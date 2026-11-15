@@ -1,0 +1,192 @@
+// Prix Cardmarket des cartes, via TCGdex.
+//
+// L'API Pokémon TCG (source des cartes) ne fournit plus de prix exploitables : rien pour les sets
+// sortis depuis fin 2025, des valeurs figées à juillet 2026 pour les autres, et quelques erreurs
+// grossières. TCGdex republie les prix Cardmarket chaque jour, mais une carte à la fois et sous ses
+// propres identifiants : ce module fait la correspondance et garde les prix en cache local.
+import { useEffect, useState } from 'react';
+import { getCachedRaw, setCached } from '../utils/cache';
+import { isGraded, loadSets, setIdOf } from './tcg';
+
+const DEX = 'https://api.tcgdex.net/v2/en';
+const DAY = 24 * 60 * 60 * 1000;
+export const CARD_PRICE_MAX_AGE = DAY;      // fiche d'une carte : prix du jour
+export const WALLET_PRICE_MAX_AGE = 7 * DAY; // valeur de la collection : rafraîchie chaque semaine
+const INDEX_MAX_AGE = 30 * DAY;              // correspondance des identifiants : ne bouge presque jamais
+const CONCURRENCY = 6;
+
+async function getJson(url) {
+  for (let attempt = 1; ; attempt++) {
+    try {
+      const res = await fetch(url);
+      if (res.ok) return await res.json();
+      if (res.status === 404) return null;
+      if (attempt >= 3) throw new Error(`HTTP ${res.status}`);
+    } catch (e) {
+      if (attempt >= 3) throw e;
+    }
+    await new Promise((r) => setTimeout(r, 400 * attempt));
+  }
+}
+
+async function cachedJson(key, maxAge, fetcher) {
+  const hit = await getCachedRaw(key);
+  const limit = typeof maxAge === 'function' ? maxAge(hit?.data) : maxAge;
+  if (hit && Date.now() - hit.ts < limit) return hit.data;
+  try {
+    const data = await fetcher();
+    if (data) await setCached(key, data);
+    return data ?? hit?.data ?? null;
+  } catch (e) {
+    if (hit) return hit.data; // hors ligne : une correspondance un peu ancienne vaut mieux que rien
+    throw e;
+  }
+}
+
+// ─── Correspondance des identifiants (API Pokémon TCG → TCGdex) ──────────────
+const plain = (s) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/&/g, 'and').replace(/[^a-z0-9]+/g, ' ').trim();
+// « 001 » et « 1 » désignent la même carte ; « TG01 » et « GG01 » se comparent tels quels.
+const numberKey = (n) => (/^\d+$/.test(n) ? String(parseInt(n, 10)) : n.toUpperCase());
+
+// « sv3pt5 » s'écrit « sv03.5 » chez TCGdex, « me6 » « me06 », mais « base1 » reste « base1 » : on essaie les formes.
+function idCandidates(id) {
+  const m = id.match(/^([a-z]+?)(\d+)(?:pt(\d+))?([a-z]*)$/);
+  if (!m) return [id];
+  const [, prefix, num, point, rest] = m;
+  const dot = point ? `.${point}` : '';
+  return [`${prefix}${num.padStart(2, '0')}${dot}${rest}`, `${prefix}${num}${dot}${rest}`, id];
+}
+
+let dexSetsPromise = null;
+function loadDexSets() {
+  dexSetsPromise ||= cachedJson('dex:sets', INDEX_MAX_AGE, async () => (
+    (await getJson(`${DEX}/sets`))?.map((s) => ({ id: s.id, name: s.name, total: s.cardCount?.total ?? 0 }))
+  )).catch((e) => { dexSetsPromise = null; throw e; });
+  return dexSetsPromise;
+}
+
+async function resolveDexSetId(setId) {
+  const [dexSets, sets] = await Promise.all([loadDexSets(), loadSets().catch(() => [])]);
+  if (!dexSets) return null;
+  const set = sets.find((s) => s.id === setId);
+  const sameName = set ? dexSets.filter((d) => plain(d.name) === plain(set.name)) : [];
+  if (sameName.length === 1) return sameName[0].id;
+  const byId = idCandidates(setId).find((c) => dexSets.some((d) => d.id === c));
+  if (byId) return byId;
+  // Plusieurs sets du même nom : celui dont le nombre de cartes est le plus proche.
+  return sameName.sort((a, b) => Math.abs(a.total - set.total) - Math.abs(b.total - set.total))[0]?.id ?? null;
+}
+
+const indexPromises = {};
+/** Pour un set : { numéro de carte → identifiant TCGdex }. Vide si le set est inconnu de TCGdex. */
+function loadSetIndex(setId) {
+  // Un index vide = set pas encore publié chez TCGdex (nouvelle sortie) : on revérifie dès le lendemain.
+  const maxAge = (index) => (index && Object.keys(index).length ? INDEX_MAX_AGE : DAY);
+  indexPromises[setId] ||= cachedJson(`dex:index:${setId}`, maxAge, async () => {
+    const dexSetId = await resolveDexSetId(setId);
+    const dexSet = dexSetId && await getJson(`${DEX}/sets/${dexSetId}`);
+    return Object.fromEntries((dexSet?.cards || []).map((c) => [numberKey(c.localId), c.id]));
+  }).catch((e) => { delete indexPromises[setId]; throw e; });
+  return indexPromises[setId];
+}
+
+async function dexCardId(cardId) {
+  const setId = setIdOf(cardId);
+  const index = await loadSetIndex(setId);
+  return index?.[numberKey(cardId.slice(setId.length + 1))] ?? null;
+}
+
+// ─── Prix : un seul enregistrement local { identifiant de carte → prix } ─────
+let store = null;
+let storePromise = null;
+function loadStore() {
+  storePromise ||= getCachedRaw('prices').then((hit) => { store = hit?.data ?? {}; return store; });
+  return storePromise;
+}
+
+let saveTimer = null;
+function scheduleSave() {
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => setCached('prices', store), 1000);
+}
+
+const inFlight = {};
+function fetchPrice(cardId) {
+  inFlight[cardId] ||= (async () => {
+    const id = await dexCardId(cardId);
+    const cm = id ? (await getJson(`${DEX}/cards/${id}`))?.pricing?.cardmarket : null;
+    const entry = cm
+      ? { trend: cm.trend, avg30: cm.avg30, avg7: cm.avg7, avg: cm.avg, low: cm.low, holoTrend: cm['trend-holo'], updated: cm.updated, at: Date.now() }
+      : { none: true, at: Date.now() }; // carte inconnue de TCGdex ou sans cotation : on ne redemande pas avant l'échéance
+    (await loadStore())[cardId] = entry;
+    scheduleSave();
+    return entry;
+  })().finally(() => { delete inFlight[cardId]; });
+  return inFlight[cardId];
+}
+
+/** Prix d'une carte, redemandé à la source s'il a plus de `maxAge`. Renvoie null si rien n'est disponible. */
+export async function getPrice(cardId, maxAge = CARD_PRICE_MAX_AGE) {
+  const known = (await loadStore())[cardId];
+  if (known && Date.now() - known.at < maxAge) return known;
+  try {
+    return await fetchPrice(cardId);
+  } catch (_) {
+    return known ?? null; // hors ligne : dernier prix connu
+  }
+}
+
+const positive = (...values) => values.find((v) => typeof v === 'number' && v > 0) ?? null;
+/** Valeur retenue pour une carte : le prix tendance Cardmarket, à défaut une moyenne récente. */
+export const priceValue = (entry) => (entry && !entry.none ? positive(entry.trend, entry.avg30, entry.avg7, entry.avg, entry.low) : null);
+
+function summarize(owned, prices) {
+  let value = 0;
+  let priced = 0;
+  let oldest = Infinity;
+  const ids = Object.keys(owned);
+  for (const id of ids) {
+    const mine = owned[id];
+    // Une carte gradée vaut ce que son propriétaire a saisi ; sans saisie, le prix de la carte brute.
+    const manual = isGraded(mine) && mine.value > 0 ? mine.value : null;
+    const market = priceValue(prices[id]);
+    if (manual === null && market === null) continue;
+    value += manual ?? market;
+    priced++;
+    if (manual === null) oldest = Math.min(oldest, prices[id].at);
+  }
+  return { value, priced, total: ids.length, updatedAt: Number.isFinite(oldest) ? oldest : null };
+}
+
+/**
+ * Valeur de la collection. Répond tout de suite avec les prix connus, puis rafraîchit en arrière-plan
+ * ceux qui manquent ou ont plus d'une semaine ; `pending` = nombre de cartes encore en cours.
+ */
+export function useWallet(owned) {
+  const [wallet, setWallet] = useState(null); // null = premier calcul en cours
+  useEffect(() => {
+    let alive = true;
+    (async () => {
+      const prices = await loadStore();
+      if (!alive) return;
+      const now = Date.now();
+      const queue = Object.keys(owned).filter((id) => !prices[id] || now - prices[id].at > WALLET_PRICE_MAX_AGE);
+      let pending = queue.length;
+      const publish = () => { if (alive) setWallet({ ...summarize(owned, prices), pending }); };
+      publish();
+
+      let lastPublish = 0;
+      const worker = async () => {
+        while (alive && queue.length) {
+          const id = queue.shift();
+          try { await fetchPrice(id); } catch (_) { /* réseau : on réessaiera au prochain affichage */ }
+          pending--;
+          if (Date.now() - lastPublish > 400 || pending === 0) { lastPublish = Date.now(); publish(); }
+        }
+      };
+      await Promise.all(Array.from({ length: Math.min(CONCURRENCY, queue.length) }, worker));
+    })();
+    return () => { alive = false; };
+  }, [owned]);
+  return wallet;
+}

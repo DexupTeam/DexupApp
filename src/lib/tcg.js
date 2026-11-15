@@ -148,28 +148,6 @@ export async function loadCardsByIds(cardIds, concurrency = 5) {
   return { map, failed };
 }
 
-/** Valeur de la collection : somme des prix tendance Cardmarket des cartes possédées. */
-export function useWallet(owned) {
-  const [wallet, setWallet] = useState(null); // null = calcul en cours
-  useEffect(() => {
-    let alive = true;
-    const ids = Object.keys(owned);
-    if (!ids.length) { setWallet({ value: 0, priced: 0, total: 0 }); return undefined; }
-    loadCardsByIds(ids).then(({ map }) => {
-      if (!alive) return;
-      let value = 0;
-      let priced = 0;
-      for (const id of ids) {
-        const trend = map[id]?.cardmarket?.prices?.trendPrice;
-        if (trend != null) { value += trend; priced++; }
-      }
-      setWallet({ value, priced, total: ids.length });
-    });
-    return () => { alive = false; };
-  }, [owned]);
-  return wallet;
-}
-
 export const formatEuro = (v) => `${v.toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} €`;
 
 const SEARCH_SELECT = 'id,name,number,rarity,set,images';

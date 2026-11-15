@@ -380,7 +380,7 @@ button.list-row:active, .list-row.tap:active { transform: scale(0.99); }
 .kv { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 11px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
 .kv:last-child { border-bottom: none; }
 .kv > span:first-child { color: var(--ink-2); }
-.kv > b { font-family: var(--mono); font-weight: 500; font-size: 13px; text-align: right; }
+.kv > b { font-family: var(--mono); font-weight: 500; font-size: 13px; text-align: right; white-space: nowrap; }
 .menu-item { display: flex; align-items: center; gap: 12px; width: 100%; padding: 15px 2px; font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; text-align: left; border-bottom: 1px solid var(--line); }
 .menu-item:last-child { border-bottom: none; }
 .menu-item.danger { color: var(--danger); }

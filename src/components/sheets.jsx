@@ -41,7 +41,18 @@ export function StatsSheet({ onClose, setNames = {}, wallet }) {
             <div className="kv"><span>Cartes possédées</span><b style={{ color: 'var(--violet-ink)', fontSize: 18 }}>{stats.total}</b></div>
             {wallet && (
               <div className="kv">
-                <span>Valeur Cardmarket{wallet.priced < wallet.total ? ` (${wallet.priced}/${wallet.total} cartes évaluées)` : ''}</span>
+                <span>
+                  Valeur de la collection
+                  <span className="tiny dim" style={{ display: 'block' }}>
+                    {wallet.pending > 0
+                      ? `Actualisation des prix… ${wallet.pending} carte${wallet.pending > 1 ? 's' : ''} restante${wallet.pending > 1 ? 's' : ''}`
+                      : [
+                        'Prix tendance Cardmarket',
+                        wallet.priced < wallet.total && `${wallet.priced} cartes sur ${wallet.total} évaluées`,
+                        wallet.updatedAt && `actualisé le ${new Date(wallet.updatedAt).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' })}`,
+                      ].filter(Boolean).join(' · ')}
+                  </span>
+                </span>
                 <b>{formatEuro(wallet.value)}</b>
               </div>
             )}

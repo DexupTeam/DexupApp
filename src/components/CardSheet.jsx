@@ -3,7 +3,8 @@ import { Check, ChevronDown, ExternalLink, ListPlus, Plus, Star, Trophy } from '
 import { useCollection } from '../store/collection';
 import { getCached, setCached } from '../utils/cache';
 import { getGradingInfo } from '../utils/storage';
-import { loadFullCard, openUrl } from '../lib/tcg';
+import { formatEuro, loadFullCard, openUrl } from '../lib/tcg';
+import { getPrice } from '../lib/prices';
 import { Confirm, Sheet, plural } from './ui';
 import { PokeBall } from './PokeBall';
 
@@ -59,13 +60,16 @@ function GradingEditor({ grading, onSave, onRemove }) {
   const [company, setCompany] = useState(grading ? (known?.tag ?? 'AUT') : 'PSA');
   const [custom, setCustom] = useState(grading && !known ? grading.company : '');
   const [grade, setGrade] = useState(grading?.grade ?? '');
+  const [value, setValue] = useState(grading?.value ? String(grading.value) : '');
 
   const save = () => {
     if (!grade.trim()) return;
     const name = company === 'AUT'
       ? (custom.trim() || 'Autres')
       : GRADING_COMPANIES.find((c) => c.tag === company).name;
-    onSave({ graded: true, company: name, grade: grade.trim() });
+    // Aucune source gratuite ne cote les cartes gradées : la valeur est saisie par le collectionneur.
+    const amount = parseFloat(value.replace(',', '.'));
+    onSave({ graded: true, company: name, grade: grade.trim(), ...(amount > 0 ? { value: amount } : {}) });
     setOpen(false);
   };
 
@@ -74,7 +78,7 @@ function GradingEditor({ grading, onSave, onRemove }) {
       <button className="row card-pad" style={{ width: '100%' }} onClick={() => setOpen((v) => !v)} aria-expanded={open}>
         <Trophy size={19} color="var(--gold)" />
         <b className="grow" style={{ textAlign: 'left' }}>
-          {grading ? `Gradée ${grading.company} ${grading.grade}` : 'Ajouter un grade'}
+          {grading ? `Gradée ${grading.company} ${grading.grade}${grading.value ? ` · ${formatEuro(grading.value)}` : ''}` : 'Ajouter un grade'}
         </b>
         <ChevronDown size={18} style={{ transform: open ? 'rotate(180deg)' : 'none', transition: 'transform .2s' }} />
       </button>
@@ -95,6 +99,12 @@ function GradingEditor({ grading, onSave, onRemove }) {
             value={grade} onChange={(e) => setGrade(e.target.value)}
             onKeyDown={(e) => { if (e.key === 'Enter') save(); }}
           />
+          <input
+            className="input" placeholder="Valeur estimée en € (facultatif)" inputMode="decimal" aria-describedby="graded-value-help"
+            value={value} onChange={(e) => setValue(e.target.value)}
+            onKeyDown={(e) => { if (e.key === 'Enter') save(); }}
+          />
+          <p id="graded-value-help" className="tiny dim">Compte dans la valeur de ta collection à la place du prix de la carte non gradée.</p>
           <div className="row">
             {grading && <button className="btn btn-danger btn-sm" onClick={() => { onRemove(); setOpen(false); }}>Supprimer</button>}
             <button className="btn btn-dark btn-sm grow" disabled={!grade.trim()} onClick={save}>Enregistrer le grade</button>
@@ -156,7 +166,7 @@ export function ListPickerSheet({ card, onClose }) {
 function CardSheetInner({ card }) {
   const { owned, favCards, lists, closeCard, toggleOwned, toggleFavCard, setGrading } = useCollection();
   const [full, setFull] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [price, setPrice] = useState(undefined); // undefined = chargement, null = aucune cotation
   const [picker, setPicker] = useState(false);
   const [confirmRemove, setConfirmRemove] = useState(false);
 
@@ -172,8 +182,8 @@ function CardSheetInner({ card }) {
         }
         if (alive && data) setFull(data);
       } catch (_) { /* hors ligne : on affiche ce qu'on a */ }
-      if (alive) setLoading(false);
     })();
+    getPrice(card.id).then((p) => { if (alive) setPrice(p && !p.none ? p : null); });
     return () => { alive = false; };
   }, [card.id]);
 
@@ -183,7 +193,6 @@ function CardSheetInner({ card }) {
   const grading = getGradingInfo(owned[card.id]);
   const inLists = Object.values(lists).filter((l) => l.cards?.[card.id]).length;
   const rarity = RARITY[c.rarity];
-  const cm = full?.cardmarket?.prices;
 
   // Sans fiche Cardmarket fournie par l'API, on renvoie vers une recherche du nom de la carte.
   const cardmarketUrl = full?.cardmarket?.url
@@ -237,20 +246,24 @@ function CardSheetInner({ card }) {
         <div className="stack" style={{ marginTop: 18 }}>
           {isOwned && (
             <GradingEditor
-              key={grading ? `${grading.company}-${grading.grade}` : 'none'}
+              key={grading ? `${grading.company}-${grading.grade}-${grading.value ?? ''}` : 'none'}
               grading={grading}
               onSave={(g) => setGrading(card.id, g)}
               onRemove={() => setGrading(card.id, { graded: false })}
             />
           )}
 
-          {loading ? (
+          {price === undefined ? (
             <div className="card card-pad row"><div className="spinner sm" /><span className="small muted">Chargement des prix…</span></div>
-          ) : cm ? (
-            <PriceBlock title="Cardmarket" unit="€" rows={[
-              ['Tendance', cm.trendPrice], ['Vente moyenne', cm.averageSellPrice], ['Prix bas', cm.lowPrice],
-              ['Moyenne 7 j', cm.avg7], ['Moyenne 30 j', cm.avg30],
-            ]} />
+          ) : price ? (
+            <PriceBlock
+              title={`Cardmarket${price.updated ? ` · relevé du ${new Date(price.updated).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' })}` : ''}`}
+              unit="€"
+              rows={[
+                ['Tendance', price.trend], ['Moyenne 30 j', price.avg30], ['Moyenne 7 j', price.avg7], ['Prix bas', price.low],
+                ['Tendance reverse / holo', price.holoTrend],
+              ]}
+            />
           ) : (
             <p className="small dim" style={{ textAlign: 'center' }}>Prix non disponible pour cette carte.</p>
           )}

@@ -7,7 +7,7 @@
 ## Fonctionnalités
 
 ### Accueil
-- Nombre de cartes possédées, sets entamés, cartes gradées et **valeur Cardmarket** de la collection
+- Nombre de cartes possédées, sets entamés, cartes gradées et **valeur de la collection** (prix tendance Cardmarket, actualisés chaque semaine ; une carte gradée compte pour la valeur saisie)
 - Statistiques détaillées (grading par société, répartition par set)
 - Accès direct à « Mes cartes », aux Actualités, aux Conventions et aux Produits
 - Extensions en cours et dernières sorties
@@ -25,9 +25,9 @@
 
 ### Fiche carte
 - Image, rareté, numéro, artiste, extension
-- **Prix Cardmarket** (tendance, moyennes 7 j / 30 j) via l'API Pokémon TCG ; le lien Cardmarket reste disponible même quand l'API n'a pas de prix
+- **Prix Cardmarket** du jour (tendance, moyennes 7 j / 30 j, prix bas, tendance reverse / holo) via TCGdex ; le lien Cardmarket reste disponible même sans cotation
 - Ajout à la collection, favori ★, ajout à une liste
-- **Grading** : PSA / PCA / CA / CollectAura / CCC / CGC / Beckett ou société libre
+- **Grading** : PSA / PCA / CA / CollectAura / CCC / CGC / Beckett ou société libre, avec une **valeur estimée** saisie à la main
 - Se ferme toute seule quand on change de page
 
 ### Recherche
@@ -99,7 +99,8 @@ src/
 ├── store/
 │   └── collection.jsx      # État partagé : cartes possédées, favoris, listes, fiche ouverte
 ├── lib/
-│   ├── tcg.js              # Accès à l'API cartes (sets, cartes, recherche, valeur)
+│   ├── tcg.js              # Accès à l'API cartes (sets, cartes, recherche)
+│   ├── prices.js           # Prix Cardmarket via TCGdex + valeur de la collection
 │   ├── scan.js             # Lecture d'une carte (OCR) et classement des candidats
 │   ├── quality.js          # Mesure de netteté / exposition d'une image
 │   ├── useAutoCapture.js   # Déclenchement automatique du scan
@@ -144,7 +145,8 @@ netlify/functions/
 
 | API | Usage |
 |-----|-------|
-| [Pokémon TCG API](https://pokemontcg.io/) v2 | Extensions, cartes, images, prix Cardmarket |
+| [Pokémon TCG API](https://pokemontcg.io/) v2 | Extensions, cartes, images |
+| [TCGdex](https://tcgdex.dev/) | Prix Cardmarket, mis à jour chaque jour (une requête par carte) |
 | [PokeAPI GraphQL](https://graphql.pokeapi.co/v1beta2) | Noms français → anglais des Pokémon |
 | Flux RSS pokemonblog.com | Actualités TCG (via fonction Netlify) |
 
@@ -222,6 +224,15 @@ create policy "shared_write"
 > Les tables gardent le préfixe `pokecollect_` (ancien nom de l'app) : les renommer orphelinerait les collections existantes.
 >
 > La liste des conventions vit dans `src/lib/events.js` ; elle est mise en cache dans `pokecollect_shared` sous la clé `collector_events_2027` (à faire évoluer quand la liste change).
+
+### Prix
+
+L'API Pokémon TCG ne fournit plus de prix exploitables (rien pour les sets sortis depuis fin 2025, valeurs figées à juillet 2026 pour les autres). Les prix viennent donc de TCGdex, qui republie Cardmarket chaque jour.
+
+- TCGdex utilise ses propres identifiants (`sv03.5-001` pour `sv3pt5-1`) : `src/lib/prices.js` relie les sets par leur nom, puis les cartes par leur numéro. La correspondance est gardée 30 jours.
+- TCGdex répond une carte à la fois : seuls les prix des cartes possédées sont chargés, en arrière-plan, et gardés dans la base locale.
+- Fiche carte : prix de moins de 24 h. Valeur de la collection : chaque prix est redemandé quand il a plus de 7 jours.
+- Les versions reverse / holo ne sont pas distinguées : une carte compte au prix de sa version normale.
 
 ### Variables d'environnement
 

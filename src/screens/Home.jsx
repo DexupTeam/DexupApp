@@ -4,7 +4,8 @@ import { ArrowUpRight, CalendarDays, Layers, Newspaper, ShoppingBag } from 'luci
 import { useCollection } from '../store/collection';
 import { useLang } from '../utils/LanguageContext.jsx';
 import { getLocalizedSetName } from '../utils/setNames';
-import { formatEuro, isGraded, ownedCountBySet, useSets, useWallet } from '../lib/tcg';
+import { formatEuro, isGraded, ownedCountBySet, useSets } from '../lib/tcg';
+import { useWallet } from '../lib/prices';
 import Logo from '../components/Logo';
 import { Page, Progress, pct, plural } from '../components/ui';
 import { EventsSheet, NewsSheet, StatsSheet } from '../components/sheets';
