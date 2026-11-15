@@ -6,13 +6,14 @@
 // propres identifiants : ce module fait la correspondance et garde les prix en cache local.
 import { useEffect, useState } from 'react';
 import { getCachedRaw, setCached } from '../utils/cache';
-import { isGraded, loadSets, setIdOf } from './tcg';
+import { isGraded, loadSetCards, loadSets, setIdOf } from './tcg';
 
 const DEX = 'https://api.tcgdex.net/v2/en';
 const DAY = 24 * 60 * 60 * 1000;
 export const CARD_PRICE_MAX_AGE = DAY;      // fiche d'une carte : prix du jour
 export const WALLET_PRICE_MAX_AGE = 7 * DAY; // valeur de la collection : rafraîchie chaque semaine
 const INDEX_MAX_AGE = 30 * DAY;              // correspondance des identifiants : ne bouge presque jamais
+const RETRY_AGE = DAY / 4;                   // « pas de prix » ou set inconnu : on redemande vite, ça finit souvent par arriver
 const CONCURRENCY = 6;
 
 async function getJson(url) {
@@ -74,14 +75,24 @@ async function resolveDexSetId(setId) {
   const byId = idCandidates(setId).find((c) => dexSets.some((d) => d.id === c));
   if (byId) return byId;
   // Plusieurs sets du même nom : celui dont le nombre de cartes est le plus proche.
-  return sameName.sort((a, b) => Math.abs(a.total - set.total) - Math.abs(b.total - set.total))[0]?.id ?? null;
+  if (sameName.length) return sameName.sort((a, b) => Math.abs(a.total - set.total) - Math.abs(b.total - set.total))[0].id;
+  if (!set) return null;
+  // Nom abrégé d'un côté (« 30th Celebration: Classic Collection » / « 30th Classic Collection ») :
+  // même nombre de cartes et tous les mots du plus court présents dans l'autre, sans ambiguïté.
+  const words = plain(set.name).split(' ');
+  const close = dexSets.filter((d) => {
+    const other = plain(d.name).split(' ');
+    const [short, long] = other.length < words.length ? [other, words] : [words, other];
+    return d.total === set.total && short.length > 1 && short.every((w) => long.includes(w));
+  });
+  return close.length === 1 ? close[0].id : null;
 }
 
 const indexPromises = {};
 /** Pour un set : { numéro de carte → identifiant TCGdex }. Vide si le set est inconnu de TCGdex. */
 function loadSetIndex(setId) {
-  // Un index vide = set pas encore publié chez TCGdex (nouvelle sortie) : on revérifie dès le lendemain.
-  const maxAge = (index) => (index && Object.keys(index).length ? INDEX_MAX_AGE : DAY);
+  // Un index vide = set pas encore publié chez TCGdex (nouvelle sortie) : on revérifie quelques heures plus tard.
+  const maxAge = (index) => (index && Object.keys(index).length ? INDEX_MAX_AGE : RETRY_AGE);
   indexPromises[setId] ||= cachedJson(`dex:index:${setId}`, maxAge, async () => {
     const dexSetId = await resolveDexSetId(setId);
     const dexSet = dexSetId && await getJson(`${DEX}/sets/${dexSetId}`);
@@ -90,10 +101,43 @@ function loadSetIndex(setId) {
   return indexPromises[setId];
 }
 
+// Quelques sets (rééditions type « Classic Collection ») sont renumérotés chez TCGdex : le numéro
+// désigne alors une autre carte. On le détecte en comparant les noms, et on associe par nom.
+async function buildRenumbering(setId) {
+  const [dexSetId, cards] = await Promise.all([resolveDexSetId(setId), loadSetCards(setId)]);
+  const dexCards = (dexSetId && (await getJson(`${DEX}/sets/${dexSetId}`))?.cards) || [];
+  if (!cards.length || !dexCards.length) return null;
+  const byNumber = Object.fromEntries(dexCards.map((d) => [numberKey(d.localId), plain(d.name)]));
+  const agreeing = cards.filter((c) => byNumber[numberKey(c.number)] === plain(c.name)).length;
+  if (agreeing * 2 >= Math.min(cards.length, dexCards.length)) return { sameNumbering: true };
+  const byName = {};
+  for (const d of dexCards) (byName[plain(d.name)] ||= []).push(d.id);
+  // Un nom porté par plusieurs cartes du set ne permet pas de trancher : ces cartes restent sans prix.
+  const ids = {};
+  for (const c of cards) if (byName[plain(c.name)]?.length === 1) ids[c.id] = byName[plain(c.name)][0];
+  return { ids };
+}
+
+const renumberings = {};
+/** Lit la renumérotation connue d'un set ; `build` la calcule (réseau) si elle ne l'a jamais été. */
+function loadRenumbering(setId, build) {
+  const key = `dex:names:${setId}`;
+  if (build && !renumberings[setId]?.built) {
+    renumberings[setId] = cachedJson(key, INDEX_MAX_AGE, () => buildRenumbering(setId)).catch(() => null);
+    renumberings[setId].built = true;
+  }
+  renumberings[setId] ||= getCachedRaw(key).then((hit) => hit?.data ?? null);
+  return renumberings[setId];
+}
+
 async function dexCardId(cardId) {
   const setId = setIdOf(cardId);
   const index = await loadSetIndex(setId);
-  return index?.[numberKey(cardId.slice(setId.length + 1))] ?? null;
+  if (!index || !Object.keys(index).length) return null;
+  const byNumber = index[numberKey(cardId.slice(setId.length + 1))] ?? null;
+  // Un numéro introuvable dans un set connu est le signe d'une renumérotation : on vérifie une fois.
+  const renumbering = (await loadRenumbering(setId)) ?? (byNumber ? null : await loadRenumbering(setId, true));
+  return renumbering?.ids ? renumbering.ids[cardId] ?? null : byNumber;
 }
 
 // ─── Prix : un seul enregistrement local { identifiant de carte → prix } ─────
@@ -117,7 +161,7 @@ function fetchPrice(cardId) {
     const cm = id ? (await getJson(`${DEX}/cards/${id}`))?.pricing?.cardmarket : null;
     const entry = cm
       ? { trend: cm.trend, avg30: cm.avg30, avg7: cm.avg7, avg: cm.avg, low: cm.low, holoTrend: cm['trend-holo'], updated: cm.updated, at: Date.now() }
-      : { none: true, at: Date.now() }; // carte inconnue de TCGdex ou sans cotation : on ne redemande pas avant l'échéance
+      : { none: true, at: Date.now() }; // carte inconnue de TCGdex ou sans cotation : redemandée après RETRY_AGE
     (await loadStore())[cardId] = entry;
     scheduleSave();
     return entry;
@@ -125,10 +169,12 @@ function fetchPrice(cardId) {
   return inFlight[cardId];
 }
 
+const isFresh = (entry, maxAge) => !!entry && Date.now() - entry.at < (entry.none ? Math.min(maxAge, RETRY_AGE) : maxAge);
+
 /** Prix d'une carte, redemandé à la source s'il a plus de `maxAge`. Renvoie null si rien n'est disponible. */
 export async function getPrice(cardId, maxAge = CARD_PRICE_MAX_AGE) {
   const known = (await loadStore())[cardId];
-  if (known && Date.now() - known.at < maxAge) return known;
+  if (isFresh(known, maxAge)) return known;
   try {
     return await fetchPrice(cardId);
   } catch (_) {
@@ -169,8 +215,7 @@ export function useWallet(owned) {
     (async () => {
       const prices = await loadStore();
       if (!alive) return;
-      const now = Date.now();
-      const queue = Object.keys(owned).filter((id) => !prices[id] || now - prices[id].at > WALLET_PRICE_MAX_AGE);
+      const queue = Object.keys(owned).filter((id) => !isFresh(prices[id], WALLET_PRICE_MAX_AGE));
       let pending = queue.length;
       const publish = () => { if (alive) setWallet({ ...summarize(owned, prices), pending }); };
       publish();
