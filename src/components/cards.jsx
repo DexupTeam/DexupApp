@@ -11,8 +11,8 @@ function useCardState(card) {
     isFav: !!favCards[card.id],
     grading,
     open: () => openCard(card),
-    // Retirer une carte gradée efface son grade : on passe par la fiche pour confirmer.
-    quickToggle: () => (grading ? openCard(card) : toggleOwned(card.id)),
+    // Retirer une carte efface son grade, sa langue et son prix saisi : on passe par la fiche pour confirmer.
+    quickToggle: () => (grading || owned[card.id]?.lang || owned[card.id]?.price ? openCard(card) : toggleOwned(card.id)),
   };
 }
 

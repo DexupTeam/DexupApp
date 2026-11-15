@@ -4,7 +4,8 @@ const KEY = 'owned_cards';
 const FAV_CARDS_KEY = 'favorite_cards';
 const FAV_SETS_KEY = 'favorite_sets';
 
-// ownedVal peut être : true (ancien format) | { graded: false } | { graded: true, company, grade }
+// ownedVal peut être : true (ancien format) | { graded: false } | { graded: true, company, grade, value? }
+// avec en option, dans les deux formes objet : lang (code de langue) et price (prix constaté en €).
 export function getGradingInfo(ownedVal) {
   if (ownedVal && typeof ownedVal === 'object' && ownedVal.graded === true) {
     return ownedVal; // { graded: true, company: 'PSA', grade: '10' }

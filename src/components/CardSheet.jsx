@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Check, ChevronDown, ExternalLink, ListPlus, Plus, Star, Trophy } from 'lucide-react';
+import { Check, ChevronDown, ExternalLink, Languages, ListPlus, Plus, Star, Trophy } from 'lucide-react';
 import { useCollection } from '../store/collection';
 import { getCached, setCached } from '../utils/cache';
 import { getGradingInfo } from '../utils/storage';
@@ -20,6 +20,21 @@ const GRADING_COMPANIES = [
   { tag: 'AUT', name: 'Autres' },
 ];
 
+// cm : filtre de langue de Cardmarket. Les cartes japonaises y sont des produits à part, sans filtre possible.
+const LANGUAGES = [
+  { code: 'FR', label: 'Français', cm: 2 }, { code: 'EN', label: 'Anglais', cm: 1 }, { code: 'JP', label: 'Japonais' },
+  { code: 'DE', label: 'Allemand', cm: 3 }, { code: 'ES', label: 'Espagnol', cm: 4 }, { code: 'IT', label: 'Italien', cm: 5 },
+];
+
+const cardmarketSearch = (name) => `https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=${encodeURIComponent(name)}`;
+/** Lien Cardmarket d'une carte : sur les offres de la langue choisie quand c'est possible. */
+function cardmarketLink({ name, language, idProduct, apiUrl }) {
+  if (language?.cm && idProduct) return `https://www.cardmarket.com/fr/Pokemon/Products?idProduct=${idProduct}&language=${language.cm}`;
+  if (language && !language.cm) return cardmarketSearch(name);
+  // Sans fiche Cardmarket connue, on renvoie vers une recherche du nom de la carte.
+  return apiUrl ?? cardmarketSearch(name);
+}
+
 const RARITY = {
   'Common': ['C', ''], 'Uncommon': ['U', 'tag-sky'], 'Rare': ['R', 'tag-gold'], 'Rare Holo': ['H', 'tag-gold'],
   'Rare Holo EX': ['EX', 'tag-peach'], 'Rare Holo GX': ['GX', 'tag-peach'], 'Rare Holo V': ['V', 'tag-peach'],
@@ -39,7 +54,7 @@ const TYPE_COLORS = {
 const money = (v, unit) => `${Number(v).toFixed(2)} ${unit}`;
 
 function PriceBlock({ title, unit, rows }) {
-  const shown = rows.filter(([, v]) => v != null);
+  const shown = rows.filter(([, v]) => v > 0); // 0 = pas de cotation pour cette ligne
   if (!shown.length) return null;
   return (
     <div className="card card-pad">
@@ -109,6 +124,58 @@ function GradingEditor({ grading, onSave, onRemove }) {
             {grading && <button className="btn btn-danger btn-sm" onClick={() => { onRemove(); setOpen(false); }}>Supprimer</button>}
             <button className="btn btn-dark btn-sm grow" disabled={!grade.trim()} onClick={save}>Enregistrer le grade</button>
           </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+function LanguageEditor({ language, price, linkFor, onSave }) {
+  const [open, setOpen] = useState(false);
+  const [code, setCode] = useState(language?.code ?? null);
+  const [value, setValue] = useState(price ? String(price) : '');
+  const chosen = LANGUAGES.find((l) => l.code === code);
+
+  const save = () => {
+    const amount = parseFloat(value.replace(',', '.'));
+    onSave({ lang: code, price: amount > 0 ? amount : null });
+    setOpen(false);
+  };
+
+  return (
+    <div className="card">
+      <button className="row card-pad" style={{ width: '100%' }} onClick={() => setOpen((v) => !v)} aria-expanded={open}>
+        <Languages size={19} />
+        <b className="grow" style={{ textAlign: 'left' }}>
+          {language || price
+            ? [language?.label, price ? formatEuro(price) : null].filter(Boolean).join(' · ')
+            : 'Langue et prix constaté'}
+        </b>
+        <ChevronDown size={18} style={{ transform: open ? 'rotate(180deg)' : 'none', transition: 'transform .2s' }} />
+      </button>
+      {open && (
+        <div className="stack" style={{ padding: '0 16px 16px' }}>
+          <div className="grade-grid" style={{ gridTemplateColumns: 'repeat(3, 1fr)' }} role="group" aria-label="Langue de la carte">
+            {LANGUAGES.map((l) => (
+              <button key={l.code} className={code === l.code ? 'is-active' : ''} aria-pressed={code === l.code} onClick={() => setCode(code === l.code ? null : l.code)}>
+                {l.label}
+              </button>
+            ))}
+          </div>
+          {chosen && (
+            <button className="btn btn-ghost btn-sm" onClick={() => openUrl(linkFor(chosen))}>
+              {chosen.cm ? `Offres en ${chosen.label.toLowerCase()}` : 'Chercher la version japonaise'} <ExternalLink size={15} />
+            </button>
+          )}
+          <input
+            className="input" placeholder="Prix constaté en € (facultatif)" inputMode="decimal" aria-describedby="lang-price-help"
+            value={value} onChange={(e) => setValue(e.target.value)}
+            onKeyDown={(e) => { if (e.key === 'Enter') save(); }}
+          />
+          <p id="lang-price-help" className="tiny dim">
+            Le prix tendance mélange toutes les langues. Saisis celui que tu constates pour ta version : il comptera à sa place dans la valeur de ta collection.
+          </p>
+          <button className="btn btn-dark btn-sm" onClick={save}>Enregistrer</button>
         </div>
       )}
     </div>
@@ -191,14 +258,22 @@ function CardSheetInner({ card }) {
   const isOwned = !!owned[card.id];
   const isFav = !!favCards[card.id];
   const grading = getGradingInfo(owned[card.id]);
+  // Langue et prix constaté vivent dans la même fiche que le grade : chaque modification conserve les autres champs.
+  const mine = owned[card.id] && typeof owned[card.id] === 'object' ? owned[card.id] : {};
+  const language = LANGUAGES.find((l) => l.code === mine.lang);
+  const myPrice = mine.price > 0 ? mine.price : null;
+  const kept = { ...(mine.lang ? { lang: mine.lang } : {}), ...(myPrice ? { price: myPrice } : {}) };
+  const saveLanguage = ({ lang, price: amount }) => {
+    const { lang: _lang, price: _price, ...rest } = mine;
+    setGrading(card.id, { graded: false, ...rest, ...(lang ? { lang } : {}), ...(amount ? { price: amount } : {}) });
+  };
   const inLists = Object.values(lists).filter((l) => l.cards?.[card.id]).length;
   const rarity = RARITY[c.rarity];
 
-  // Sans fiche Cardmarket fournie par l'API, on renvoie vers une recherche du nom de la carte.
-  const cardmarketUrl = full?.cardmarket?.url
-    ?? `https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=${encodeURIComponent(c.name)}`;
+  const linkFor = (lang) => cardmarketLink({ name: c.name, language: lang, idProduct: price?.idProduct, apiUrl: full?.cardmarket?.url });
+  const hasDetails = !!grading || !!language || !!myPrice;
 
-  const onOwnedClick = () => (grading ? setConfirmRemove(true) : toggleOwned(card.id));
+  const onOwnedClick = () => (hasDetails ? setConfirmRemove(true) : toggleOwned(card.id));
 
   return (
     <>
@@ -248,28 +323,37 @@ function CardSheetInner({ card }) {
             <GradingEditor
               key={grading ? `${grading.company}-${grading.grade}-${grading.value ?? ''}` : 'none'}
               grading={grading}
-              onSave={(g) => setGrading(card.id, g)}
-              onRemove={() => setGrading(card.id, { graded: false })}
+              onSave={(g) => setGrading(card.id, { ...g, ...kept })}
+              onRemove={() => setGrading(card.id, { graded: false, ...kept })}
+            />
+          )}
+          {isOwned && (
+            <LanguageEditor
+              key={`${mine.lang ?? ''}-${myPrice ?? ''}`}
+              language={language} price={myPrice} linkFor={linkFor} onSave={saveLanguage}
             />
           )}
 
           {price === undefined ? (
             <div className="card card-pad row"><div className="spinner sm" /><span className="small muted">Chargement des prix…</span></div>
-          ) : price ? (
+          ) : price || myPrice ? (
             <PriceBlock
-              title={`Cardmarket${price.updated ? ` · relevé du ${new Date(price.updated).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' })}` : ''}`}
+              title={price ? `Cardmarket${price.updated ? ` · relevé du ${new Date(price.updated).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' })}` : ''}` : 'Prix'}
               unit="€"
               rows={[
-                ['Tendance', price.trend], ['Moyenne 30 j', price.avg30], ['Moyenne 7 j', price.avg7], ['Prix bas', price.low],
-                ['Tendance reverse / holo', price.holoTrend],
+                [`Ton prix${language ? ` (${language.code})` : ''}`, myPrice],
+                [language ? 'Tendance toutes langues' : 'Tendance', price?.trend], ['Moyenne 30 j', price?.avg30], ['Moyenne 7 j', price?.avg7], ['Prix bas', price?.low],
+                ['Tendance reverse / holo', price?.holoTrend],
               ]}
             />
           ) : (
             <p className="small dim" style={{ textAlign: 'center' }}>Prix non disponible pour cette carte.</p>
           )}
 
-          <button className="btn btn-ghost btn-block" onClick={() => openUrl(cardmarketUrl)}>
-            {full?.cardmarket?.url ? 'Voir sur Cardmarket' : 'Chercher sur Cardmarket'} <ExternalLink size={16} />
+          <button className="btn btn-ghost btn-block" onClick={() => openUrl(linkFor(language))}>
+            {language?.cm && price?.idProduct
+              ? `Offres en ${language.label.toLowerCase()} sur Cardmarket`
+              : full?.cardmarket?.url && !language ? 'Voir sur Cardmarket' : 'Chercher sur Cardmarket'} <ExternalLink size={16} />
           </button>
         </div>
       </Sheet>
@@ -278,7 +362,9 @@ function CardSheetInner({ card }) {
       {confirmRemove && (
         <Confirm
           title="Retirer de la collection ?"
-          message={`${c.name} est gradée ${grading?.company} ${grading?.grade}. La retirer supprimera aussi son grade.`}
+          message={grading
+            ? `${c.name} est gradée ${grading.company} ${grading.grade}. La retirer supprimera aussi son grade.`
+            : `La retirer supprimera aussi la langue et le prix que tu as enregistrés pour ${c.name}.`}
           confirmLabel="Retirer"
           onConfirm={() => toggleOwned(card.id)}
           onClose={() => setConfirmRemove(false)}

@@ -160,7 +160,7 @@ function fetchPrice(cardId) {
     const id = await dexCardId(cardId);
     const cm = id ? (await getJson(`${DEX}/cards/${id}`))?.pricing?.cardmarket : null;
     const entry = cm
-      ? { trend: cm.trend, avg30: cm.avg30, avg7: cm.avg7, avg: cm.avg, low: cm.low, holoTrend: cm['trend-holo'], updated: cm.updated, at: Date.now() }
+      ? { trend: cm.trend, avg30: cm.avg30, avg7: cm.avg7, avg: cm.avg, low: cm.low, holoTrend: cm['trend-holo'], idProduct: cm.idProduct, updated: cm.updated, at: Date.now() }
       : { none: true, at: Date.now() }; // carte inconnue de TCGdex ou sans cotation : redemandée après RETRY_AGE
     (await loadStore())[cardId] = entry;
     scheduleSave();
@@ -193,8 +193,9 @@ function summarize(owned, prices) {
   const ids = Object.keys(owned);
   for (const id of ids) {
     const mine = owned[id];
-    // Une carte gradée vaut ce que son propriétaire a saisi ; sans saisie, le prix de la carte brute.
-    const manual = isGraded(mine) && mine.value > 0 ? mine.value : null;
+    // Ce que le propriétaire a saisi passe avant le marché : la valeur d'une carte gradée, sinon le prix
+    // constaté dans sa langue (le prix tendance mélange toutes les langues).
+    const manual = (isGraded(mine) && mine.value > 0 ? mine.value : null) ?? (mine?.price > 0 ? mine.price : null);
     const market = priceValue(prices[id]);
     if (manual === null && market === null) continue;
     value += manual ?? market;
