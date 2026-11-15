@@ -234,6 +234,8 @@ L'API Pokémon TCG ne fournit plus de prix exploitables (rien pour les sets sort
 - Fiche carte : prix de moins de 24 h. Valeur de la collection : chaque prix est redemandé quand il a plus de 7 jours.
 - Les versions reverse / holo ne sont pas distinguées : une carte compte au prix de sa version normale.
 
+**Produits scellés** : prix tendance issus du relevé public de Cardmarket, régénérés à chaque build par `scripts/update-product-prices.mjs` (`npm run prices` pour voir le détail des correspondances). Un produit absent du catalogue Cardmarket s'affiche « Prix indisponible ».
+
 ### Variables d'environnement
 
 Créer un fichier `.env` à la racine :

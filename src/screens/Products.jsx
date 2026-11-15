@@ -2,9 +2,14 @@ import React, { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Check, ExternalLink, Plus, SearchX } from 'lucide-react';
 import { useCollection } from '../store/collection';
-import { PRODUCTS, PRODUCT_TYPES, PRICE_SOURCE, PRICE_UPDATED } from '../data/products';
-import { openUrl, setLogoUrl } from '../lib/tcg';
+import { PRODUCTS, PRODUCT_TYPES } from '../data/products';
+import priceData from '../data/productPrices.json';
+import { formatEuro, openUrl, setLogoUrl } from '../lib/tcg';
 import { Empty, Page, Pills, SearchField, Sheet, StarButton, Tappable, TopBar } from '../components/ui';
+
+// Prix tendance Cardmarket du produit scellé, ou null s'il n'y est pas référencé.
+const priceOf = (product) => priceData.prices[product.id] ?? null;
+const PRICE_DATE = new Date(priceData.updated).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' });
 
 const typeLabel = (id) => PRODUCT_TYPES.find((t) => t.id === id)?.label ?? id;
 const TYPE_OPTIONS = PRODUCT_TYPES.map((t) => ({ value: t.id, label: t.label }));
@@ -20,6 +25,7 @@ export function ProductImage({ product }) {
 
 export function ProductRow({ product, onOpen }) {
   const { favProducts, ownedProducts, toggleFavProduct, toggleOwnedProduct } = useCollection();
+  const price = priceOf(product);
   const packs = product.contents?.packs;
   const isOwned = !!ownedProducts[product.id];
   return (
@@ -32,7 +38,7 @@ export function ProductRow({ product, onOpen }) {
           {product.setId && <span className="tag tag-violet">{product.setId.toUpperCase()}</span>}
           {packs > 0 && <span className="tiny dim">{packs} booster{packs > 1 ? 's' : ''}</span>}
         </div>
-        <b style={{ display: 'block', marginTop: 6, fontFamily: 'var(--mono)', fontSize: 13 }}>{product.price ?? 'Prix à venir'}</b>
+        <b style={{ display: 'block', marginTop: 6, fontFamily: 'var(--mono)', fontSize: 13 }} className={price === null ? 'dim' : undefined}>{price === null ? 'Prix indisponible' : formatEuro(price)}</b>
       </div>
       <button
         className={`icon-btn${isOwned ? ' is-owned' : ''}`} aria-pressed={isOwned}
@@ -52,6 +58,7 @@ export function ProductSheet({ product, onClose }) {
   const isOwned = !!ownedProducts[product.id];
   const contents = product.contents || {};
   const name = product.nameFr || product.name;
+  const price = priceOf(product);
   const cardmarket = `https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=${encodeURIComponent(name)}`;
 
   return (
@@ -79,10 +86,10 @@ export function ProductSheet({ product, onClose }) {
 
         <div className="card card-pad row" style={{ justifyContent: 'space-between' }}>
           <div>
-            <p className="small muted">Prix indicatif {PRICE_SOURCE}</p>
-            <p className="tiny dim">Mis à jour {PRICE_UPDATED}</p>
+            <p className="small muted">Prix tendance Cardmarket</p>
+            <p className="tiny dim">{price === null ? 'Produit non coté' : `Relevé du ${PRICE_DATE}`}</p>
           </div>
-          <b style={{ fontFamily: 'var(--display)', fontSize: product.price ? 28 : 18, color: 'var(--violet-ink)' }}>{product.price ?? 'À venir'}</b>
+          <b style={{ fontFamily: 'var(--display)', fontSize: price === null ? 18 : 28, color: 'var(--violet-ink)', whiteSpace: 'nowrap' }}>{price === null ? 'Indisponible' : formatEuro(price)}</b>
         </div>
 
         <div className="card card-pad">

@@ -81,7 +81,6 @@ export async function toggleFavoriteProduct(product) {
       type: product.type,
       setId: product.setId,
       setName: product.setName,
-      price: product.price,
       color: product.color,
     };
   }
