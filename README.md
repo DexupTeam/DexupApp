@@ -2,8 +2,6 @@
 
 > Application web progressive (PWA) pour suivre sa collection de cartes Pokémon — React + Vite + Supabase.
 
-Anciennement « PokéCollect ».
-
 ---
 
 ## Fonctionnalités
