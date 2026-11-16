@@ -1,12 +1,15 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { ChevronDown, Layers, Trophy } from 'lucide-react';
 import { useCollection } from '../store/collection';
 import { useLang } from '../utils/LanguageContext.jsx';
 import { getLocalizedSetName } from '../utils/setNames';
-import { isGraded, loadCardsByIds, setIdOf, setLogoUrl, sortCards, useSets } from '../lib/tcg';
+import { formatEuro, isGraded, loadCardsByIds, setIdOf, setLogoUrl, sortCards, useSets } from '../lib/tcg';
+import { useWallet } from '../lib/prices';
 import { CardsView } from '../components/cards';
-import { Empty, Loading, Page, Tappable, TopBar, ViewToggle, plural, usePersistedState } from '../components/ui';
+import { Empty, Loading, Page, Segmented, Tappable, TopBar, ViewToggle, plural, usePersistedState } from '../components/ui';
+
+const SORTS = [{ value: 'set', label: 'Par extension' }, { value: 'value', label: 'Par valeur' }];
 
 // Charge une fois les données des cartes visées ; les cartes retirées ensuite restent affichées (grisées).
 function useCardData(ids, ready) {
@@ -41,7 +44,21 @@ export function Collection() {
   const { lang } = useLang();
   const { sets } = useSets();
   const [mode, setMode] = usePersistedState('pc_cards_view', 'grid');
+  const [savedSort, setSort] = usePersistedState('pc_cards_sort', 'set');
+  const [params] = useSearchParams();
+  // Depuis « Valeur de la collection » (statistiques), on arrive directement sur le tri par valeur.
+  const [sort, setSortState] = useState(params.get('sort') === 'value' ? 'value' : savedSort);
+  const changeSort = (v) => { setSortState(v); setSort(v); };
   const { map, failed, loading, retry } = useCardData(Object.keys(owned), ready);
+  const wallet = useWallet(owned);
+  const values = wallet?.values;
+
+  // Les plus chères d'abord ; les cartes non évaluées à la fin.
+  const byValue = useMemo(() => (
+    sort === 'value' && values
+      ? Object.values(map).sort((a, b) => (values[b.id] ?? -1) - (values[a.id] ?? -1) || a.name.localeCompare(b.name))
+      : []
+  ), [sort, values, map]);
 
   const groups = useMemo(() => {
     const meta = Object.fromEntries(sets.map((s) => [s.id, s]));
@@ -75,8 +92,20 @@ export function Collection() {
 
       {ready && !loading && groups.length > 0 && (
         <>
-          <p className="small muted">{plural(total, 'carte')} · {plural(groups.length, 'extension')} · triées par date de sortie</p>
-          {groups.map((g) => (
+          <div style={{ marginBottom: 12 }}><Segmented options={SORTS} value={sort} onChange={changeSort} /></div>
+          <p className="small muted" style={{ marginBottom: 12 }}>
+            {sort === 'value'
+              ? [
+                plural(total, 'carte'),
+                wallet && formatEuro(wallet.value),
+                wallet?.pending > 0 ? `actualisation des prix… ${wallet.pending} restante${wallet.pending > 1 ? 's' : ''}` : 'de la plus chère à la moins chère',
+              ].filter(Boolean).join(' · ')
+              : `${plural(total, 'carte')} · ${plural(groups.length, 'extension')} · triées par date de sortie`}
+          </p>
+          {sort === 'value' && (values
+            ? <CardsView cards={byValue} mode={mode} caption="name" values={values} />
+            : <Loading label="Calcul des valeurs…" />)}
+          {sort === 'set' && groups.map((g) => (
             <section key={g.sid}>
               <button className="group-head" onClick={() => navigate(`/sets/${g.sid}`)}>
                 <img src={setLogoUrl(g.sid)} alt="" loading="lazy" onError={(e) => { e.target.style.display = 'none'; }} />

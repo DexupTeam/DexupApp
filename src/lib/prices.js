@@ -186,23 +186,26 @@ const positive = (...values) => values.find((v) => typeof v === 'number' && v > 
 /** Valeur retenue pour une carte : le prix tendance Cardmarket, à défaut une moyenne récente. */
 export const priceValue = (entry) => (entry && !entry.none ? positive(entry.trend, entry.avg30, entry.avg7, entry.avg, entry.low) : null);
 
+// Ce que le propriétaire a saisi passe avant le marché : la valeur d'une carte gradée, sinon le prix
+// constaté dans sa langue (le prix tendance mélange toutes les langues).
+const manualValue = (mine) => (isGraded(mine) && mine.value > 0 ? mine.value : null) ?? (mine?.price > 0 ? mine.price : null);
+
 function summarize(owned, prices) {
   let value = 0;
   let priced = 0;
   let oldest = Infinity;
+  const values = {}; // identifiant de carte → valeur retenue (absent = carte non évaluée)
   const ids = Object.keys(owned);
   for (const id of ids) {
-    const mine = owned[id];
-    // Ce que le propriétaire a saisi passe avant le marché : la valeur d'une carte gradée, sinon le prix
-    // constaté dans sa langue (le prix tendance mélange toutes les langues).
-    const manual = (isGraded(mine) && mine.value > 0 ? mine.value : null) ?? (mine?.price > 0 ? mine.price : null);
+    const manual = manualValue(owned[id]);
     const market = priceValue(prices[id]);
     if (manual === null && market === null) continue;
-    value += manual ?? market;
+    values[id] = manual ?? market;
+    value += values[id];
     priced++;
     if (manual === null) oldest = Math.min(oldest, prices[id].at);
   }
-  return { value, priced, total: ids.length, updatedAt: Number.isFinite(oldest) ? oldest : null };
+  return { value, values, priced, total: ids.length, updatedAt: Number.isFinite(oldest) ? oldest : null };
 }
 
 /**

@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import { Check, Minus, Plus, Star, Trophy } from 'lucide-react';
 import { useCollection } from '../store/collection';
 import { getGradingInfo } from '../utils/storage';
+import { formatEuro } from '../lib/tcg';
+
+// `value` : undefined = prix non affiché, null = carte non évaluée.
+const priceLabel = (value) => (value == null ? 'Non évaluée' : formatEuro(value));
 
 function useCardState(card) {
   const { owned, favCards, toggleOwned, openCard } = useCollection();
@@ -41,7 +45,7 @@ function ToggleButton({ card, isOwned, onToggle, onRemove, inline }) {
   );
 }
 
-function CardTile({ card, caption, onRemove, dim }) {
+function CardTile({ card, caption, onRemove, dim, value }) {
   const { isOwned, isFav, grading, open, quickToggle } = useCardState(card);
   const [loaded, setLoaded] = useState(false);
   return (
@@ -56,7 +60,7 @@ function CardTile({ card, caption, onRemove, dim }) {
         {caption === 'name' ? (
           <>
             <b className="clamp1">{card.name}</b>
-            <span className="clamp1">{card.set?.name}</span>
+            <span className="clamp1">{value !== undefined ? priceLabel(value) : card.set?.name}</span>
           </>
         ) : (
           <span>#{card.number}</span>
@@ -66,7 +70,7 @@ function CardTile({ card, caption, onRemove, dim }) {
   );
 }
 
-function CardRow({ card, caption, onRemove, dim }) {
+function CardRow({ card, caption, onRemove, dim, value }) {
   const { isOwned, isFav, grading, open, quickToggle } = useCardState(card);
   const meta = caption === 'name'
     ? `#${card.number}${card.set?.name ? ` · ${card.set.name}` : ''}`
@@ -89,6 +93,7 @@ function CardRow({ card, caption, onRemove, dim }) {
           {isFav && <span className="tag tag-gold"><Star size={11} fill="currentColor" /> Favori</span>}
         </div>
       </div>
+      {value !== undefined && <b className={value == null ? 'small dim' : undefined} style={{ fontFamily: 'var(--mono)', fontSize: 13, whiteSpace: 'nowrap' }}>{priceLabel(value)}</b>}
       <ToggleButton card={card} isOwned={isOwned} onToggle={quickToggle} onRemove={onRemove} inline />
     </div>
   );
@@ -98,18 +103,20 @@ function CardRow({ card, caption, onRemove, dim }) {
  * Grille ou liste de cartes. `caption` : 'number' (dans un set) ou 'name' (résultats mélangés).
  * `dimMissing` grise les cartes non possédées (inutile dans des résultats de recherche).
  * `onRemove` remplace le bouton d'ajout par un bouton de retrait (édition d'une liste).
+ * `values` ({ identifiant → valeur en € }) affiche la valeur de chaque carte.
  */
-export function CardsView({ cards, mode = 'grid', caption = 'name', onRemove, dimMissing = true }) {
+export function CardsView({ cards, mode = 'grid', caption = 'name', onRemove, dimMissing = true, values }) {
+  const valueOf = (c) => (values ? values[c.id] ?? null : undefined);
   if (mode === 'list') {
     return (
       <div className="stack">
-        {cards.map((c) => <CardRow key={c.id} card={c} caption={caption} onRemove={onRemove} dim={dimMissing} />)}
+        {cards.map((c) => <CardRow key={c.id} card={c} caption={caption} onRemove={onRemove} dim={dimMissing} value={valueOf(c)} />)}
       </div>
     );
   }
   return (
     <div className="card-grid">
-      {cards.map((c) => <CardTile key={c.id} card={c} caption={caption} onRemove={onRemove} dim={dimMissing} />)}
+      {cards.map((c) => <CardTile key={c.id} card={c} caption={caption} onRemove={onRemove} dim={dimMissing} value={valueOf(c)} />)}
     </div>
   );
 }

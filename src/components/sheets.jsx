@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { CloudUpload, ChevronRight, LogOut, MapPin, Newspaper, WifiOff } from 'lucide-react';
 import { useCollection } from '../store/collection';
 import { useLang, LANGUAGES } from '../utils/LanguageContext.jsx';
@@ -14,6 +15,7 @@ import Logo from './Logo';
 // ─── Statistiques (totaux, grading, répartition par set) ─────────────────────
 export function StatsSheet({ onClose, setNames = {}, wallet }) {
   const { owned } = useCollection();
+  const navigate = useNavigate();
   const stats = useMemo(() => {
     const entries = Object.values(owned);
     const graded = entries.filter(isGraded);
@@ -40,7 +42,11 @@ export function StatsSheet({ onClose, setNames = {}, wallet }) {
           <div className="card card-pad">
             <div className="kv"><span>Cartes possédées</span><b style={{ color: 'var(--violet-ink)', fontSize: 18 }}>{stats.total}</b></div>
             {wallet && (
-              <div className="kv">
+              <button
+                className="kv tap" style={{ width: '100%', textAlign: 'left' }}
+                aria-label="Valeur de la collection : voir mes cartes triées par valeur"
+                onClick={() => navigate('/binder/collection?sort=value')}
+              >
                 <span>
                   Valeur de la collection
                   <span className="tiny dim" style={{ display: 'block' }}>
@@ -53,8 +59,8 @@ export function StatsSheet({ onClose, setNames = {}, wallet }) {
                       ].filter(Boolean).join(' · ')}
                   </span>
                 </span>
-                <b>{formatEuro(wallet.value)}</b>
-              </div>
+                <b style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}>{formatEuro(wallet.value)} <ChevronRight size={16} /></b>
+              </button>
             )}
             <div className="kv"><span>Sets entamés</span><b>{stats.bySet.length}</b></div>
             <div className="kv"><span>Cartes gradées</span><b>{stats.graded}</b></div>
