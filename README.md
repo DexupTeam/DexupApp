@@ -238,6 +238,8 @@ L'API Pokémon TCG ne fournit plus de prix exploitables (rien pour les sets sort
 
 **Produits scellés** : prix tendance issus du relevé public de Cardmarket, régénérés à chaque build par `scripts/update-product-prices.mjs` (`npm run prices` pour voir le détail des correspondances). Un produit absent du catalogue Cardmarket s'affiche « Prix indisponible ».
 
+**Photos des produits** : `node scripts/update-product-images.mjs` associe chaque produit à sa photo du catalogue public tcgcsv.com (TCGplayer) et écrit `src/data/productImages.json`. À relancer à la main quand des produits sont ajoutés ; sans photo, le logo de l'extension est affiché.
+
 ### Variables d'environnement
 
 Créer un fichier `.env` à la racine :

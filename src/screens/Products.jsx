@@ -4,6 +4,7 @@ import { Check, ExternalLink, Plus, SearchX } from 'lucide-react';
 import { useCollection } from '../store/collection';
 import { PRODUCTS, PRODUCT_TYPES } from '../data/products';
 import priceData from '../data/productPrices.json';
+import productImages from '../data/productImages.json';
 import { formatEuro, openUrl, setLogoUrl } from '../lib/tcg';
 import { Empty, Page, Pills, SearchField, Sheet, StarButton, Tappable, TopBar } from '../components/ui';
 
@@ -15,9 +16,12 @@ const typeLabel = (id) => PRODUCT_TYPES.find((t) => t.id === id)?.label ?? id;
 const TYPE_OPTIONS = PRODUCT_TYPES.map((t) => ({ value: t.id, label: t.label }));
 
 export function ProductImage({ product }) {
+  // Photo du produit quand on en a une, sinon le logo de son extension.
+  const photo = product.image || productImages[product.id];
   return (
     <img
-      src={product.image || setLogoUrl(product.setId)} alt="" loading="lazy"
+      className={photo ? 'product-photo' : undefined}
+      src={photo || setLogoUrl(product.setId)} alt="" loading="lazy"
       onError={(e) => { if (!e.target.dataset.fallback) { e.target.dataset.fallback = '1'; e.target.src = setLogoUrl(product.setId); } }}
     />
   );
