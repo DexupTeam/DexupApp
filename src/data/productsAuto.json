@@ -1,0 +1,145 @@
+[
+ {
+  "id": "me55c:booster",
+  "name": "Booster 30th Celebration: Classic Collection",
+  "nameFr": "Booster 30th Celebration: Classic Collection",
+  "type": "booster",
+  "setId": "me55c",
+  "setName": "30th Celebration: Classic Collection",
+  "series": "Mega Evolution",
+  "releaseDate": "2026/09/16",
+  "image": null,
+  "contents": {
+   "packs": 1,
+   "cardsPerPack": 10
+  },
+  "auto": true
+ },
+ {
+  "id": "me1:booster",
+  "name": "Booster Mega Evolution",
+  "nameFr": "Booster Méga-Évolution",
+  "type": "booster",
+  "setId": "me1",
+  "setName": "Mega Evolution",
+  "series": "Mega Evolution",
+  "releaseDate": "2025/09/26",
+  "image": null,
+  "contents": {
+   "packs": 1,
+   "cardsPerPack": 10
+  },
+  "auto": true
+ },
+ {
+  "id": "me1:display",
+  "name": "Display Mega Evolution",
+  "nameFr": "Display Méga-Évolution",
+  "type": "display",
+  "setId": "me1",
+  "setName": "Mega Evolution",
+  "series": "Mega Evolution",
+  "releaseDate": "2025/09/26",
+  "image": null,
+  "contents": {
+   "packs": 36,
+   "cardsPerPack": 10
+  },
+  "auto": true
+ },
+ {
+  "id": "me1:etb",
+  "name": "ETB Mega Evolution",
+  "nameFr": "ETB Méga-Évolution",
+  "type": "etb",
+  "setId": "me1",
+  "setName": "Mega Evolution",
+  "series": "Mega Evolution",
+  "releaseDate": "2025/09/26",
+  "image": null,
+  "contents": {
+   "packs": 9,
+   "cardsPerPack": 10,
+   "extras": [
+    "65 protège-cartes",
+    "45 cartes Énergie",
+    "accessoires"
+   ]
+  },
+  "auto": true
+ },
+ {
+  "id": "rsv10pt5:booster",
+  "name": "Booster White Flare",
+  "nameFr": "Booster Flamme Blanche",
+  "type": "booster",
+  "setId": "rsv10pt5",
+  "setName": "White Flare",
+  "series": "Scarlet & Violet",
+  "releaseDate": "2025/07/18",
+  "image": null,
+  "contents": {
+   "packs": 1,
+   "cardsPerPack": 10
+  },
+  "auto": true
+ },
+ {
+  "id": "rsv10pt5:etb",
+  "name": "ETB White Flare",
+  "nameFr": "ETB Flamme Blanche",
+  "type": "etb",
+  "setId": "rsv10pt5",
+  "setName": "White Flare",
+  "series": "Scarlet & Violet",
+  "releaseDate": "2025/07/18",
+  "image": null,
+  "contents": {
+   "packs": 9,
+   "cardsPerPack": 10,
+   "extras": [
+    "65 protège-cartes",
+    "45 cartes Énergie",
+    "accessoires"
+   ]
+  },
+  "auto": true
+ },
+ {
+  "id": "zsv10pt5:booster",
+  "name": "Booster Black Bolt",
+  "nameFr": "Booster Foudre Noire",
+  "type": "booster",
+  "setId": "zsv10pt5",
+  "setName": "Black Bolt",
+  "series": "Scarlet & Violet",
+  "releaseDate": "2025/07/18",
+  "image": null,
+  "contents": {
+   "packs": 1,
+   "cardsPerPack": 10
+  },
+  "auto": true
+ },
+ {
+  "id": "zsv10pt5:etb",
+  "name": "ETB Black Bolt",
+  "nameFr": "ETB Foudre Noire",
+  "type": "etb",
+  "setId": "zsv10pt5",
+  "setName": "Black Bolt",
+  "series": "Scarlet & Violet",
+  "releaseDate": "2025/07/18",
+  "image": null,
+  "contents": {
+   "packs": 9,
+   "cardsPerPack": 10,
+   "extras": [
+    "65 protège-cartes",
+    "45 cartes Énergie",
+    "accessoires"
+   ]
+  },
+  "auto": true
+ }
+]

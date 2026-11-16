@@ -1,5 +1,9 @@
-// Mapping complet FR → EN pour les noms de sets TCG Pokémon
-// Couvre toutes les séries principales jusqu'en 2026
+// Noms des extensions en français.
+// Les noms officiels viennent de TCGdex (setNamesFr.json, régénéré chaque semaine par
+// scripts/update-set-names.mjs) : une nouvelle extension est traduite sans intervention.
+// La table ci-dessous complète ces noms et sert d'alias pour la recherche.
+import OFFICIAL_EN_TO_FR from '../data/setNamesFr.json';
+
 
 const SET_FR_TO_EN = {
   // Mega Evolution (2025-2026)
@@ -249,6 +253,11 @@ for (const [fr, en] of Object.entries(SET_FR_TO_EN)) {
       _EN_TO_FR[key] = fr.charAt(0).toUpperCase() + fr.slice(1);
     }
   }
+}
+// Les noms officiels priment sur la table manuelle, et deviennent aussi cherchables en français.
+for (const [en, fr] of Object.entries(OFFICIAL_EN_TO_FR)) {
+  _EN_TO_FR[en] = fr;
+  SET_FR_TO_EN[fr.toLowerCase()] ??= en;
 }
 
 /**

@@ -1,0 +1,54 @@
+# Met à jour chaque semaine les données générées de l'app, puis les pousse sur main ;
+# Netlify redéploie alors automatiquement.
+#   - noms français des extensions (TCGdex)
+#   - produits des nouvelles extensions, leurs prix (Cardmarket) et leurs photos (tcgcsv.com)
+# Lançable aussi à la main : onglet Actions → « Refresh data » → Run workflow.
+name: Refresh data
+
+on:
+  schedule:
+    - cron: '0 5 * * 1' # chaque lundi à 5 h UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: refresh-data
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Noms français des extensions
+        run: node scripts/update-set-names.mjs
+
+      - name: Produits des nouvelles extensions
+        run: node scripts/update-products.mjs
+
+      - name: Prix des produits
+        run: node scripts/update-product-prices.mjs
+
+      - name: Photos des produits
+        run: node scripts/update-product-images.mjs
+
+      - name: Pousser les changements
+        run: |
+          git add src/data/setNamesFr.json src/data/productsAuto.json src/data/productPrices.json src/data/productImages.json
+          if git diff --cached --quiet; then
+            echo "Rien de nouveau."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Refresh set names, products, prices and photos"
+          git pull --rebase origin main
+          git push origin HEAD:main

@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { pokemonApiUrl } from '../utils/api';
-import { getApiCache, setApiCache, SETS_TTL, CARDS_TTL } from '../utils/sharedCache';
+import { getApiCache, setApiCache, CARDS_TTL } from '../utils/sharedCache';
+
+const DAY = 24 * 60 * 60 * 1000;
 
 const API_MAX_PAGE = 250;
 
@@ -41,7 +43,8 @@ let setsPromise = null;
 export function loadSets() {
   if (!setsPromise) {
     setsPromise = (async () => {
-      const cached = await getApiCache('sets:en', SETS_TTL);
+      // Relue chaque jour : une nouvelle extension apparaît le lendemain de son ajout à l'API.
+      const cached = await getApiCache('sets:en', DAY);
       if (cached) return cached;
       const json = await getJson(pokemonApiUrl('/sets', { orderBy: '-releaseDate', pageSize: API_MAX_PAGE }));
       const sets = json.data || [];
@@ -96,7 +99,10 @@ export function loadSetCards(setId) {
   if (!cardsInFlight[setId]) {
     cardsInFlight[setId] = (async () => {
       const key = `cards:${setId}`;
-      const cached = await getApiCache(key, CARDS_TTL);
+      // Une extension récente se complète au fil des jours dans l'API : on la relit chaque jour.
+      const set = (await loadSets().catch(() => [])).find((s) => s.id === setId);
+      const recent = set && Date.now() - new Date(set.releaseDate.replace(/\//g, '-')).getTime() < 60 * DAY;
+      const cached = await getApiCache(key, recent ? DAY : CARDS_TTL);
       // Un cache d'exactement 250 cartes peut venir d'une ancienne requête tronquée par l'API.
       const verifiedKey = `pc_cards_full:${setId}`;
       let cards;

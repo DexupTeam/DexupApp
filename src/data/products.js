@@ -2,6 +2,8 @@
 // Types : booster | display | etb | tin | coffret | deck
 // Les prix ne sont pas ici : ils viennent du relevé Cardmarket (productPrices.json, régénéré par
 // scripts/update-product-prices.mjs à chaque build).
+import AUTO_PRODUCTS from './productsAuto.json' with { type: 'json' };
+import NAMES_FR from './setNamesFr.json' with { type: 'json' };
 
 const PKM = (year, slug) =>
   `https://www.pokemon.com/static-assets/content-assets/cms2/img/trading-card-game/series/incrementals/${year}/${slug}/${slug}-169-en.png`;
@@ -16,7 +18,8 @@ export const PRODUCT_TYPES = [
   { id: 'deck',    label: 'Decks',    emoji: '🃏' },
 ];
 
-export const PRODUCTS = [
+// Catalogue tenu à la main ; les extensions plus récentes sont complétées par productsAuto.json.
+export const MANUAL_PRODUCTS = [
 
   // ═══════════════════════════════════════════════════════════════
   // MEGA EVOLUTION (2025-2026)
@@ -52,9 +55,9 @@ export const PRODUCTS = [
   { id:'me2-etb', name:'ETB Phantasmal Flames', nameFr:'ETB Flammes Fantasmagoriques', type:'etb', setId:'me2', setName:'Phantasmal Flames', series:'Mega Evolution', releaseDate:'2025/11/14', image:PKM('2025','me02-elite-trainer-box'), contents:{packs:9,cardsPerPack:10,extras:['65 protège-cartes','45 cartes Énergie','accessoires']}, color:'#3a1a1a' },
 
   // ─── me1 — Ascended Heroes / Héros Ascendants (2025) ──────────
-  { id:'me1-booster', name:'Booster Ascended Heroes', nameFr:'Booster Héros Ascendants', type:'booster', setId:'me1', setName:'Ascended Heroes', series:'Mega Evolution', releaseDate:'2025/07/25', image:null, contents:{packs:1,cardsPerPack:10}, color:'#2a1a3a' },
-  { id:'me1-display', name:'Display Ascended Heroes', nameFr:'Display Héros Ascendants', type:'display', setId:'me1', setName:'Ascended Heroes', series:'Mega Evolution', releaseDate:'2025/07/25', image:null, contents:{packs:36,cardsPerPack:10}, color:'#2a1a3a' },
-  { id:'me1-etb', name:'ETB Ascended Heroes', nameFr:'ETB Héros Ascendants', type:'etb', setId:'me1', setName:'Ascended Heroes', series:'Mega Evolution', releaseDate:'2025/07/25', image:null, contents:{packs:9,cardsPerPack:10,extras:['65 protège-cartes','45 cartes Énergie','accessoires']}, color:'#2a1a3a' },
+  { id:'me1-booster', name:'Booster Ascended Heroes', nameFr:'Booster Héros Ascendants', type:'booster', setId:'me2pt5', setName:'Ascended Heroes', series:'Mega Evolution', releaseDate:'2025/07/25', image:null, contents:{packs:1,cardsPerPack:10}, color:'#2a1a3a' },
+  { id:'me1-display', name:'Display Ascended Heroes', nameFr:'Display Héros Ascendants', type:'display', setId:'me2pt5', setName:'Ascended Heroes', series:'Mega Evolution', releaseDate:'2025/07/25', image:null, contents:{packs:36,cardsPerPack:10}, color:'#2a1a3a' },
+  { id:'me1-etb', name:'ETB Ascended Heroes', nameFr:'ETB Héros Ascendants', type:'etb', setId:'me2pt5', setName:'Ascended Heroes', series:'Mega Evolution', releaseDate:'2025/07/25', image:null, contents:{packs:9,cardsPerPack:10,extras:['65 protège-cartes','45 cartes Énergie','accessoires']}, color:'#2a1a3a' },
 
   // ═══════════════════════════════════════════════════════════════
   // SCARLET & VIOLET (2023-2025)
@@ -342,6 +345,21 @@ export const PRODUCTS = [
   { id:'xy1-etb', name:'ETB XY', nameFr:'ETB XY', type:'etb', setId:'xy1', setName:'XY', series:'XY', releaseDate:'2014/02/05', image:null, contents:{packs:9,cardsPerPack:10,extras:['65 protège-cartes','45 cartes Énergie','accessoires']}, color:'#1a2a1a' },
 
 ];
+
+// Booster, display et ETB prennent le nom français officiel de leur extension (TCGdex) : les noms
+// saisis à la main étaient parfois restés en anglais ou approximatifs. Les tins, coffrets et decks,
+// nommés d'après un Pokémon, gardent le leur.
+const LABELS = { booster: 'Booster', display: 'Display', etb: 'ETB' };
+const withFrenchName = (p) => {
+  const fr = NAMES_FR[p.setName?.toLowerCase()];
+  return fr && LABELS[p.type] ? { ...p, nameFr: `${LABELS[p.type]} ${fr}` } : p;
+};
+
+// Catalogue complet, du plus récent au plus ancien : le catalogue manuel, complété par les booster,
+// display et ETB des extensions qu'il ne couvre pas (générés chaque semaine par scripts/update-products.mjs).
+export const PRODUCTS = [...AUTO_PRODUCTS, ...MANUAL_PRODUCTS]
+  .map(withFrenchName)
+  .sort((a, b) => (b.releaseDate ?? '').localeCompare(a.releaseDate ?? ''));
 
 export function getProductsByType(type) {
   if (type === 'all') return PRODUCTS;

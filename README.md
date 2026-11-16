@@ -241,7 +241,22 @@ L'API Pokémon TCG ne fournit plus de prix exploitables (rien pour les sets sort
 
 **Produits scellés** : prix tendance issus du relevé public de Cardmarket, régénérés à chaque build par `scripts/update-product-prices.mjs` (`npm run prices` pour voir le détail des correspondances). Un produit absent du catalogue Cardmarket s'affiche « Prix indisponible ».
 
-**Photos des produits** : `node scripts/update-product-images.mjs` associe chaque produit à sa photo du catalogue public tcgcsv.com (TCGplayer) et écrit `src/data/productImages.json`. À relancer à la main quand des produits sont ajoutés ; sans photo, le logo de l'extension est affiché.
+**Photos des produits** : `scripts/update-product-images.mjs` associe chaque produit à sa photo du catalogue public tcgcsv.com (TCGplayer) ; sans photo, le logo de l'extension est affiché.
+
+### Mises à jour automatiques
+
+| Donnée | Source | Fréquence |
+|---|---|---|
+| Extensions et cartes | api.pokemontcg.io | liste des extensions relue chaque jour ; cartes d'une extension de moins de 60 jours relues chaque jour, 30 jours sinon |
+| Prix des cartes | TCGdex (Cardmarket) | 1 jour sur la fiche, 7 jours pour la valeur de la collection |
+| Actualités | flux RSS | 24 h |
+| Sorties | calendrier iCal PokéCardex | 6 h |
+| Noms français des extensions | TCGdex | chaque lundi (workflow) |
+| Produits des nouvelles extensions (booster, display, ETB) | Cardmarket | chaque lundi (workflow) |
+| Prix et photos des produits | Cardmarket, tcgcsv.com | chaque lundi (workflow) et à chaque build pour les prix |
+| Conventions | `src/lib/events.js` | **à la main** : aucune source publique fiable |
+
+Le workflow GitHub `.github/workflows/refresh-data.yml` lance les scripts de `scripts/` chaque lundi, pousse les fichiers de `src/data/` qui ont changé, et Netlify redéploie. Il se lance aussi à la main depuis l'onglet Actions. Les produits spéciaux (tins, coffrets, decks) restent ajoutés à la main dans `src/data/products.js`.
 
 ### Variables d'environnement
 
