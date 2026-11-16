@@ -3,6 +3,9 @@
 
 const SET_FR_TO_EN = {
   // Mega Evolution (2025-2026)
+  'règne delta': 'delta reign',
+  'nuit noire': 'pitch black',
+  '30e anniversaire': '30th celebration',
   'chaos ascendant': 'chaos rising',
   'ordre parfait': 'perfect order',
   'héros ascendants': 'ascended heroes',
@@ -255,6 +258,24 @@ for (const [fr, en] of Object.entries(SET_FR_TO_EN)) {
 export function getLocalizedSetName(setName, lang) {
   if (lang !== 'fr' || !setName) return setName;
   return _EN_TO_FR[setName.toLowerCase()] ?? setName;
+}
+
+/**
+ * Extension citée dans un nom de produit (« Blister - Booster Règne Delta - … »), en français ou en
+ * anglais. Si plusieurs sont citées (« Méga-Évolution - Règne Delta » : série puis extension), la plus
+ * récente l'emporte.
+ */
+export function findSetInText(text, sets) {
+  const t = ` ${normalize(text.replace(/ᵉ/g, 'e')).replace(/[^a-z0-9]+/g, ' ')} `;
+  let best = null;
+  for (const set of sets) {
+    const fr = _EN_TO_FR[set.name.toLowerCase()];
+    for (const name of [set.name, fr].filter(Boolean)) {
+      const n = normalize(name).replace(/[^a-z0-9]+/g, ' ').trim();
+      if (n.length > 3 && t.includes(` ${n} `) && (!best || (set.releaseDate ?? '') > (best.releaseDate ?? ''))) best = set;
+    }
+  }
+  return best;
 }
 
 /**

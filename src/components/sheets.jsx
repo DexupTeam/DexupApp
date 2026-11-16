@@ -1,11 +1,12 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CloudUpload, ChevronRight, ExternalLink, LogOut, MapPin, Newspaper, WifiOff } from 'lucide-react';
+import { BookOpen, Boxes, CloudUpload, ChevronRight, ExternalLink, Gift, Layers, LogOut, MapPin, Newspaper, Package, WifiOff } from 'lucide-react';
 import { useCollection } from '../store/collection';
 import { useLang, LANGUAGES } from '../utils/LanguageContext.jsx';
 import { supabase, signOut } from '../utils/supabase';
 import { pushAllToRemote } from '../utils/persist';
-import { formatEuro, isGraded, ownedCountBySet, openUrl, setLogoUrl } from '../lib/tcg';
+import { formatEuro, isGraded, ownedCountBySet, openUrl, setLogoUrl, useSets } from '../lib/tcg';
+import { findSetInText } from '../utils/setNames';
 import { loadNews, formatNewsDate } from '../lib/news';
 import { loadReleases, isUpcoming, formatReleaseDate, RELEASES_SOURCE } from '../lib/releases';
 import { loadEvents, isPast, formatEventDate, eventTagClass } from '../lib/events';
@@ -121,7 +122,31 @@ export function NewsSheet({ onClose }) {
   );
 }
 
+// Icône selon le type de produit, quand aucune extension connue n'est citée.
+function releaseIcon(name) {
+  const n = name.toLowerCase();
+  if (/display/.test(n)) return Boxes;
+  if (/deck/.test(n)) return Layers;
+  if (/classeur|portfolio/.test(n)) return BookOpen;
+  if (/booster|blister|duopack|lot de/.test(n)) return Package;
+  return Gift; // coffrets, boîtes, collections
+}
+
+function ReleaseThumb({ item, sets }) {
+  const set = findSetInText(item.name, sets);
+  const [broken, setBroken] = useState(false);
+  const Icon = releaseIcon(item.name);
+  return (
+    <div className="thumb-box" style={{ width: 56, height: 40, padding: 4, color: 'var(--ink-3)' }}>
+      {set && !broken
+        ? <img src={set.images?.logo ?? setLogoUrl(set.id)} alt="" loading="lazy" onError={() => setBroken(true)} />
+        : <Icon size={20} />}
+    </div>
+  );
+}
+
 function ReleasesList() {
+  const { sets } = useSets();
   const [state, setState] = useState({ loading: true, error: false, releases: [] });
   const [attempt, setAttempt] = useState(0);
   const [showPast, setShowPast] = useState(false);
@@ -153,7 +178,8 @@ function ReleasesList() {
         {formatReleaseDate(r.date)}
       </p>
       {r.items.map((item, i) => (
-        <div className="row" key={i} style={{ gap: 8, padding: '6px 0', alignItems: 'flex-start', borderTop: i ? '1px solid var(--line)' : 'none' }}>
+        <div className="row" key={i} style={{ gap: 10, padding: '8px 0', borderTop: i ? '1px solid var(--line)' : 'none' }}>
+          <ReleaseThumb item={item} sets={sets} />
           <span className="grow small">{item.name}</span>
           {item.langs.map((l) => <span key={l} className={`tag${l === 'JP' ? ' tag-peach' : l === 'FR' ? ' tag-violet' : ''}`}>{l}</span>)}
         </div>
