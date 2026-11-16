@@ -52,6 +52,8 @@ function netlifyFunctionsDevPlugin() {
 const { version } = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'package.json'), 'utf8'));
 
 export default defineConfig({
+  // Le fil de travail du scanner importe OpenCV et ONNX Runtime à la demande : format module.
+  worker: { format: 'es' },
   define: { __APP_VERSION__: JSON.stringify(version.split('.').slice(0, 2).join('.')) },
   plugins: [
     react(),
@@ -76,7 +78,21 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,wasm}'],
+        // Le scanner (modèle, OpenCV, moteur WebAssembly, index : ≈ 45 Mo) n'est pas préchargé pour
+        // tout le monde : il se télécharge à la première ouverture du scanner, puis reste en cache.
+        globIgnores: ['**/scan/**', '**/assets/worker-*.js', '**/assets/opencv-*.js', '**/assets/ort-*.wasm'],
         runtimeCaching: [
+          {
+            urlPattern: ({ url }) => url.origin === self.location.origin
+              && (url.pathname.startsWith('/scan/') || /\/assets\/(worker|opencv|ort)-.*\.(m?js|wasm)$/.test(url.pathname))
+              && url.pathname !== '/scan/index.json',
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'scanner',
+              expiration: { maxEntries: 20 },
+              cacheableResponse: { statuses: [200] },
+            },
+          },
           // ⚠️ On ne met PAS api.pokemontcg.io ici : les requêtes API sont
           // déjà mises en cache côté app (SQLite + Supabase). Laisser le SW
           // intercepter les appels API provoque des erreurs CORS en production
