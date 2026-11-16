@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { Check, ChevronDown, ExternalLink, Languages, ListPlus, Plus, Star, Trophy } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { Camera, Check, ChevronDown, ExternalLink, Languages, ListPlus, Plus, Star, Trophy } from 'lucide-react';
 import { useCollection } from '../store/collection';
 import { getCached, setCached } from '../utils/cache';
 import { getGradingInfo } from '../utils/storage';
 import { formatEuro, loadFullCard, openUrl } from '../lib/tcg';
 import { getPrice } from '../lib/prices';
+import { cardImage, photoFromFile } from '../lib/photos';
+import { CardPlaceholder } from './cards';
 import { Confirm, Sheet, plural } from './ui';
 import { PokeBall } from './PokeBall';
 
@@ -231,7 +233,11 @@ export function ListPickerSheet({ card, onClose }) {
 }
 
 function CardSheetInner({ card }) {
-  const { owned, favCards, lists, closeCard, toggleOwned, toggleFavCard, setGrading } = useCollection();
+  const {
+    owned, favCards, lists, cardPhotos, closeCard, toggleOwned, toggleFavCard, setGrading, setCardPhoto, deleteCustomCard,
+  } = useCollection();
+  const photoInput = useRef(null);
+  const [photoError, setPhotoError] = useState(null);
   const [full, setFull] = useState(null);
   const [price, setPrice] = useState(undefined); // undefined = chargement, null = aucune cotation
   const [picker, setPicker] = useState(false);
@@ -270,10 +276,26 @@ function CardSheetInner({ card }) {
   const inLists = Object.values(lists).filter((l) => l.cards?.[card.id]).length;
   const rarity = RARITY[c.rarity];
 
-  const linkFor = (lang) => cardmarketLink({ name: c.name, language: lang, idProduct: price?.idProduct, apiUrl: full?.cardmarket?.url });
+  const linkFor = (lang) => cardmarketLink({ name: c.name, language: lang, idProduct: price?.idProduct, apiUrl: c.cardmarket?.url });
   const hasDetails = !!grading || !!language || !!myPrice;
+  const isCustom = c.extra === 'custom';
+  const myPhoto = cardPhotos[card.id];
+  const image = cardImage(c, cardPhotos, 'large');
 
-  const onOwnedClick = () => (hasDetails ? setConfirmRemove(true) : toggleOwned(card.id));
+  // Une carte perso n'existe que dans la collection : la retirer, c'est la supprimer.
+  const onOwnedClick = () => (isCustom || hasDetails ? setConfirmRemove(true) : toggleOwned(card.id));
+
+  const onPhoto = async (e) => {
+    const file = e.target.files?.[0];
+    e.target.value = '';
+    if (!file) return;
+    setPhotoError(null);
+    try {
+      setCardPhoto(card.id, await photoFromFile(file));
+    } catch (_) {
+      setPhotoError('Image illisible.');
+    }
+  };
 
   return (
     <>
@@ -300,16 +322,31 @@ function CardSheetInner({ card }) {
           </>
         }
       >
-        <img className="cs-image" src={c.images?.large ?? c.images?.small} alt={c.name} />
+        {image
+          ? <img className="cs-image" src={image} alt={c.name} />
+          : <span className="cs-ph"><CardPlaceholder card={c} /></span>}
+
+        {(isOwned || isCustom) && (
+          <div className="row" style={{ justifyContent: 'center', gap: 8, marginBottom: 12 }}>
+            <button className="btn btn-ghost btn-sm" onClick={() => photoInput.current?.click()}>
+              <Camera size={15} /> {myPhoto ? 'Changer ma photo' : 'Ajouter ma photo'}
+            </button>
+            {myPhoto && <button className="btn btn-ghost btn-sm" onClick={() => setCardPhoto(card.id, null)}>Retirer</button>}
+            <input ref={photoInput} type="file" accept="image/*" hidden onChange={onPhoto} />
+          </div>
+        )}
+        {photoError && <p className="small" style={{ textAlign: 'center', color: 'var(--danger)' }}>{photoError}</p>}
 
         {c.set && (
           <p className="small muted" style={{ textAlign: 'center' }}>
-            {c.set.name}{c.set.series ? ` · ${c.set.series}` : ''}
+            {isCustom ? (c.set.label || 'Carte perso') : <>{c.set.name}{c.set.series ? ` · ${c.set.series}` : ''}</>}
           </p>
         )}
+        {c.detail && image && <p className="small" style={{ textAlign: 'center', marginTop: 4 }}>{c.detail}</p>}
         <div className="cs-chips">
-          <span className="tag">#{c.number}{full?.set?.printedTotal ? ` / ${full.set.printedTotal}` : ''}</span>
-          {c.set?.id && <span className="tag tag-violet">{c.set.id.toUpperCase()}</span>}
+          {c.number && <span className="tag">#{c.number}{full?.set?.printedTotal ? ` / ${full.set.printedTotal}` : ''}</span>}
+          {c.set?.id && !isCustom && <span className="tag tag-violet">{(c.set.code || c.set.id).toUpperCase()}</span>}
+          {isCustom && <span className="tag tag-violet">Carte perso</span>}
           {c.rarity && <span className={`tag ${rarity?.[1] ?? ''}`} title={c.rarity}>{rarity ? `${rarity[0]} · ` : ''}{c.rarity}</span>}
           {c.supertype && <span className="tag">{c.supertype}</span>}
           {c.types?.map((t) => (
@@ -353,13 +390,21 @@ function CardSheetInner({ card }) {
           <button className="btn btn-ghost btn-block" onClick={() => openUrl(linkFor(language))}>
             {language?.cm && price?.idProduct
               ? `Offres en ${language.label.toLowerCase()} sur Cardmarket`
-              : full?.cardmarket?.url && !language ? 'Voir sur Cardmarket' : 'Chercher sur Cardmarket'} <ExternalLink size={16} />
+              : c.cardmarket?.url && !language ? 'Voir sur Cardmarket' : 'Chercher sur Cardmarket'} <ExternalLink size={16} />
           </button>
         </div>
       </Sheet>
 
       {picker && <ListPickerSheet card={c} onClose={() => setPicker(false)} />}
-      {confirmRemove && (
+      {confirmRemove && (isCustom ? (
+        <Confirm
+          title="Supprimer cette carte perso ?"
+          message={`${c.name} sera retirée de ta collection et de tes listes, avec sa photo et son prix. Cette suppression est définitive.`}
+          confirmLabel="Supprimer"
+          onConfirm={() => { closeCard(); deleteCustomCard(card.id); }}
+          onClose={() => setConfirmRemove(false)}
+        />
+      ) : (
         <Confirm
           title="Retirer de la collection ?"
           message={grading
@@ -369,7 +414,7 @@ function CardSheetInner({ card }) {
           onConfirm={() => toggleOwned(card.id)}
           onClose={() => setConfirmRemove(false)}
         />
-      )}
+      ))}
     </>
   );
 }

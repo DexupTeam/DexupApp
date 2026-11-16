@@ -7,6 +7,7 @@
 import { useEffect, useState } from 'react';
 import { getCachedRaw, setCached } from '../utils/cache';
 import { isGraded, loadSetCards, loadSets, setIdOf } from './tcg';
+import { isChinaSet, isExtraCard } from './extraCards';
 
 const DEX = 'https://api.tcgdex.net/v2/en';
 const DAY = 24 * 60 * 60 * 1000;
@@ -155,10 +156,19 @@ function scheduleSave() {
 }
 
 const inFlight = {};
+// Cartes hors API : prix tendance relevé dans le catalogue Cardmarket (extensions chinoises),
+// rien pour les cartes perso (leur valeur est le prix saisi par le collectionneur).
+async function extraPrice(cardId) {
+  if (!isChinaSet(setIdOf(cardId))) return null;
+  const card = (await loadSetCards(setIdOf(cardId))).find((c) => c.id === cardId);
+  return card?.marketPrice ?? null;
+}
+
 function fetchPrice(cardId) {
   inFlight[cardId] ||= (async () => {
-    const id = await dexCardId(cardId);
-    const cm = id ? (await getJson(`${DEX}/cards/${id}`))?.pricing?.cardmarket : null;
+    const extra = isExtraCard(cardId);
+    const id = extra ? null : await dexCardId(cardId);
+    const cm = extra ? await extraPrice(cardId) : id ? (await getJson(`${DEX}/cards/${id}`))?.pricing?.cardmarket : null;
     const entry = cm
       ? { trend: cm.trend, avg30: cm.avg30, avg7: cm.avg7, avg: cm.avg, low: cm.low, holoTrend: cm['trend-holo'], idProduct: cm.idProduct, updated: cm.updated, at: Date.now() }
       : { none: true, at: Date.now() }; // carte inconnue de TCGdex ou sans cotation : redemandée après RETRY_AGE

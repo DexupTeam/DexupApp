@@ -5,6 +5,7 @@ import { useCollection } from '../store/collection';
 import { useLang } from '../utils/LanguageContext.jsx';
 import { getLocalizedSetName } from '../utils/setNames';
 import { loadSetCards, useSets } from '../lib/tcg';
+import { CHINA_SERIES } from '../lib/extraCards';
 import { CardsView, OWNERSHIP_FILTERS, filterByOwnership } from '../components/cards';
 import { Empty, Loading, Page, Progress, Segmented, StarButton, TopBar, ViewToggle, pct, plural, usePersistedState } from '../components/ui';
 
@@ -57,7 +58,12 @@ export default function SetDetail() {
               <b style={{ color: 'var(--violet-ink)' }}>{pct(ownedCount, cards.length)} %</b>
             </div>
             <Progress value={ownedCount} total={cards.length} />
-            {set && <p className="tiny dim" style={{ marginTop: 10 }}>{set.series} · {set.id.toUpperCase()} · sortie le {set.releaseDate}</p>}
+            {set && <p className="tiny dim" style={{ marginTop: 10 }}>{set.series} · {(set.code || set.id).toUpperCase()} · sortie le {set.releaseDate}</p>}
+            {set?.series === CHINA_SERIES && (
+              <p className="tiny dim" style={{ marginTop: 6 }}>
+                Cartes et prix d'après le catalogue Cardmarket, sans image ni numéro : les variantes d'une même carte sont listées séparément. Ajoute ta photo depuis la fiche d'une carte possédée.
+              </p>
+            )}
           </div>
 
           <div className="row" style={{ marginBottom: 16 }}>

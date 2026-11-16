@@ -3,14 +3,38 @@ import { Check, Minus, Plus, Star, Trophy } from 'lucide-react';
 import { useCollection } from '../store/collection';
 import { getGradingInfo } from '../utils/storage';
 import { formatEuro } from '../lib/tcg';
+import { cardImage } from '../lib/photos';
+
+/** Carte sans image (extension chinoise, carte perso sans photo) : son nom sur un dos de carte. */
+export function CardPlaceholder({ card }) {
+  return (
+    <span className="card-ph">
+      <b className="clamp2">{card.name}</b>
+      {card.detail && <span className="clamp2">{card.detail}</span>}
+      {card.set?.code && <i>{card.set.code}</i>}
+    </span>
+  );
+}
+
+/**
+ * Numéro affiché d'une carte : « #025 ». Sans numéro (extensions chinoises), son prix Cardmarket,
+ * qui distingue le mieux les variantes d'une même carte ; sinon ce qui la décrit.
+ */
+export const cardLabel = (card) => {
+  if (card.number) return `#${card.number}`;
+  if (card.marketPrice?.trend > 0) return formatEuro(card.marketPrice.trend);
+  if (card.extra === 'cn') return 'Prix inconnu';
+  return card.set?.label || '—';
+};
 
 // `value` : undefined = prix non affiché, null = carte non évaluée.
 const priceLabel = (value) => (value == null ? 'Non évaluée' : formatEuro(value));
 
 function useCardState(card) {
-  const { owned, favCards, toggleOwned, openCard } = useCollection();
+  const { owned, favCards, cardPhotos, toggleOwned, openCard } = useCollection();
   const grading = getGradingInfo(owned[card.id]);
   return {
+    image: cardImage(card, cardPhotos),
     isOwned: !!owned[card.id],
     isFav: !!favCards[card.id],
     grading,
@@ -46,12 +70,14 @@ function ToggleButton({ card, isOwned, onToggle, onRemove, inline }) {
 }
 
 function CardTile({ card, caption, onRemove, dim, value }) {
-  const { isOwned, isFav, grading, open, quickToggle } = useCardState(card);
+  const { image, isOwned, isFav, grading, open, quickToggle } = useCardState(card);
   const [loaded, setLoaded] = useState(false);
   return (
     <div className={`ctile${isOwned || !dim ? '' : ' is-missing'}`}>
-      <button className={`ctile-img${loaded ? ' is-loaded' : ''}`} onClick={open} aria-label={`${card.name} — voir la fiche`}>
-        <img src={card.images?.small} alt="" loading="lazy" onLoad={() => setLoaded(true)} onError={() => setLoaded(true)} />
+      <button className={`ctile-img${loaded || !image ? ' is-loaded' : ''}`} onClick={open} aria-label={`${card.name} — voir la fiche`}>
+        {image
+          ? <img src={image} alt="" loading="lazy" onLoad={() => setLoaded(true)} onError={() => setLoaded(true)} />
+          : <CardPlaceholder card={card} />}
         {isFav && <span className="ctile-fav"><Star size={11} fill="currentColor" /></span>}
         {grading && <span className="ctile-grade">{grading.company} {grading.grade}</span>}
       </button>
@@ -60,10 +86,10 @@ function CardTile({ card, caption, onRemove, dim, value }) {
         {caption === 'name' ? (
           <>
             <b className="clamp1">{card.name}</b>
-            <span className="clamp1">{value !== undefined ? priceLabel(value) : card.set?.name}</span>
+            <span className="clamp1">{value !== undefined ? priceLabel(value) : card.set?.label || card.set?.name}</span>
           </>
         ) : (
-          <span>#{card.number}</span>
+          <span className="clamp1">{cardLabel(card)}</span>
         )}
       </div>
     </div>
@@ -71,20 +97,23 @@ function CardTile({ card, caption, onRemove, dim, value }) {
 }
 
 function CardRow({ card, caption, onRemove, dim, value }) {
-  const { isOwned, isFav, grading, open, quickToggle } = useCardState(card);
+  const { image, isOwned, isFav, grading, open, quickToggle } = useCardState(card);
+  const setName = card.set?.label || card.set?.name;
   const meta = caption === 'name'
-    ? `#${card.number}${card.set?.name ? ` · ${card.set.name}` : ''}`
-    : `#${card.number} · ${card.rarity || '—'}`;
+    ? `${cardLabel(card)}${setName ? ` · ${setName}` : ''}`
+    : `${cardLabel(card)} · ${card.rarity || '—'}`;
   return (
     <div
       className="list-row tap" role="button" tabIndex={0} style={{ cursor: 'pointer' }}
       onClick={open}
       onKeyDown={(e) => { if (e.key === 'Enter' && e.target === e.currentTarget) open(); }}
     >
-      <img
-        className="card-thumb" src={card.images?.small} alt="" loading="lazy"
-        style={isOwned || !dim ? undefined : { filter: 'grayscale(1)', opacity: 0.5 }}
-      />
+      {image ? (
+        <img
+          className="card-thumb" src={image} alt="" loading="lazy"
+          style={isOwned || !dim ? undefined : { filter: 'grayscale(1)', opacity: 0.5 }}
+        />
+      ) : <span className="card-thumb card-ph card-ph-sm"><b className="clamp2">{card.name}</b></span>}
       <div className="grow">
         <b className="clamp1">{card.name}</b>
         <p className="small muted clamp1">{meta}</p>

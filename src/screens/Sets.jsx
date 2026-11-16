@@ -5,6 +5,15 @@ import { useCollection } from '../store/collection';
 import { useLang } from '../utils/LanguageContext.jsx';
 import { filterSets, getLocalizedSetName, resolveSetQuery } from '../utils/setNames';
 import { ownedCountBySet, useSets } from '../lib/tcg';
+import { CHINA_SERIES } from '../lib/extraCards';
+
+// Logo de l'extension, ou son code quand elle n'en a pas (extensions chinoises).
+function SetLogo({ set }) {
+  return set.images?.logo
+    ? <img src={set.images.logo} alt="" loading="lazy" />
+    : <b style={{ fontFamily: 'var(--mono)', fontSize: 11, color: 'var(--ink-2)' }}>{set.code || set.id.toUpperCase()}</b>;
+}
+const setCode = (s) => (s.code || s.id).toUpperCase();
 import {
   Empty, Loading, Page, Pills, Progress, SearchField, StarButton, Tappable, TopBar, ViewToggle,
   pct, usePersistedState,
@@ -25,8 +34,13 @@ export default function Sets() {
     return r?.wasFrench ? r.translated : null;
   }, [query]);
 
+  const chinaCount = useMemo(() => sets.filter((s) => s.series === CHINA_SERIES).length, [sets]);
   const shown = useMemo(() => {
     let list = filterSets(sets, query);
+    if (!query.trim() && list.length) {
+      // Les extensions chinoises ont leur propre onglet : elles ne noient pas la liste principale.
+      list = list.filter((s) => (scope === 'china') === (s.series === CHINA_SERIES) || scope === 'started' || scope === 'favs');
+    }
     if (scope === 'started') list = list.filter((s) => counts[s.id]);
     if (scope === 'favs') list = list.filter((s) => favSets[s.id]);
     return list;
@@ -45,9 +59,10 @@ export default function Sets() {
         <Pills
           value={scope} onChange={setScope}
           options={[
-            { value: 'all', label: 'Toutes', count: sets.length || undefined },
+            { value: 'all', label: 'Toutes', count: (sets.length - chinaCount) || undefined },
             { value: 'started', label: 'Entamées', count: Object.keys(counts).length },
             { value: 'favs', label: 'Favorites', count: Object.keys(favSets).length },
+            { value: 'china', label: 'Chine', count: chinaCount || undefined },
           ]}
         />
         {translated && <p className="tiny muted">Recherche traduite : <b style={{ color: 'var(--violet-ink)' }}>{translated}</b></p>}
@@ -72,11 +87,11 @@ export default function Sets() {
             const n = counts[s.id] || 0;
             return (
               <Tappable key={s.id} onClick={() => open(s)}>
-                <div className="thumb-box"><img src={s.images?.logo} alt="" loading="lazy" /></div>
+                <div className="thumb-box"><SetLogo set={s} /></div>
                 <div className="grow">
                   <div className="row" style={{ gap: 6 }}>
                     <b className="clamp1">{getLocalizedSetName(s.name, lang)}</b>
-                    <span className="tag tag-violet">{s.id.toUpperCase()}</span>
+                    <span className="tag tag-violet">{setCode(s)}</span>
                   </div>
                   <p className="tiny muted clamp1">{s.series} · {s.releaseDate}</p>
                   <div className="row" style={{ marginTop: 6 }}>
@@ -96,11 +111,11 @@ export default function Sets() {
             return (
               <Tappable key={s.id} className="set-cell" onClick={() => open(s)}>
                 <span className="star"><StarButton on={!!favSets[s.id]} onClick={() => toggleFavSet(s)} /></span>
-                <div className="logo"><img src={s.images?.logo} alt="" loading="lazy" /></div>
+                <div className="logo"><SetLogo set={s} /></div>
                 <b className="clamp2" style={{ fontSize: 14 }}>{getLocalizedSetName(s.name, lang)}</b>
                 <Progress value={n} total={s.total} />
                 <div className="row" style={{ justifyContent: 'space-between' }}>
-                  <span className="tag tag-violet">{s.id.toUpperCase()}</span>
+                  <span className="tag tag-violet">{setCode(s)}</span>
                   <span className="tiny muted" style={{ fontWeight: 600 }}>{n}/{s.total} · {pct(n, s.total)} %</span>
                 </div>
               </Tappable>

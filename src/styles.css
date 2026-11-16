@@ -329,6 +329,21 @@ button.list-row:active, .list-row.tap:active { transform: scale(0.99); }
 .ctile-img.is-loaded { animation: none; background: var(--panel); }
 .ctile-img img { width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: filter 0.2s, opacity 0.3s; }
 .ctile-img.is-loaded img { opacity: 1; }
+/* Carte sans image : son nom sur un dos de carte sobre, dans la grille comme dans les listes. */
+.card-ph { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; padding: 10px 8px; text-align: center; background: repeating-linear-gradient(135deg, var(--panel) 0 6px, var(--surface-2) 6px 12px); border: 1px solid var(--line); border-radius: inherit; color: var(--ink); }
+.card-ph b { font-size: 12px; font-weight: 600; line-height: 1.2; }
+.card-ph span { font-size: 10px; color: var(--ink-3); line-height: 1.25; }
+.card-ph i { font-style: normal; font-family: var(--mono); font-size: 9px; letter-spacing: 0.06em; color: var(--ink-3); }
+.card-ph-sm { position: relative; inset: auto; padding: 4px; gap: 0; }
+.card-ph-sm b { font-size: 8.5px; }
+.cs-ph { position: relative; display: block; width: min(64%, 250px); aspect-ratio: 63 / 88; margin: 0 auto 18px; border-radius: 10px; }
+.cs-ph .card-ph b { font-size: 18px; }
+.cs-ph .card-ph span { font-size: 12.5px; }
+.custom-photo { display: block; width: 150px; aspect-ratio: 63 / 88; margin: 0 auto; border-radius: 10px; border: 1px dashed var(--ink-3); background: var(--panel); overflow: hidden; color: var(--ink-2); }
+.custom-photo img { width: 100%; height: 100%; object-fit: cover; }
+.custom-photo span { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; height: 100%; }
+.custom-photo b { font-size: 12px; font-weight: 600; }
+.custom-photo i { font-style: normal; font-family: var(--mono); font-size: 9.5px; text-transform: uppercase; color: var(--ink-3); }
 .ctile.is-missing .ctile-img img { filter: grayscale(1); }
 .ctile.is-missing .ctile-img.is-loaded img { opacity: 0.4; }
 .ctile-cap { padding: 6px 2px 0; text-align: center; }

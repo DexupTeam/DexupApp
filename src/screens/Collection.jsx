@@ -1,12 +1,15 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { ChevronDown, Layers, Trophy } from 'lucide-react';
+import { ChevronDown, Layers, Plus, Trophy } from 'lucide-react';
 import { useCollection } from '../store/collection';
 import { useLang } from '../utils/LanguageContext.jsx';
 import { getLocalizedSetName } from '../utils/setNames';
 import { formatEuro, isGraded, loadCardsByIds, setIdOf, setLogoUrl, sortCards, useSets } from '../lib/tcg';
 import { useWallet } from '../lib/prices';
 import { CardsView } from '../components/cards';
+import CustomCardSheet from '../components/CustomCardSheet';
+import { CUSTOM_SET_ID } from '../lib/extraCards';
+import { cardImage } from '../lib/photos';
 import { Empty, Loading, Page, Segmented, Tappable, TopBar, ViewToggle, plural, usePersistedState } from '../components/ui';
 
 const SORTS = [{ value: 'set', label: 'Par extension' }, { value: 'value', label: 'Par valeur' }];
@@ -40,7 +43,8 @@ function FailedSets({ failed, retry }) {
 
 export function Collection() {
   const navigate = useNavigate();
-  const { ready, owned } = useCollection();
+  const { ready, owned, customCards, openCard } = useCollection();
+  const [adding, setAdding] = useState(false);
   const { lang } = useLang();
   const { sets } = useSets();
   const [mode, setMode] = usePersistedState('pc_cards_view', 'grid');
@@ -49,7 +53,13 @@ export function Collection() {
   // Depuis « Valeur de la collection » (statistiques), on arrive directement sur le tri par valeur.
   const [sort, setSortState] = useState(params.get('sort') === 'value' ? 'value' : savedSort);
   const changeSort = (v) => { setSortState(v); setSort(v); };
-  const { map, failed, loading, retry } = useCardData(Object.keys(owned), ready);
+  const { map: loaded, failed, loading, retry } = useCardData(Object.keys(owned), ready);
+  // Les cartes perso viennent du store (pas du réseau) : toujours à jour, même juste après un ajout.
+  const map = useMemo(() => {
+    const all = { ...loaded };
+    for (const [id, card] of Object.entries(customCards)) if (owned[id]) all[id] = card;
+    return all;
+  }, [loaded, customCards, owned]);
   const wallet = useWallet(owned);
   const values = wallet?.values;
 
@@ -67,9 +77,10 @@ export function Collection() {
     return Object.entries(bySet)
       .map(([sid, cards]) => ({
         sid,
-        cards: sortCards(cards),
+        cards: sid === CUSTOM_SET_ID ? cards.sort((a, b) => a.name.localeCompare(b.name)) : sortCards(cards),
         name: meta[sid] ? getLocalizedSetName(meta[sid].name, lang) : cards[0].set?.name ?? sid.toUpperCase(),
-        date: meta[sid]?.releaseDate ?? cards[0].set?.releaseDate ?? sid,
+        // Les cartes perso en premier (les groupes sont triés par date de sortie croissante).
+        date: sid === CUSTOM_SET_ID ? '0000' : meta[sid]?.releaseDate ?? cards[0].set?.releaseDate ?? sid,
       }))
       .sort((a, b) => a.date.localeCompare(b.date));
   }, [map, sets, lang]);
@@ -79,8 +90,12 @@ export function Collection() {
   return (
     <Page>
       <TopBar title="Ma collection" back="/binder">
+        <button className="icon-btn" onClick={() => setAdding(true)} aria-label="Ajouter une carte perso" title="Carte absente de la base">
+          <Plus size={21} />
+        </button>
         {total > 0 && <ViewToggle mode={mode} onChange={setMode} />}
       </TopBar>
+      {adding && <CustomCardSheet onClose={() => setAdding(false)} onAdded={(card) => openCard(card)} />}
 
       {(!ready || loading) && <Loading label="Chargement de ta collection…" />}
       {ready && !loading && <FailedSets failed={failed} retry={retry} />}
@@ -122,10 +137,11 @@ export function Collection() {
 }
 
 export function Graded() {
-  const { ready, owned, openCard } = useCollection();
+  const { ready, owned, openCard, cardPhotos, customCards } = useCollection();
   const [closed, setClosed] = useState({});
   const gradedIds = useMemo(() => Object.keys(owned).filter((id) => isGraded(owned[id])), [owned]);
-  const { map, failed, loading, retry } = useCardData(gradedIds, ready);
+  const { map: loaded, failed, loading, retry } = useCardData(gradedIds, ready);
+  const map = useMemo(() => ({ ...loaded, ...customCards }), [loaded, customCards]);
 
   const sections = useMemo(() => {
     const byCompany = {};
@@ -172,7 +188,7 @@ export function Graded() {
                   <div className="stack">
                     {items.map(({ card, grade }) => (
                       <Tappable key={card.id} onClick={() => openCard(card)}>
-                        <img className="card-thumb" src={card.images?.small} alt="" loading="lazy" />
+                        <img className="card-thumb" src={cardImage(card, cardPhotos) ?? undefined} alt="" loading="lazy" />
                         <div className="grow">
                           <b className="clamp1">{card.name}</b>
                           <p className="small muted clamp1">#{card.number} · {card.set?.name}</p>

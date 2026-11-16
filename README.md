@@ -18,6 +18,11 @@
 - Recherche en français ou en anglais, ou par code ; filtres Toutes / Entamées / Favorites
 - Vue liste ou grille, barre de progression et favori ★ par extension
 
+### Extensions chinoises et cartes perso
+- **Exclusivités Chine** (onglet « Chine » des extensions) : Gem Pack, Happy Set, éditions chinoises… d'après le catalogue public de Cardmarket (`scripts/update-china-sets.mjs`, chaque lundi). Aucune base gratuite ne les publie avec leurs images : on a le nom, les attaques et le prix tendance, mais ni image ni numéro, et les variantes d'une même carte apparaissent séparément (avec leur prix pour les distinguer)
+- **Cartes perso** (bouton + de « Ma collection ») : n'importe quelle carte absente de la base — nom, extension, numéro, langue, photo et prix, qui compte dans la valeur de la collection
+- **Ma photo** : sur toute carte possédée, on peut ajouter sa propre photo, affichée à la place de l'image officielle (ou du dos de carte des cartes sans image). Photos réduites (~40 Ko) et synchronisées avec le compte
+
 ### Cartes d'une extension
 - Grille de cartes : **un tap sur le « + » ajoute la carte à la collection**, un tap sur l'image ouvre sa fiche
 - Filtres Toutes / Possédées / Manquantes, vue grille ou liste
@@ -35,13 +40,16 @@
 - Filtre par rareté, résultats paginés (« Voir plus »)
 
 ### Scanner
-- Caméra en **plein écran**, commandes en bas, résultats dans une feuille par-dessus la caméra
-- **Scan automatique** : la lecture se déclenche dès que la carte est nette, immobile et bien éclairée (conseils « Ne bouge plus », « Plus de lumière », « Trop de reflets »), puis attend que la carte change avant de relire
-- OCR du numéro (`025/193`) avec correction des caractères ambigus (O→0, l→1…) et contraste automatique
-- **Il suffit de passer la carte** : pas de zone à viser. Le bas de la carte (numéro à gauche ou à droite selon l'époque) et le nom en haut sont lus en parallèle ; le nom (« Goupix », « Tiplouf ») + les chiffres lus ouvrent directement la bonne carte. Si seul le nom est lisible (webcam, reflet), les cartes de ce Pokémon sont proposées des plus récentes aux plus anciennes
+- **Reconnaissance par l'image**, dans le navigateur, sans serveur (méthode et modèle de [pokeum](https://github.com/TBLgGamin/pokeum), MIT) :
+  1. la carte est cherchée dans toute l'image (bords détectés avec OpenCV.js, sur la luminosité et la saturation des couleurs) — pas de cadre à viser au pixel près, carte penchée, décentrée ou à l'envers acceptée ;
+  2. elle est redressée, puis réduite à son empreinte visuelle par un modèle DINOv2 affiné pour ignorer reflets, flou et lumière (24 Mo, quantifié en 8 bits, ONNX Runtime Web) ;
+  3. cette empreinte est comparée à celles de toutes les cartes connues ; une correspondance nette ouvre la fiche, sinon les cartes possibles sont proposées (rééditions d'une même illustration, image moyenne)
+- **Scan automatique** : la reconnaissance se déclenche dès que l'image est nette, immobile et bien éclairée (conseils « Ne bouge plus », « Plus de lumière », « Trop de reflets »), puis attend que la carte change
+- **Reconnaître une photo** déjà prise (galerie, capture d'écran), y compris sans accès à la caméra
+- Calcul dans un fil de travail séparé : la caméra reste fluide. Le moteur (≈ 45 Mo) se télécharge à la première ouverture du scanner puis reste en cache, sans alourdir le reste de l'app
+- **Index** : `scripts/update-scan-index.mjs` calcule l'empreinte de chaque carte (un fichier par extension dans `scan-index/`), relancé chaque lundi par le workflow pour les nouvelles extensions ; `scripts/pack-scan-index.mjs` les assemble avant chaque build
 - **BarcodeDetector** natif (Chrome / Safari) pour détecter QR codes et codes-barres automatiquement
-- Recherche manuelle par numéro de carte (ex : `025`, `163/193`)
-- Les PV et les noms d'attaques lus départagent les cartes d'un même Pokémon ; si une carte se détache, sa fiche s'ouvre directement
+- Recherche manuelle par numéro de carte (ex : `025`, `163/193`) ou par nom
 
 ### Classeur
 - **Listes** : « Ma collection » (cartes possédées, groupées par extension) et « Cartes gradées » (par société) toujours présentes, plus autant de listes personnelles que souhaité
@@ -254,6 +262,8 @@ L'API Pokémon TCG ne fournit plus de prix exploitables (rien pour les sets sort
 | Noms français des extensions | TCGdex | chaque lundi (workflow) |
 | Produits des nouvelles extensions (booster, display, ETB) | Cardmarket | chaque lundi (workflow) |
 | Prix et photos des produits | Cardmarket, tcgcsv.com | chaque lundi (workflow) et à chaque build pour les prix |
+| Extensions chinoises (cartes et prix) | catalogue Cardmarket | chaque lundi (workflow) |
+| Index du scanner (empreinte de chaque carte) | images api.pokemontcg.io | chaque lundi (workflow), extensions nouvelles ou complétées seulement |
 | Conventions | `src/lib/events.js` | **à la main** : aucune source publique fiable |
 
 Le workflow GitHub `.github/workflows/refresh-data.yml` lance les scripts de `scripts/` chaque lundi, pousse les fichiers de `src/data/` qui ont changé, et Netlify redéploie. Il se lance aussi à la main depuis l'onglet Actions. Les produits spéciaux (tins, coffrets, decks) restent ajoutés à la main dans `src/data/products.js`.

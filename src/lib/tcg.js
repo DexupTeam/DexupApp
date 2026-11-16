@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { pokemonApiUrl } from '../utils/api';
 import { getApiCache, setApiCache, CARDS_TTL } from '../utils/sharedCache';
+import { chinaSets, getCustomCards, isChinaSet, isCustomSet, isExtraCard, loadChinaCards } from './extraCards';
 
 const DAY = 24 * 60 * 60 * 1000;
 
@@ -44,12 +45,13 @@ export function loadSets() {
   if (!setsPromise) {
     setsPromise = (async () => {
       // Relue chaque jour : une nouvelle extension apparaît le lendemain de son ajout à l'API.
+      // Les extensions chinoises (hors API) viennent après toutes les autres.
       const cached = await getApiCache('sets:en', DAY);
-      if (cached) return cached;
+      if (cached) return [...cached, ...chinaSets];
       const json = await getJson(pokemonApiUrl('/sets', { orderBy: '-releaseDate', pageSize: API_MAX_PAGE }));
       const sets = json.data || [];
       await setApiCache('sets:en', sets);
-      return sets;
+      return [...sets, ...chinaSets];
     })().catch((e) => { setsPromise = null; throw e; });
   }
   return setsPromise;
@@ -95,6 +97,8 @@ const cardsInMemory = new Map();
 const cardsInFlight = {};
 
 export function loadSetCards(setId) {
+  if (isCustomSet(setId)) return Promise.resolve(getCustomCards());
+  if (isChinaSet(setId)) return loadChinaCards(setId);
   if (cardsInMemory.has(setId)) return Promise.resolve(cardsInMemory.get(setId));
   if (!cardsInFlight[setId]) {
     cardsInFlight[setId] = (async () => {
@@ -175,6 +179,7 @@ export async function searchCards({ name, exactName, rarity, number, printedTota
 }
 
 export async function loadFullCard(cardId) {
+  if (isExtraCard(cardId)) return null; // pas de fiche dans l'API : la carte affichée est déjà complète
   const json = await getJson(pokemonApiUrl(`/cards/${cardId}`));
   return json.data;
 }

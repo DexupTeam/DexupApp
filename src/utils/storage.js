@@ -133,3 +133,39 @@ export async function toggleFavoriteSet(set) {
   await writeStore(FAV_SETS_KEY, favs);
   return favs;
 }
+
+// ─── Cartes perso et photos ──────────────────────────────────────────────────
+// Cartes absentes de la base, saisies par le collectionneur : { id: carte }.
+const CUSTOM_CARDS_KEY = 'custom_cards';
+// Photo prise par le collectionneur, pour n'importe quelle carte : { id: image JPEG en data URL }.
+const CARD_PHOTOS_KEY = 'card_photos';
+
+export async function getCustomCards() {
+  return (await readStore(CUSTOM_CARDS_KEY)) ?? {};
+}
+
+export async function saveCustomCard(card) {
+  const cards = await getCustomCards();
+  cards[card.id] = card;
+  await writeStore(CUSTOM_CARDS_KEY, cards);
+  return cards;
+}
+
+export async function deleteCustomCard(cardId) {
+  const cards = await getCustomCards();
+  delete cards[cardId];
+  await writeStore(CUSTOM_CARDS_KEY, cards);
+  return cards;
+}
+
+export async function getCardPhotos() {
+  return (await readStore(CARD_PHOTOS_KEY)) ?? {};
+}
+
+/** `photo` : data URL JPEG, ou null pour retirer la photo. */
+export async function setCardPhoto(cardId, photo) {
+  const photos = await getCardPhotos();
+  if (photo) photos[cardId] = photo; else delete photos[cardId];
+  await writeStore(CARD_PHOTOS_KEY, photos);
+  return photos;
+}

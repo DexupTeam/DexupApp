@@ -50,7 +50,7 @@ export default function Home({ onAccount }) {
   const total = Object.keys(owned).length;
   const graded = useMemo(() => Object.values(owned).filter(isGraded).length, [owned]);
   const setNames = useMemo(
-    () => Object.fromEntries(sets.map((s) => [s.id, getLocalizedSetName(s.name, lang)])),
+    () => ({ ...Object.fromEntries(sets.map((s) => [s.id, getLocalizedSetName(s.name, lang)])), custom: 'Cartes perso' }),
     [sets, lang]
   );
   const inProgress = useMemo(

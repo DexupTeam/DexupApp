@@ -5,13 +5,15 @@ import {
   getFavoriteSets, toggleFavoriteSet,
   getFavoriteProducts, toggleFavoriteProduct,
   getOwnedProducts, toggleOwnedProduct,
+  getCustomCards, saveCustomCard, deleteCustomCard, getCardPhotos, setCardPhoto,
 } from '../utils/storage';
+import { setCustomCards } from '../lib/extraCards';
 import { getLists, createList, deleteList, renameList, addCardToList, removeCardFromList } from '../utils/lists';
 
 const Ctx = createContext(null);
 export const useCollection = () => useContext(Ctx);
 
-const EMPTY = { owned: {}, favCards: {}, favSets: {}, favProducts: {}, ownedProducts: {}, lists: {}, ready: false };
+const EMPTY = { owned: {}, favCards: {}, favSets: {}, favProducts: {}, ownedProducts: {}, lists: {}, customCards: {}, cardPhotos: {}, ready: false };
 
 const flip = (id, value) => (map) => {
   const next = { ...map };
@@ -25,10 +27,12 @@ export function CollectionProvider({ children }) {
   const queue = useRef(Promise.resolve());
 
   const reload = useCallback(async () => {
-    const [owned, favCards, favSets, favProducts, ownedProducts, lists] = await Promise.all([
+    const [owned, favCards, favSets, favProducts, ownedProducts, lists, customCards, cardPhotos] = await Promise.all([
       getOwnedCards(), getFavoriteCards(), getFavoriteSets(), getFavoriteProducts(), getOwnedProducts(), getLists(),
+      getCustomCards(), getCardPhotos(),
     ]);
-    setData({ owned, favCards, favSets, favProducts, ownedProducts, lists, ready: true });
+    setCustomCards(customCards);
+    setData({ owned, favCards, favSets, favProducts, ownedProducts, lists, customCards, cardPhotos, ready: true });
   }, []);
 
   useEffect(() => { reload(); }, [reload]);
@@ -61,6 +65,32 @@ export function CollectionProvider({ children }) {
       set: { id: card.set?.id, name: card.set?.name },
     })),
     removeFromList: (listId, cardId) => write('lists', () => removeCardFromList(listId, cardId)),
+    // Carte perso : enregistrée puis ajoutée à la collection (avec son prix saisi, s'il y en a un).
+    addCustomCard: async (card, { price, photo } = {}) => {
+      await write('customCards', async () => { const all = await saveCustomCard(card); setCustomCards(all); return all; });
+      if (photo) await write('cardPhotos', () => setCardPhoto(card.id, photo));
+      await write('owned', async () => {
+        await toggleCard(card.id);
+        return setCardGrading(card.id, { graded: false, ...(card.lang ? { lang: card.lang } : {}), ...(price > 0 ? { price } : {}) });
+      });
+    },
+    // Supprime une carte perso : de la collection, des listes et de la base perso.
+    deleteCustomCard: async (cardId) => {
+      await write('owned', async () => {
+        const owned = await getOwnedCards();
+        return owned[cardId] ? toggleCard(cardId) : owned;
+      });
+      await write('lists', async () => {
+        let lists = await getLists();
+        for (const list of Object.values(lists)) {
+          if (list.cards?.[cardId]) lists = await removeCardFromList(list.id, cardId);
+        }
+        return lists;
+      });
+      await write('cardPhotos', () => setCardPhoto(cardId, null));
+      await write('customCards', async () => { const all = await deleteCustomCard(cardId); setCustomCards(all); return all; });
+    },
+    setCardPhoto: (cardId, photo) => write('cardPhotos', () => setCardPhoto(cardId, photo)),
   }), [reload, write]);
 
   const value = useMemo(() => ({ ...data, activeCard, ...actions }), [data, activeCard, actions]);
