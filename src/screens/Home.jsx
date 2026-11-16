@@ -92,11 +92,11 @@ export default function Home({ onAccount }) {
         </button>
         <button className="tile tile-sky" onClick={() => setSheet('news')}>
           <Newspaper size={24} />
-          <div><b>Actualités</b><span>Actus et sorties</span></div>
+          <div><b>Actualités</b><span>Le TCG en direct</span></div>
         </button>
         <button className="tile tile-peach" onClick={() => setSheet('events')}>
           <CalendarDays size={24} />
-          <div><b>Conventions</b><span>Salons de collection</span></div>
+          <div><b>Conventions</b><span>Salons et sorties</span></div>
         </button>
         <button className="tile tile-mint" onClick={() => navigate('/products')}>
           <ShoppingBag size={24} />

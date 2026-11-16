@@ -110,14 +110,10 @@ export function StatsSheet({ onClose, setNames = {}, wallet }) {
 }
 
 // ─── Actualités ──────────────────────────────────────────────────────────────
-const NEWS_TABS = [{ value: 'news', label: 'Actualités' }, { value: 'releases', label: 'Sorties' }];
-
 export function NewsSheet({ onClose }) {
-  const [tab, setTab] = useState('news');
   return (
     <Sheet title="Actualités TCG" onClose={onClose} tall>
-      <div style={{ marginBottom: 14 }}><Segmented options={NEWS_TABS} value={tab} onChange={setTab} /></div>
-      {tab === 'news' ? <NewsList /> : <ReleasesList />}
+      <NewsList />
     </Sheet>
   );
 }
@@ -256,13 +252,25 @@ function NewsList() {
 }
 
 // ─── Événements ──────────────────────────────────────────────────────────────
+const AGENDA_TABS = [{ value: 'events', label: 'Conventions' }, { value: 'releases', label: 'Sorties' }];
+
 export function EventsSheet({ onClose }) {
+  const [tab, setTab] = useState('events');
+  return (
+    <Sheet title="Agenda" onClose={onClose} tall>
+      <div style={{ marginBottom: 14 }}><Segmented options={AGENDA_TABS} value={tab} onChange={setTab} /></div>
+      {tab === 'events' ? <EventsList /> : <ReleasesList />}
+    </Sheet>
+  );
+}
+
+function EventsList() {
   const [events, setEvents] = useState(null);
   const [showPast, setShowPast] = useState(false);
 
   useEffect(() => { loadEvents().then(setEvents); }, []);
 
-  if (!events) return <Sheet title="Conventions" onClose={onClose} tall><Loading /></Sheet>;
+  if (!events) return <Loading />;
 
   const upcoming = events.filter((e) => !isPast(e));
   const past = events.filter(isPast);
@@ -270,54 +278,52 @@ export function EventsSheet({ onClose }) {
   const next = upcoming[0];
 
   return (
-    <Sheet title="Conventions" onClose={onClose} tall>
-      <div className="stack">
-        <p className="tiny dim">Salons de collection · France & Europe · {upcoming.length} à venir</p>
+    <div className="stack">
+      <p className="tiny dim">Salons de collection · France & Europe · {upcoming.length} à venir</p>
 
-        {next && (
-          <div className="card-pad" style={{ background: 'var(--ink)', color: '#fff', borderRadius: 'var(--r)' }}>
-            <p className="tiny" style={{ opacity: 0.85, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 0.6 }}>Prochain salon</p>
-            <p className="h2" style={{ margin: '4px 0' }}>{next.name}</p>
-            <p className="small" style={{ opacity: 0.9 }}>
-              {formatEventDate(next.date)}{next.dateEnd && next.dateEnd !== next.date ? ` → ${formatEventDate(next.dateEnd)}` : ''} · {next.city}
-            </p>
-          </div>
-        )}
+      {next && (
+        <div className="card-pad" style={{ background: 'var(--ink)', color: '#fff', borderRadius: 'var(--r)' }}>
+          <p className="tiny" style={{ opacity: 0.85, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 0.6 }}>Prochain salon</p>
+          <p className="h2" style={{ margin: '4px 0' }}>{next.name}</p>
+          <p className="small" style={{ opacity: 0.9 }}>
+            {formatEventDate(next.date)}{next.dateEnd && next.dateEnd !== next.date ? ` → ${formatEventDate(next.dateEnd)}` : ''} · {next.city}
+          </p>
+        </div>
+      )}
 
-        {shown.map((ev) => {
-          const d = new Date(`${ev.date}T00:00:00`);
-          const done = isPast(ev);
-          return (
-            <button
-              key={ev.id} className="list-row" style={done ? { opacity: 0.55 } : undefined}
-              onClick={() => ev.url && openUrl(ev.url)}
-            >
-              <span className="thumb-box" style={{ width: 52, height: 56, flexDirection: 'column', padding: 0 }}>
-                <b style={{ fontFamily: 'var(--display)', fontSize: 19, lineHeight: 1, color: done ? 'var(--ink-3)' : 'var(--violet-ink)' }}>{d.getDate()}</b>
-                <span className="tiny dim" style={{ textTransform: 'uppercase', fontWeight: 700 }}>
-                  {d.toLocaleDateString('fr-FR', { month: 'short' })}
-                </span>
+      {shown.map((ev) => {
+        const d = new Date(`${ev.date}T00:00:00`);
+        const done = isPast(ev);
+        return (
+          <button
+            key={ev.id} className="list-row" style={done ? { opacity: 0.55 } : undefined}
+            onClick={() => ev.url && openUrl(ev.url)}
+          >
+            <span className="thumb-box" style={{ width: 52, height: 56, flexDirection: 'column', padding: 0 }}>
+              <b style={{ fontFamily: 'var(--display)', fontSize: 19, lineHeight: 1, color: done ? 'var(--ink-3)' : 'var(--violet-ink)' }}>{d.getDate()}</b>
+              <span className="tiny dim" style={{ textTransform: 'uppercase', fontWeight: 700 }}>
+                {d.toLocaleDateString('fr-FR', { month: 'short' })}
               </span>
-              <span className="grow">
-                <span className={`tag ${eventTagClass(ev.type)}`}>{ev.type}</span>
-                <b className="clamp2" style={{ fontSize: 14, marginTop: 4 }}>{ev.name}</b>
-                <span className="row tiny muted" style={{ gap: 4, marginTop: 2 }}><MapPin size={12} /> {[ev.venue, ev.city].filter(Boolean).join(', ')}</span>
-                {ev.dateEnd && ev.dateEnd !== ev.date && <span className="tiny dim">Jusqu'au {formatEventDate(ev.dateEnd)}</span>}
-              </span>
-              {ev.url && <ChevronRight size={18} color="var(--ink-3)" />}
-            </button>
-          );
-        })}
-
-        {upcoming.length === 0 && !showPast && <p className="small dim" style={{ textAlign: 'center', padding: 20 }}>Aucun salon annoncé pour le moment.</p>}
-
-        {past.length > 0 && (
-          <button className="btn btn-ghost btn-sm" onClick={() => setShowPast((v) => !v)}>
-            {showPast ? 'Masquer les salons passés' : `Voir ${plural(past.length, 'salon')} passé${past.length > 1 ? 's' : ''}`}
+            </span>
+            <span className="grow">
+              <span className={`tag ${eventTagClass(ev.type)}`}>{ev.type}</span>
+              <b className="clamp2" style={{ fontSize: 14, marginTop: 4 }}>{ev.name}</b>
+              <span className="row tiny muted" style={{ gap: 4, marginTop: 2 }}><MapPin size={12} /> {[ev.venue, ev.city].filter(Boolean).join(', ')}</span>
+              {ev.dateEnd && ev.dateEnd !== ev.date && <span className="tiny dim">Jusqu'au {formatEventDate(ev.dateEnd)}</span>}
+            </span>
+            {ev.url && <ChevronRight size={18} color="var(--ink-3)" />}
           </button>
-        )}
-      </div>
-    </Sheet>
+        );
+      })}
+
+      {upcoming.length === 0 && !showPast && <p className="small dim" style={{ textAlign: 'center', padding: 20 }}>Aucun salon annoncé pour le moment.</p>}
+
+      {past.length > 0 && (
+        <button className="btn btn-ghost btn-sm" onClick={() => setShowPast((v) => !v)}>
+          {showPast ? 'Masquer les salons passés' : `Voir ${plural(past.length, 'salon')} passé${past.length > 1 ? 's' : ''}`}
+        </button>
+      )}
+    </div>
   );
 }
 

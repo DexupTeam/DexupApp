@@ -56,7 +56,7 @@
 
 ### Actualités et conventions
 - **Actualités TCG** : flux RSS de pokemonblog.com (catégorie TCG) relayé par une fonction Netlify
-- **Sorties** (onglet des Actualités) : calendrier des sorties de produits FR / US et des extensions japonaises, depuis le calendrier iCal public de PokéCardex relayé par une fonction Netlify
+- **Sorties** (onglet des Conventions) : calendrier des sorties de produits FR / US et des extensions japonaises, depuis le calendrier iCal public de PokéCardex relayé par une fonction Netlify
 - **Conventions** : salons et conventions pour collectionneurs en France et en Europe (pas les tournois compétitifs)
 - Cache partagé 24 h dans Supabase
 
