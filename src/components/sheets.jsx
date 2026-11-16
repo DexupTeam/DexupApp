@@ -1,12 +1,13 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CloudUpload, ChevronRight, LogOut, MapPin, Newspaper, WifiOff } from 'lucide-react';
+import { CloudUpload, ChevronRight, ExternalLink, LogOut, MapPin, Newspaper, WifiOff } from 'lucide-react';
 import { useCollection } from '../store/collection';
 import { useLang, LANGUAGES } from '../utils/LanguageContext.jsx';
 import { supabase, signOut } from '../utils/supabase';
 import { pushAllToRemote } from '../utils/persist';
 import { formatEuro, isGraded, ownedCountBySet, openUrl, setLogoUrl } from '../lib/tcg';
 import { loadNews, formatNewsDate } from '../lib/news';
+import { loadReleases, isUpcoming, formatReleaseDate, RELEASES_SOURCE } from '../lib/releases';
 import { loadEvents, isPast, formatEventDate, eventTagClass } from '../lib/events';
 import { Empty, Loading, Segmented, Sheet, plural } from './ui';
 import { PokeBallPicker } from './PokeBall';
@@ -108,7 +109,76 @@ export function StatsSheet({ onClose, setNames = {}, wallet }) {
 }
 
 // ─── Actualités ──────────────────────────────────────────────────────────────
+const NEWS_TABS = [{ value: 'news', label: 'Actualités' }, { value: 'releases', label: 'Sorties' }];
+
 export function NewsSheet({ onClose }) {
+  const [tab, setTab] = useState('news');
+  return (
+    <Sheet title="Actualités TCG" onClose={onClose} tall>
+      <div style={{ marginBottom: 14 }}><Segmented options={NEWS_TABS} value={tab} onChange={setTab} /></div>
+      {tab === 'news' ? <NewsList /> : <ReleasesList />}
+    </Sheet>
+  );
+}
+
+function ReleasesList() {
+  const [state, setState] = useState({ loading: true, error: false, releases: [] });
+  const [attempt, setAttempt] = useState(0);
+  const [showPast, setShowPast] = useState(false);
+
+  useEffect(() => {
+    let alive = true;
+    setState({ loading: true, error: false, releases: [] });
+    loadReleases()
+      .then((releases) => alive && setState({ loading: false, error: false, releases }))
+      .catch(() => alive && setState({ loading: false, error: true, releases: [] }));
+    return () => { alive = false; };
+  }, [attempt]);
+
+  const { loading, error, releases } = state;
+  if (loading) return <Loading label="Chargement du calendrier…" />;
+  if (error) {
+    return (
+      <Empty icon={WifiOff} title="Calendrier indisponible" text="Vérifie ta connexion internet puis réessaie.">
+        <button className="btn btn-dark" onClick={() => setAttempt((n) => n + 1)}>Réessayer</button>
+      </Empty>
+    );
+  }
+  const upcoming = releases.filter(isUpcoming);
+  const past = releases.filter((r) => !isUpcoming(r)).reverse(); // les plus récentes d'abord
+
+  const day = (r) => (
+    <div className="card card-pad" key={r.date}>
+      <p className="tiny" style={{ fontFamily: 'var(--mono)', textTransform: 'uppercase', letterSpacing: 0.6, color: 'var(--violet-ink)', marginBottom: 6 }}>
+        {formatReleaseDate(r.date)}
+      </p>
+      {r.items.map((item, i) => (
+        <div className="row" key={i} style={{ gap: 8, padding: '6px 0', alignItems: 'flex-start', borderTop: i ? '1px solid var(--line)' : 'none' }}>
+          <span className="grow small">{item.name}</span>
+          {item.langs.map((l) => <span key={l} className={`tag${l === 'JP' ? ' tag-peach' : l === 'FR' ? ' tag-violet' : ''}`}>{l}</span>)}
+        </div>
+      ))}
+    </div>
+  );
+
+  return (
+    <div className="stack">
+      <p className="tiny dim">Produits FR / US et extensions japonaises · {RELEASES_SOURCE}</p>
+      {upcoming.length ? upcoming.map(day) : <p className="small muted">Aucune sortie annoncée pour l'instant.</p>}
+      {past.length > 0 && (
+        <button className="btn btn-ghost btn-sm" onClick={() => setShowPast((v) => !v)} aria-expanded={showPast}>
+          {showPast ? 'Masquer les sorties passées' : `Sorties passées (${past.length})`}
+        </button>
+      )}
+      {showPast && past.map(day)}
+      <button className="btn btn-ghost btn-sm" onClick={() => openUrl('https://www.pokecardex.com/calendrier')}>
+        Calendrier complet sur PokéCardex <ExternalLink size={15} />
+      </button>
+    </div>
+  );
+}
+
+function NewsList() {
   const [state, setState] = useState({ loading: true, error: false, articles: [] });
   const [attempt, setAttempt] = useState(0);
 
@@ -123,7 +193,7 @@ export function NewsSheet({ onClose }) {
 
   const { loading, error, articles } = state;
   return (
-    <Sheet title="Actualités TCG" onClose={onClose} tall>
+    <>
       {loading && <Loading label="Chargement des actualités…" />}
       {error && (
         <Empty icon={WifiOff} title="Actualités indisponibles" text="Vérifie ta connexion internet puis réessaie.">
@@ -155,7 +225,7 @@ export function NewsSheet({ onClose }) {
           ))}
         </div>
       )}
-    </Sheet>
+    </>
   );
 }
 

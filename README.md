@@ -56,6 +56,7 @@
 
 ### Actualités et conventions
 - **Actualités TCG** : flux RSS de pokemonblog.com (catégorie TCG) relayé par une fonction Netlify
+- **Sorties** (onglet des Actualités) : calendrier des sorties de produits FR / US et des extensions japonaises, depuis le calendrier iCal public de PokéCardex relayé par une fonction Netlify
 - **Conventions** : salons et conventions pour collectionneurs en France et en Europe (pas les tournois compétitifs)
 - Cache partagé 24 h dans Supabase
 
@@ -105,6 +106,7 @@ src/
 │   ├── quality.js          # Mesure de netteté / exposition d'une image
 │   ├── useAutoCapture.js   # Déclenchement automatique du scan
 │   ├── news.js             # Actualités
+│   ├── releases.js         # Calendrier des sorties
 │   └── events.js           # Conventions
 ├── utils/                  # Couche données
 │   ├── supabase.js         # Client Supabase + authentification
@@ -123,7 +125,8 @@ src/
 
 netlify/functions/
 ├── pokemon-api.js          # Proxy vers api.pokemontcg.io (avec nouvelles tentatives)
-└── fetch-news.js           # Relais du flux RSS d'actualités
+├── fetch-news.js           # Relais du flux RSS d'actualités
+└── fetch-releases.js       # Relais du calendrier des sorties (PokéCardex)
 ```
 
 ---
