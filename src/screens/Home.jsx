@@ -96,7 +96,7 @@ export default function Home({ onAccount }) {
         </button>
         <button className="tile tile-peach" onClick={() => setSheet('events')}>
           <CalendarDays size={24} />
-          <div><b>Conventions</b><span>Salons et sorties</span></div>
+          <div><b>Agenda</b><span>Salons et sorties</span></div>
         </button>
         <button className="tile tile-mint" onClick={() => navigate('/products')}>
           <ShoppingBag size={24} />

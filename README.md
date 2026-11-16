@@ -9,7 +9,7 @@
 ### Accueil
 - Nombre de cartes possédées, sets entamés, cartes gradées et **valeur de la collection** (prix tendance Cardmarket, actualisés chaque semaine ; une carte gradée compte pour la valeur saisie)
 - Statistiques détaillées (grading par société, répartition par set)
-- Accès direct à « Mes cartes », aux Actualités, aux Conventions et aux Produits
+- Accès direct à « Mes cartes », aux Actualités, à l’Agenda (conventions et sorties) et aux Produits
 - Extensions en cours et dernières sorties
 
 ### Extensions
@@ -56,8 +56,8 @@
 
 ### Actualités et conventions
 - **Actualités TCG** : flux RSS de pokemonblog.com (catégorie TCG) relayé par une fonction Netlify
-- **Sorties** (onglet des Conventions) : calendrier des sorties de produits FR / US et des extensions japonaises, depuis le calendrier iCal public de PokéCardex relayé par une fonction Netlify
-- **Conventions** : salons et conventions pour collectionneurs en France et en Europe (pas les tournois compétitifs)
+- **Sorties** (onglet de l’Agenda) : calendrier des sorties de produits FR / US et des extensions japonaises, depuis le calendrier iCal public de PokéCardex relayé par une fonction Netlify
+- **Conventions** (onglet de l’Agenda) : salons et conventions pour collectionneurs en France et en Europe (pas les tournois compétitifs)
 - Cache partagé 24 h dans Supabase
 
 ### Compte et synchronisation
