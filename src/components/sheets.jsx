@@ -271,6 +271,7 @@ export function AccountSheet({ onClose, session }) {
           </button>
         )}
         <button className="btn btn-danger btn-block" onClick={logout}><LogOut size={18} /> Se déconnecter</button>
+        <p className="tiny dim" style={{ textAlign: 'center', fontFamily: 'var(--mono)' }}>Dexup v{__APP_VERSION__}</p>
       </div>
     </Sheet>
   );

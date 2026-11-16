@@ -48,7 +48,11 @@ function netlifyFunctionsDevPlugin() {
   };
 }
 
+// Version affichée dans « Mon compte » : majeure.mineure de package.json, montée à chaque mise en ligne.
+const { version } = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'package.json'), 'utf8'));
+
 export default defineConfig({
+  define: { __APP_VERSION__: JSON.stringify(version.split('.').slice(0, 2).join('.')) },
   plugins: [
     react(),
     sqlWasmPlugin(),
