@@ -5,7 +5,7 @@ import { useCollection } from '../store/collection';
 import { useProfile } from '../store/profile';
 import { loadCardsByIds } from '../lib/tcg';
 import { CommunityUnavailable, getFollowerCount, getProfile, listProfiles, listProfilesByIds } from '../lib/community';
-import { Avatar, FollowButton, ProfileHeader, SHOWCASE_MAX, ShareButton, Showcase, profileStats } from '../components/profile';
+import { Avatar, FollowButton, ProfileHeader, SHOWCASE_MAX, ShareButton, Showcase, TeamBadge, profileStats } from '../components/profile';
 import { CardPlaceholder } from '../components/cards';
 import CardBrowser from '../components/CardBrowser';
 import { PokeBall } from '../components/PokeBall';
@@ -103,7 +103,11 @@ export default function Community() {
           <Tappable key={p.userId} onClick={() => navigate(`/community/${p.username}`)}>
             <Avatar profile={p} size={46} />
             <div className="grow" style={{ minWidth: 0 }}>
-              <b className="clamp1">{p.displayName}{me?.userId === p.userId && <span className="tiny muted"> · toi</span>}</b>
+              <b className="row" style={{ gap: 5, minWidth: 0 }}>
+                <span className="clamp1">{p.displayName}</span>
+                <TeamBadge profile={p} compact />
+                {me?.userId === p.userId && <span className="tiny muted" style={{ flexShrink: 0 }}>· toi</span>}
+              </b>
               <p className="small muted clamp1">@{p.username}</p>
               <p className="tiny dim clamp1" style={{ marginTop: 2 }}>{profileStats(p).join(' · ')}</p>
             </div>

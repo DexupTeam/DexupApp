@@ -5,6 +5,7 @@ import { useLang } from '../utils/LanguageContext.jsx';
 import { getLocalizedSetName } from '../utils/setNames';
 import { setIdOf, sortCards, useSets } from '../lib/tcg';
 import { useWallet } from '../lib/prices';
+import { useCardMatcher } from '../lib/cardSearch';
 import { CardsView } from './cards';
 import { Empty, Pills, SearchField, ViewToggle, plural, usePersistedState } from './ui';
 
@@ -19,7 +20,6 @@ const MINE = [
   { value: 'missing', label: 'Il me manque' },
 ];
 
-const fold = (s) => (s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
 
 /**
  * Cartes d'un autre collectionneur, avec recherche (nom, numéro, extension), filtre par extension
@@ -53,16 +53,14 @@ export default function CardBrowser({ cards }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cards, setMeta, lang]);
 
+  const matches = useCardMatcher(query);
   const shown = useMemo(() => {
-    const q = fold(query.trim());
     let list = cards.filter((c) => {
       const sid = setIdOf(c.id);
       if (setFilter !== 'all' && sid !== setFilter) return false;
       if (mine === 'have' && !owned[c.id]) return false;
       if (mine === 'missing' && owned[c.id]) return false;
-      if (!q) return true;
-      return fold(c.name).includes(q) || fold(c.number).replace(/^0+/, '') === q.replace(/^0+/, '')
-        || fold(setName(sid, c)).includes(q) || fold(c.detail).includes(q);
+      return matches(c, [setName(sid, c), c.set?.name]);
     });
     if (sort === 'name') list = [...list].sort((a, b) => a.name.localeCompare(b.name));
     else if (sort === 'value') list = [...list].sort((a, b) => (values?.[b.id] ?? -1) - (values?.[a.id] ?? -1) || a.name.localeCompare(b.name));
@@ -76,13 +74,13 @@ export default function CardBrowser({ cards }) {
     }
     return list;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cards, query, setFilter, mine, sort, owned, values, setMeta, lang]);
+  }, [cards, matches, setFilter, mine, sort, owned, values, setMeta, lang]);
 
   const filtered = query.trim() || setFilter !== 'all' || mine !== 'all';
   return (
     <>
       <div className="stack" style={{ gap: 10, marginBottom: 14 }}>
-        <SearchField value={query} onChange={setQuery} placeholder="Nom, numéro ou extension" />
+        <SearchField value={query} onChange={setQuery} placeholder="Nom (français ou anglais), numéro, extension" />
         <select className="input" value={setFilter} onChange={(e) => setSetFilter(e.target.value)} aria-label="Extension">
           <option value="all">Toutes les extensions ({cards.length})</option>
           {setOptions.map((s) => <option key={s.id} value={s.id}>{s.name} ({s.count})</option>)}

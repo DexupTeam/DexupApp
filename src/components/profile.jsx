@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Check, Share2, UserCheck, UserPlus } from 'lucide-react';
+import { BadgeCheck, Check, Share2, UserCheck, UserPlus } from 'lucide-react';
 import { useCollection } from '../store/collection';
 import { useProfile } from '../store/profile';
 import { useLang } from '../utils/LanguageContext.jsx';
 import { getLocalizedSetName } from '../utils/setNames';
 import { formatEuro, setLogoUrl, useSets } from '../lib/tcg';
 import { cardImage } from '../lib/photos';
+import { isTeam } from '../data/team';
 import { CardPlaceholder } from './cards';
 import Logo from './Logo';
 import { plural } from './ui';
@@ -17,6 +18,17 @@ export function Avatar({ profile, size = 44 }) {
   return (
     <span className="avatar" style={{ width: size, height: size, fontSize: size * 0.42 }}>
       {profile?.avatar ? <img src={profile.avatar} alt="" /> : profile ? initial : <Logo size={size * 0.7} />}
+    </span>
+  );
+}
+
+/** Badge « Dexup Team » des comptes de l'équipe (`compact` : icône seule, pour les listes). */
+export function TeamBadge({ profile, compact }) {
+  if (!isTeam(profile?.userId)) return null;
+  return (
+    <span className={`team-badge${compact ? ' is-compact' : ''}`} title="Membre de l'équipe Dexup">
+      <BadgeCheck size={compact ? 15 : 13} />
+      {!compact && 'Dexup Team'}
     </span>
   );
 }
@@ -112,7 +124,10 @@ export function ProfileHeader({ profile, action, followers, children }) {
         <Avatar profile={profile} size={112} />
         <div className="grow" style={{ minWidth: 0 }}>
           <h1 className="h1 clamp2" style={{ fontSize: 26 }}>{profile.displayName}</h1>
-          <p className="small muted clamp1">@{profile.username}</p>
+          <p className="row" style={{ gap: "4px 8px", minWidth: 0, flexWrap: "wrap" }}>
+            <span className="small muted clamp1">@{profile.username}</span>
+            <TeamBadge profile={profile} />
+          </p>
         </div>
         {action && <div className="profile-action row" style={{ gap: 8 }}>{action}</div>}
       </div>

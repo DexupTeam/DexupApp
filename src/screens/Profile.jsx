@@ -10,6 +10,7 @@ import { cardSnapshot, DEFAULT_SETTINGS, getFollowerCount, USERNAME_RE } from '.
 import { AVATAR, BANNER, cardImage, croppedFromFile } from '../lib/photos';
 import { formatEuro, loadCardsByIds, useSets } from '../lib/tcg';
 import { useWallet } from '../lib/prices';
+import { useCardMatcher } from '../lib/cardSearch';
 import { getLocalizedSetName } from '../utils/setNames';
 import { Avatar, ProfileHeader, SHOWCASE_MAX, ShareButton, Showcase } from '../components/profile';
 import { CardPlaceholder } from '../components/cards';
@@ -199,6 +200,7 @@ function ShowcasePicker({ current, onClose }) {
   const { owned, customCards, cardPhotos } = useCollection();
   const { save } = useProfile();
   const { sets } = useSets();
+  const { lang } = useLang();
   // Valeur de chaque carte (prix saisi, sinon tendance Cardmarket), comme dans « Ma collection ».
   const wallet = useWallet(owned);
   const values = wallet?.values;
@@ -222,13 +224,16 @@ function ShowcasePicker({ current, onClose }) {
   }, []);
 
   const rank = useMemo(() => Object.fromEntries(sets.map((s, i) => [s.id, i])), [sets]);
+  const matches = useCardMatcher(query);
   const shown = useMemo(() => {
-    const q = query.trim().toLowerCase();
-    const list = (cards || []).filter((c) => !q || c.name.toLowerCase().includes(q) || (c.set?.name || '').toLowerCase().includes(q));
-    if (sort === 'value') return [...list].sort((a, b) => (values?.[b.id] ?? -1) - (values?.[a.id] ?? -1) || a.name.localeCompare(b.name));
-    if (sort === 'recent') return [...list].sort((a, b) => (rank[a.set?.id] ?? 9999) - (rank[b.set?.id] ?? 9999) || a.name.localeCompare(b.name));
-    return list; // déjà par nom
-  }, [cards, query, sort, values, rank]);
+    const list = (cards || []).filter((c) => matches(c, [c.set?.name, c.set?.label, getLocalizedSetName(c.set?.name || '', lang)]));
+    let sorted = list;
+    if (sort === 'value') sorted = [...list].sort((a, b) => (values?.[b.id] ?? -1) - (values?.[a.id] ?? -1) || a.name.localeCompare(b.name));
+    if (sort === 'recent') sorted = [...list].sort((a, b) => (rank[a.set?.id] ?? 9999) - (rank[b.set?.id] ?? 9999) || a.name.localeCompare(b.name));
+    // Cartes sélectionnées en tête, dans l'ordre de la vitrine ; puis les autres selon le tri.
+    const position = (id) => { const i = picked.indexOf(id); return i >= 0 ? i : SHOWCASE_MAX; };
+    return [...sorted].sort((a, b) => position(a.id) - position(b.id));
+  }, [cards, matches, sort, values, rank, picked, lang]);
 
   const toggle = (id) => setPicked((p) => (p.includes(id) ? p.filter((x) => x !== id) : p.length < SHOWCASE_MAX ? [...p, id] : p));
 
@@ -261,7 +266,7 @@ function ShowcasePicker({ current, onClose }) {
           {picked.length > 0 && <button className="link" style={{ flexShrink: 0 }} onClick={() => setPicked([])}>Tout désélectionner</button>}
         </div>
         {error && <p className="small" style={{ color: 'var(--danger)' }}>{error}</p>}
-        <SearchField value={query} onChange={setQuery} placeholder="Chercher dans ma collection" />
+        <SearchField value={query} onChange={setQuery} placeholder="Nom (français ou anglais), numéro, extension" />
         <Segmented options={PICKER_SORTS} value={sort} onChange={setSort} />
         {sort === 'value' && wallet?.pending > 0 && <p className="tiny dim">Actualisation des prix… {wallet.pending} restante{wallet.pending > 1 ? 's' : ''}</p>}
         {!cards && <Loading label="Chargement de ta collection…" />}
