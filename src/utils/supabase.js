@@ -6,6 +6,13 @@ import { createClient } from '@supabase/supabase-js';
 const SUPABASE_URL      = import.meta.env.VITE_SUPABASE_URL;
 const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
+// Lien reçu par email (réinitialisation du mot de passe) : lu avant que Supabase ne nettoie l'adresse.
+const AUTH_LINK = new URLSearchParams(window.location.hash.replace(/^#/, ''));
+/** L'app a été ouverte depuis un lien « mot de passe oublié » valide. */
+export const recoveryLink = AUTH_LINK.get('type') === 'recovery';
+/** Lien expiré ou déjà utilisé : message à afficher sur l'écran de connexion. */
+export const authLinkError = AUTH_LINK.get('error') ? AUTH_LINK.get('error_code') || AUTH_LINK.get('error') : null;
+
 function initSupabase() {
   if (!SUPABASE_URL || !SUPABASE_ANON_KEY) return null;
   try {
@@ -51,6 +58,18 @@ export async function signUp(email, password) {
 export async function signIn(email, password) {
   if (!supabase) return { error: { message: 'Supabase non configuré' } };
   return supabase.auth.signInWithPassword({ email, password });
+}
+
+/** Envoie l'email « mot de passe oublié » ; le lien ramène sur l'app pour choisir le nouveau. */
+export async function resetPassword(email) {
+  if (!supabase) return { error: { message: 'Supabase non configuré' } };
+  return supabase.auth.resetPasswordForEmail(email, { redirectTo: `${window.location.origin}/` });
+}
+
+/** Change le mot de passe du compte connecté (après le lien de réinitialisation). */
+export async function updatePassword(password) {
+  if (!supabase) return { error: { message: 'Supabase non configuré' } };
+  return supabase.auth.updateUser({ password });
 }
 
 /** Déconnexion. */

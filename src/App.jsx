@@ -3,10 +3,10 @@ import { HashRouter, Navigate, Route, Routes, useLocation, useNavigate } from 'r
 import { BookMarked, Home as HomeIcon, LayoutGrid, ScanLine, Search as SearchIcon, Users } from 'lucide-react';
 import { LanguageProvider } from './utils/LanguageContext.jsx';
 import { syncLocalOwner } from './utils/persist';
-import { supabase } from './utils/supabase';
+import { recoveryLink, supabase } from './utils/supabase';
 import { CollectionProvider, useCollection } from './store/collection';
 import { ProfileProvider, useProfile } from './store/profile';
-import Auth, { Splash } from './components/Auth';
+import Auth, { NewPassword, Splash } from './components/Auth';
 import CardSheet from './components/CardSheet';
 import Logo from './components/Logo';
 import { Avatar } from './components/profile';
@@ -126,11 +126,16 @@ const guestMode = !supabase || (import.meta.env.DEV && new URLSearchParams(windo
 
 export default function App() {
   const [session, setSession] = useState(guestMode ? GUEST : undefined); // undefined = en cours de vérification
+  // Ouverte depuis le lien « mot de passe oublié » : on demande d'abord le nouveau mot de passe.
+  const [recovering, setRecovering] = useState(recoveryLink);
 
   useEffect(() => {
     if (guestMode) return undefined;
     supabase.auth.getSession().then(({ data }) => setSession(data.session ?? null));
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, s) => setSession(s ?? null));
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, s) => {
+      if (event === 'PASSWORD_RECOVERY') setRecovering(true);
+      setSession(s ?? null);
+    });
     return () => subscription.unsubscribe();
   }, []);
 
@@ -147,6 +152,7 @@ export default function App() {
 
   if (session === undefined) return null;
   if (!session) return <Auth />;
+  if (recovering) return <NewPassword onDone={() => setRecovering(false)} />;
   if (localReady !== userId) {
     // Même écran que le lancement : il s'efface ensuite avec l'animation habituelle.
     return <div className="splash" aria-busy="true"><Logo size={96} /><b>Dexup</b></div>;

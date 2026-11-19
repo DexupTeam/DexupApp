@@ -504,3 +504,6 @@ button.list-row:active, .list-row.tap:active { transform: scale(0.99); }
 .team-badge svg { width: 11px; height: 11px; stroke-width: 2; }
 .team-badge.is-compact { margin: 0; padding: 0; border: none; }
 .team-badge.is-compact svg { width: 14px; height: 14px; }
+.auth-link { align-self: center; padding: 4px 0; }
+.auth-link::after { content: none; }
+.auth-forgot { align-self: flex-end; margin-top: -8px; }
