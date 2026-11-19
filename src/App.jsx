@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { HashRouter, Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import { BookMarked, Home as HomeIcon, LayoutGrid, ScanLine, Search as SearchIcon, Users } from 'lucide-react';
 import { LanguageProvider } from './utils/LanguageContext.jsx';
-import { hydrateFromRemote } from './utils/persist';
+import { syncLocalOwner } from './utils/persist';
 import { supabase } from './utils/supabase';
 import { CollectionProvider, useCollection } from './store/collection';
 import { ProfileProvider, useProfile } from './store/profile';
@@ -84,15 +84,6 @@ function Sidebar({ email }) {
   );
 }
 
-// Récupère la collection distante au premier affichage, puis rafraîchit le store.
-function RemoteHydration({ userId }) {
-  const { reload } = useCollection();
-  useEffect(() => {
-    hydrateFromRemote().then((changed) => { if (changed) reload(); });
-  }, [userId, reload]);
-  return null;
-}
-
 function Shell({ session }) {
   const { pathname } = useLocation();
   const { closeCard } = useCollection();
@@ -143,14 +134,28 @@ export default function App() {
     return () => subscription.unsubscribe();
   }, []);
 
+  // Les données locales sont celles du compte connecté avant d'afficher quoi que ce soit
+  // (vidées si un autre compte s'est connecté sur l'appareil, remplacées par celles en ligne).
+  const userId = session?.user?.id;
+  const [localReady, setLocalReady] = useState(null); // identifiant du compte prêt
+  useEffect(() => {
+    if (!userId) return undefined;
+    let alive = true;
+    syncLocalOwner(userId).finally(() => { if (alive) setLocalReady(userId); });
+    return () => { alive = false; };
+  }, [userId]);
+
   if (session === undefined) return null;
   if (!session) return <Auth />;
+  if (localReady !== userId) {
+    // Même écran que le lancement : il s'efface ensuite avec l'animation habituelle.
+    return <div className="splash" aria-busy="true"><Logo size={96} /><b>Dexup</b></div>;
+  }
 
   return (
     <HashRouter>
       <LanguageProvider>
-        <CollectionProvider>
-          {!guestMode && <RemoteHydration userId={session.user.id} />}
+        <CollectionProvider key={userId}>
           <Splash />
           <ProfileProvider userId={session.user.id} guest={guestMode}>
             <Shell session={session} />

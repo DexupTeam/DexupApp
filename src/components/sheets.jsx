@@ -1,10 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BookOpen, Boxes, CloudUpload, ChevronRight, ExternalLink, Gift, Layers, LogOut, MapPin, Newspaper, Package, WifiOff } from 'lucide-react';
+import { BookOpen, Boxes, ChevronRight, ExternalLink, Gift, Layers, MapPin, Newspaper, Package, WifiOff } from 'lucide-react';
 import { useCollection } from '../store/collection';
-import { useLang, LANGUAGES } from '../utils/LanguageContext.jsx';
-import { supabase, signOut } from '../utils/supabase';
-import { pushAllToRemote } from '../utils/persist';
 import { formatEuro, isGraded, ownedCountBySet, openUrl, setLogoUrl, useSets } from '../lib/tcg';
 import { findSetInText } from '../utils/setNames';
 import { loadNews, formatNewsDate } from '../lib/news';
@@ -12,7 +9,6 @@ import { loadReleases, isUpcoming, formatReleaseDate, RELEASES_SOURCE } from '..
 import { loadEvents, isPast, formatEventDate, eventTagClass } from '../lib/events';
 import { Empty, Loading, Segmented, Sheet, plural } from './ui';
 import { PokeBallPicker } from './PokeBall';
-import Logo from './Logo';
 
 // ─── Statistiques (totaux, grading, répartition par set) ─────────────────────
 export function StatsSheet({ onClose, setNames = {}, wallet }) {
@@ -324,58 +320,6 @@ function EventsList() {
         </button>
       )}
     </div>
-  );
-}
-
-// ─── Compte & réglages ───────────────────────────────────────────────────────
-const LANG_NOTE = {
-  fr: 'Noms des extensions affichés en français. Les visuels des cartes restent en anglais (les numéros sont identiques).',
-  ja: 'Les sets japonais ne sont pas disponibles : visuels en anglais, numéros identiques.',
-};
-
-export function AccountSheet({ onClose, session }) {
-  const { lang, setLang } = useLang();
-  const [sync, setSync] = useState(null); // null | 'busy' | 'ok' | 'err'
-
-  const push = async () => {
-    setSync('busy');
-    const ok = await pushAllToRemote();
-    setSync(ok ? 'ok' : 'err');
-    setTimeout(() => setSync(null), 2500);
-  };
-
-  const logout = async () => {
-    await signOut();
-    window.location.reload();
-  };
-
-  return (
-    <Sheet title="Mon compte" onClose={onClose}>
-      <div className="stack" style={{ gap: 16 }}>
-        <div className="list-row">
-          <Logo size={40} />
-          <div className="grow">
-            <p className="tiny dim">Connecté en tant que</p>
-            <b className="clamp1">{session?.user?.email ?? '—'}</b>
-          </div>
-        </div>
-
-        <div>
-          <p className="label">Langue des extensions</p>
-          <Segmented options={LANGUAGES.map((l) => ({ value: l.code, label: l.label }))} value={lang} onChange={setLang} />
-          {LANG_NOTE[lang] && <p className="tiny dim" style={{ marginTop: 8 }}>{LANG_NOTE[lang]}</p>}
-        </div>
-
-        {!!supabase && (
-          <button className="btn btn-soft btn-block" onClick={push} disabled={sync === 'busy'}>
-            <CloudUpload size={18} />
-            {sync === 'busy' ? 'Envoi en cours…' : sync === 'ok' ? 'Données envoyées' : sync === 'err' ? "Échec de l'envoi" : 'Forcer la synchronisation'}
-          </button>
-        )}
-        <button className="btn btn-danger btn-block" onClick={logout}><LogOut size={18} /> Se déconnecter</button>
-        <p className="tiny dim" style={{ textAlign: 'center', fontFamily: 'var(--mono)' }}>Dexup v{__APP_VERSION__}</p>
-      </div>
-    </Sheet>
   );
 }
 

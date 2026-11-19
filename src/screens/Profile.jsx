@@ -4,7 +4,7 @@ import { Camera, CloudUpload, Eye, ImagePlus, LogOut, Pencil, Sparkles, Trash2, 
 import { useCollection } from '../store/collection';
 import { useProfile } from '../store/profile';
 import { useLang, LANGUAGES } from '../utils/LanguageContext.jsx';
-import { pushAllToRemote } from '../utils/persist';
+import { forgetLocalUser, pushAllToRemote } from '../utils/persist';
 import { signOut, supabase } from '../utils/supabase';
 import { cardSnapshot, DEFAULT_SETTINGS, getFollowerCount, USERNAME_RE } from '../lib/community';
 import { AVATAR, BANNER, cardImage, croppedFromFile } from '../lib/photos';
@@ -325,7 +325,7 @@ function Settings({ email, guest }) {
             {sync === 'busy' ? 'Envoi en cours…' : sync === 'ok' ? 'Données envoyées' : sync === 'err' ? "Échec de l'envoi" : 'Forcer la synchronisation'}
           </button>
         )}
-        <button className="btn btn-danger btn-block" onClick={async () => { await signOut(); window.location.reload(); }}>
+        <button className="btn btn-danger btn-block" onClick={async () => { await forgetLocalUser(); await signOut(); window.location.reload(); }}>
           <LogOut size={18} /> Se déconnecter
         </button>
         <p className="tiny dim" style={{ textAlign: 'center', fontFamily: 'var(--mono)' }}>Dexup v{__APP_VERSION__}</p>

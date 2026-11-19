@@ -46,31 +46,68 @@ export async function writeStore(key, value) {
   }
 }
 
-// ─── Hydratation initiale depuis Supabase → DB locale ────────────────────────
-export async function hydrateFromRemote() {
-  if (!supabase) return false;
+// ─── Données locales rattachées à un compte ──────────────────────────────────
+// La base locale (SQLite dans le navigateur) est partagée par tous les comptes qui se connectent
+// sur l'appareil : on note à qui elle appartient, et on la vide quand un autre compte se connecte.
+// Sans ça, un second compte héritait de la collection du premier… puis l'enregistrait comme la sienne.
+const OWNER_KEY = 'pc_local_owner';
+
+const readOwner = () => { try { return localStorage.getItem(OWNER_KEY); } catch (_) { return null; } };
+const writeOwner = (id) => { try { if (id) localStorage.setItem(OWNER_KEY, id); else localStorage.removeItem(OWNER_KEY); } catch (_) {} };
+
+/** Efface de l'appareil les données du compte (collection, favoris, listes, photos…). */
+export async function clearLocalUserData() {
+  const db = await getDb();
+  const keys = [...SYNC_KEYS];
+  db.run(`DELETE FROM kv_store WHERE key IN (${keys.map(() => '?').join(', ')})`, keys);
+  await persistDb();
+}
+
+/**
+ * À la connexion, avant d'afficher l'app : la base locale devient celle de `userId`.
+ *   - Elle appartenait à un autre compte → vidée.
+ *   - Le compte a des données en ligne → elles REMPLACENT les données locales (une clé absente en
+ *     ligne est effacée localement).
+ *   - Aucune donnée en ligne : on garde le local seulement s'il est déjà à ce compte (changements
+ *     faits hors ligne), et on l'envoie. Sans propriétaire noté (installation d'avant ce correctif),
+ *     il vient forcément d'un autre compte — l'app exige une connexion, et un compte qui a déjà
+ *     enregistré quelque chose a des données en ligne : on le vide.
+ * Hors ligne, l'app démarre avec les données locales si elles sont à ce compte.
+ */
+export async function syncLocalOwner(userId) {
+  const previous = readOwner();
+  if (previous && previous !== userId) await clearLocalUserData();
+  if (!supabase || userId === 'guest') { writeOwner(userId); return; }
   try {
-    const userId = await getAuthUserId();
-    if (!userId) return false;
-
-    const { data, error } = await supabase
-      .from('pokecollect_data')
-      .select('key, value')
-      .eq('user_id', userId);
-
-    if (error) { console.warn('[sync] hydrate error:', error.message); return false; }
-    if (!data?.length) return false;
-
+    const { data, error } = await supabase.from('pokecollect_data').select('key, value').eq('user_id', userId);
+    if (error) throw error;
     const db = await getDb();
-    for (const row of data) {
-      db.run('INSERT OR REPLACE INTO kv_store (key, value) VALUES (?, ?)', [row.key, row.value]);
+    if (data?.length) {
+      const remote = new Map(data.filter((r) => SYNC_KEYS.has(r.key)).map((r) => [r.key, r.value]));
+      for (const key of SYNC_KEYS) {
+        if (remote.has(key)) db.run('INSERT OR REPLACE INTO kv_store (key, value) VALUES (?, ?)', [key, remote.get(key)]);
+        else db.run('DELETE FROM kv_store WHERE key = ?', [key]);
+      }
+      await persistDb();
+      writeOwner(userId);
+    } else if (previous === userId) {
+      await pushAllToRemote();
+    } else {
+      await clearLocalUserData();
+      writeOwner(userId);
     }
-    await persistDb();
-    return true;
   } catch (e) {
-    console.warn('[sync] hydrate error:', e);
-    return false;
+    console.warn('[sync] chargement du compte impossible :', e?.message || e);
+    // Hors ligne : on ne garde le local que s'il est bien à ce compte.
+    if (previous !== userId) { await clearLocalUserData(); writeOwner(userId); }
   }
+}
+
+/** Déconnexion : rien du compte ne reste sur l'appareil (tout est déjà en ligne). */
+export async function forgetLocalUser() {
+  await pushAllToRemote().catch(() => {});
+  await clearLocalUserData();
+  writeOwner(null);
 }
 
 // ─── Pousse toutes les clés locales vers Supabase (sync forcée) ──────────────
