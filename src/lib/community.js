@@ -111,7 +111,14 @@ export async function saveMyProfile(userId, fields) {
     demoWrite(rows);
     return fromRow(merged);
   }
-  const { data, error } = await supabase.from(TABLE).upsert(row, { onConflict: 'user_id' }).select('*').single();
+  // Création : la ligne complète (le pseudo est obligatoire). Mise à jour : seulement les champs
+  // fournis — un upsert partiel échouerait, car Postgres vérifie la ligne « à insérer » (sans
+  // pseudo) avant de constater qu'elle existe déjà.
+  const { data: existing, error: readError } = await supabase.from(TABLE).select('user_id').eq('user_id', userId).maybeSingle();
+  check(readError);
+  const { data, error } = existing
+    ? await supabase.from(TABLE).update(row).eq('user_id', userId).select('*').single()
+    : await supabase.from(TABLE).insert(row).select('*').single();
   check(error);
   return fromRow(data);
 }

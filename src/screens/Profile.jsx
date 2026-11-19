@@ -176,6 +176,7 @@ function ShowcasePicker({ current, onClose }) {
   const [query, setQuery] = useState('');
   const [picked, setPicked] = useState(() => current.map((c) => c.id));
   const [saving, setSaving] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     let alive = true;
@@ -204,7 +205,14 @@ function ShowcasePicker({ current, onClose }) {
       // La photo perso de la carte est publiée avec elle (sinon, l'image officielle).
       return cardPhotos[card.id] ? { ...snap, images: { small: cardPhotos[card.id] } } : snap;
     });
-    try { await save({ showcase }); onClose(); } catch (_) { setSaving(false); }
+    setError(null);
+    try {
+      await save({ showcase });
+      onClose();
+    } catch (e) {
+      setError(`Enregistrement impossible : ${e.message}`);
+      setSaving(false);
+    }
   };
 
   return (
@@ -213,6 +221,7 @@ function ShowcasePicker({ current, onClose }) {
       footer={<button className="btn btn-violet grow" disabled={saving} onClick={submit}>Enregistrer ({picked.length} / 3)</button>}
     >
       <div className="stack" style={{ gap: 12 }}>
+        {error && <p className="small" style={{ color: 'var(--danger)' }}>{error}</p>}
         <SearchField value={query} onChange={setQuery} placeholder="Chercher dans ma collection" />
         {!cards && <Loading label="Chargement de ta collection…" />}
         {cards && !cards.length && <Empty title="Aucune carte" text="Ajoute des cartes à ta collection pour les mettre en avant." />}
@@ -281,8 +290,14 @@ export default function Profile({ email }) {
   const navigate = useNavigate();
   const { status, profile, error, guest, save, remove, reload } = useProfile();
   const [sheet, setSheet] = useState(null); // edit | showcase | delete
+  const [saveError, setSaveError] = useState(null);
 
-  const setSetting = (key, value) => save({ settings: { ...profile.settings, [key]: value } });
+  // Réglage enregistré tout de suite ; en cas d'échec, l'interrupteur revient et l'erreur s'affiche.
+  const update = async (fields) => {
+    setSaveError(null);
+    try { await save(fields); } catch (e) { setSaveError(`Enregistrement impossible : ${e.message}`); }
+  };
+  const setSetting = (key, value) => update({ settings: { ...profile.settings, [key]: value } });
 
   return (
     <Page>
@@ -327,13 +342,14 @@ export default function Profile({ email }) {
             <h2 className="h2" style={{ marginBottom: 10 }}>Visibilité</h2>
             <div className="card card-pad">
               <Switch
-                label="Profil public" checked={profile.isPublic} onChange={(v) => save({ isPublic: v })}
+                label="Profil public" checked={profile.isPublic} onChange={(v) => update({ isPublic: v })}
                 hint={profile.isPublic ? 'Visible dans la communauté.' : 'Personne ne voit ton profil.'}
               />
               {SECTIONS.map(([key, label]) => (
                 <Switch key={key} label={`Montrer : ${label.toLowerCase()}`} checked={profile.settings[key] !== false} disabled={!profile.isPublic} onChange={(v) => setSetting(key, v)} />
               ))}
             </div>
+            {saveError && <p className="small" style={{ color: 'var(--danger)', marginTop: 8 }}>{saveError}</p>}
             <p className="tiny dim" style={{ marginTop: 8 }}>Ta collection publique se met à jour toute seule quand tu ajoutes ou retires une carte.</p>
           </section>
         </>

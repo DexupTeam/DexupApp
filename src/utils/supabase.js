@@ -22,11 +22,16 @@ export const SYNC_KEYS = new Set(['owned_cards', 'favorite_cards', 'favorite_set
 
 // ─── Auth helpers ─────────────────────────────────────────────────────────────
 
-/** Retourne l'ID de l'utilisateur connecté, ou null. */
+/**
+ * Retourne l'ID de l'utilisateur connecté, ou null. Lu dans la session locale (getSession) et non
+ * redemandé au serveur (getUser) : appelé à chaque écriture, getUser gardait le verrou de session
+ * le temps d'un aller-retour réseau, et le rafraîchissement automatique du jeton échouait alors
+ * (« Acquiring an exclusive Navigator LockManager lock … immediately failed »).
+ */
 export async function getAuthUserId() {
   if (!supabase) return null;
-  const { data: { user } } = await supabase.auth.getUser();
-  return user?.id ?? null;
+  const { data: { session } } = await supabase.auth.getSession();
+  return session?.user?.id ?? null;
 }
 
 /** Retourne la session en cours, ou null. */
