@@ -317,7 +317,7 @@ Le déploiement se fait par Netlify à chaque push sur `main` (commande `npm run
 
 ## Auteur
 
-Fait avec ❤️ par **Paul Guttin**
+Fait avec ❤️ par **Paul Guttin** (j'adore le caca)
 
 ---
 
