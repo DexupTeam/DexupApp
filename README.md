@@ -68,6 +68,12 @@
 - **Conventions** (onglet de l’Agenda) : salons et conventions pour collectionneurs en France et en Europe (pas les tournois compétitifs)
 - Cache partagé 24 h dans Supabase
 
+### Profil et communauté
+- **Onglet Profil** : photo de profil, bannière, nom affiché, pseudo, bio, 3 cartes mises en avant (avec ta photo perso si la carte en a une), visibilité, et les paramètres (langue des extensions, synchronisation, déconnexion, version)
+- **Communauté** : liste des profils publics (recherche par pseudo ou nom), et pour chacun ses 3 cartes, ses cartes possédées, ses listes et ses favoris, selon ce qu'il choisit de montrer ; « N cartes en commun avec toi »
+- Le profil publie un **instantané** de la collection (identifiants des cartes, listes, favoris, statistiques), republié automatiquement quand la collection change ; les données privées de `pokecollect_data` ne sont jamais exposées
+- Table `pokecollect_profiles` : à créer une fois avec [`docs/supabase-profiles.sql`](docs/supabase-profiles.sql). Sans elle, l'app affiche « Communauté bientôt disponible ». En mode invité (développement), une communauté de démonstration locale la remplace
+
 ### Compte et synchronisation
 - Inscription / connexion par email + mot de passe (Supabase Auth) ; l'app est privée
 - Collection, favoris, listes et produits possédés **synchronisés sur Supabase**, lisibles hors ligne grâce à la base locale
@@ -176,6 +182,7 @@ Seules les données utilisateur sont synchronisées. Le cache API reste local.
 |---|---|
 | `pokecollect_data` | Données par utilisateur (collection, favoris, listes, produits possédés) — RLS user-scoped |
 | `pokecollect_shared` | Cache partagé global (sets, cartes, actualités, conventions) — lecture publique |
+| `pokecollect_profiles` | Profils publics : pseudo, photo, bannière, bio, cartes mises en avant, instantané de la collection — lecture publique (profils publics), écriture par le propriétaire |
 
 `pokecollect_data` : RLS activé — chaque utilisateur n'accède qu'à ses propres données.  
 `pokecollect_shared` : lecture publique (anon), écriture réservée aux utilisateurs authentifiés.

@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { HashRouter, Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
-import { BookMarked, Home as HomeIcon, LayoutGrid, ScanLine, Search as SearchIcon } from 'lucide-react';
+import { BookMarked, Home as HomeIcon, LayoutGrid, ScanLine, Search as SearchIcon, UserRound } from 'lucide-react';
 import { LanguageProvider } from './utils/LanguageContext.jsx';
 import { hydrateFromRemote } from './utils/persist';
 import { supabase } from './utils/supabase';
 import { CollectionProvider, useCollection } from './store/collection';
+import { ProfileProvider, useProfile } from './store/profile';
 import Auth, { Splash } from './components/Auth';
 import CardSheet from './components/CardSheet';
 import Logo from './components/Logo';
-import { AccountSheet } from './components/sheets';
+import { Avatar } from './components/profile';
 import Home from './screens/Home';
 import Sets from './screens/Sets';
 import SetDetail from './screens/SetDetail';
@@ -18,6 +19,8 @@ import Binder from './screens/Binder';
 import ListDetail from './screens/ListDetail';
 import { Collection, Graded } from './screens/Collection';
 import Products from './screens/Products';
+import Profile from './screens/Profile';
+import Community, { PublicProfile } from './screens/Community';
 
 const TABS = [
   { path: '/', label: 'Accueil', Icon: HomeIcon, match: (p) => p === '/' || p.startsWith('/products') },
@@ -25,6 +28,7 @@ const TABS = [
   { path: '/scan', label: 'Scanner', Icon: ScanLine, match: (p) => p.startsWith('/scan'), primary: true },
   { path: '/search', label: 'Recherche', Icon: SearchIcon, match: (p) => p.startsWith('/search') },
   { path: '/binder', label: 'Classeur', Icon: BookMarked, match: (p) => p.startsWith('/binder') },
+  { path: '/profile', label: 'Profil', Icon: UserRound, match: (p) => p.startsWith('/profile') || p.startsWith('/community') },
 ];
 
 function TabBar() {
@@ -51,13 +55,14 @@ function TabBar() {
   );
 }
 
-function Sidebar({ email, onAccount }) {
+function Sidebar({ email }) {
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  const { profile } = useProfile();
   return (
     <aside className="sidebar">
       <div className="sidebar-brand"><Logo size={28} />Dexup</div>
-      {TABS.map(({ path, label, Icon, match }) => {
+      {TABS.filter((t) => t.path !== '/profile').map(({ path, label, Icon, match }) => {
         const active = match(pathname);
         return (
           <button
@@ -68,9 +73,12 @@ function Sidebar({ email, onAccount }) {
           </button>
         );
       })}
-      <button className="side-link sidebar-foot" onClick={onAccount}>
-        <Logo size={24} />
-        <span className="clamp1 small">{email ?? 'Mon compte'}</span>
+      <button
+        className={`side-link sidebar-foot${pathname.startsWith('/profile') || pathname.startsWith('/community') ? ' is-active' : ''}`}
+        onClick={() => navigate('/profile')}
+      >
+        <Avatar profile={profile} size={26} />
+        <span className="clamp1 small">{profile ? `@${profile.username}` : email ?? 'Mon profil'}</span>
       </button>
     </aside>
   );
@@ -86,23 +94,20 @@ function RemoteHydration({ userId }) {
 }
 
 function Shell({ session }) {
-  const [account, setAccount] = useState(false);
-  const openAccount = () => setAccount(true);
   const { pathname } = useLocation();
   const { closeCard } = useCollection();
 
   // Une fiche ouverte ne doit pas rester par-dessus la page suivante.
   useEffect(() => {
     closeCard();
-    setAccount(false);
   }, [pathname, closeCard]);
 
   return (
     <div className="app">
-      <Sidebar email={session.user?.email} onAccount={openAccount} />
+      <Sidebar email={session.user?.email} />
       <main className="main">
         <Routes>
-          <Route path="/" element={<Home onAccount={openAccount} />} />
+          <Route path="/" element={<Home />} />
           <Route path="/sets" element={<Sets />} />
           <Route path="/sets/:setId" element={<SetDetail />} />
           <Route path="/search" element={<Search />} />
@@ -112,12 +117,14 @@ function Shell({ session }) {
           <Route path="/binder/graded" element={<Graded />} />
           <Route path="/binder/list/:listId" element={<ListDetail />} />
           <Route path="/products" element={<Products />} />
+          <Route path="/profile" element={<Profile email={session.user?.email} />} />
+          <Route path="/community" element={<Community />} />
+          <Route path="/community/:username" element={<PublicProfile />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </main>
       <TabBar />
       <CardSheet />
-      {account && <AccountSheet session={session} onClose={() => setAccount(false)} />}
     </div>
   );
 }
@@ -145,7 +152,9 @@ export default function App() {
         <CollectionProvider>
           {!guestMode && <RemoteHydration userId={session.user.id} />}
           <Splash />
-          <Shell session={session} />
+          <ProfileProvider userId={session.user.id} guest={guestMode}>
+            <Shell session={session} />
+          </ProfileProvider>
         </CollectionProvider>
       </LanguageProvider>
     </HashRouter>
