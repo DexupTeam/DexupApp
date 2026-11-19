@@ -465,7 +465,9 @@ button.list-row:active, .list-row.tap:active { transform: scale(0.99); }
 .profile-id > .grow { padding-bottom: 6px; }
 .profile-id .avatar { border: 3px solid var(--bg, #f5f5f5); box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12); }
 .profile-bio { font-size: 14px; line-height: 1.45; color: var(--ink-2); margin-bottom: 10px; white-space: pre-line; }
-.showcase { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px 10px; max-width: 520px; }
+.showcase { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px 10px; }
+/* Grand écran : autant de cartes par ligne que la largeur le permet (≈ 150 px chacune). */
+@media (min-width: 700px) { .showcase { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 16px 14px; } }
 .showcase-card { display: flex; flex-direction: column; gap: 4px; text-align: left; min-width: 0; }
 .showcase-card b { font-size: 12.5px; font-weight: 600; }
 .showcase-img { position: relative; display: block; aspect-ratio: 63 / 88; border-radius: 8px; overflow: hidden; background: var(--panel); box-shadow: 0 10px 22px rgba(0, 0, 0, 0.14); transition: transform 0.15s; }
@@ -483,7 +485,7 @@ button.list-row:active, .list-row.tap:active { transform: scale(0.99); }
 .banner-pick { display: block; width: 100%; aspect-ratio: 3 / 1; border-radius: var(--r); overflow: hidden; border: 1px dashed var(--ink-3); background: var(--panel); color: var(--ink-2); }
 .banner-pick img { width: 100%; height: 100%; object-fit: cover; }
 .pick-check { position: absolute; top: 6px; right: 6px; width: 26px; height: 26px; border-radius: 50%; background: var(--signal); color: #fff; display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 13px; font-weight: 700; z-index: 2; }
-.fav-set { display: inline-flex; align-items: center; gap: 8px; max-width: 100%; padding: 6px 12px 6px 10px; margin-bottom: 10px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); }
+.fav-set { display: inline-flex; align-items: center; gap: 8px; max-width: 100%; padding: 6px 12px 6px 10px; margin-bottom: 10px; border-radius: var(--r-sm); border: 1px solid var(--line); background: var(--surface); }
 .fav-set img { height: 22px; max-width: 70px; object-fit: contain; }
 .profile-action { flex-shrink: 0; padding-bottom: 6px; }
 /* Petits écrans : la photo rétrécit pour laisser la place au nom et aux boutons Suivre / Partager. */

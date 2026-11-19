@@ -8,7 +8,8 @@ import { pushAllToRemote } from '../utils/persist';
 import { signOut, supabase } from '../utils/supabase';
 import { cardSnapshot, DEFAULT_SETTINGS, getFollowerCount, USERNAME_RE } from '../lib/community';
 import { AVATAR, BANNER, cardImage, croppedFromFile } from '../lib/photos';
-import { loadCardsByIds, useSets } from '../lib/tcg';
+import { formatEuro, loadCardsByIds, useSets } from '../lib/tcg';
+import { useWallet } from '../lib/prices';
 import { getLocalizedSetName } from '../utils/setNames';
 import { Avatar, ProfileHeader, SHOWCASE_MAX, ShareButton, Showcase } from '../components/profile';
 import { CardPlaceholder } from '../components/cards';
@@ -192,11 +193,18 @@ function EditProfileSheet({ profile, onClose }) {
 }
 
 // ─── Choix des 3 cartes mises en avant ───────────────────────────────────────
+const PICKER_SORTS = [{ value: 'value', label: 'Valeur' }, { value: 'name', label: 'Nom' }, { value: 'recent', label: 'Extension' }];
+
 function ShowcasePicker({ current, onClose }) {
   const { owned, customCards, cardPhotos } = useCollection();
   const { save } = useProfile();
+  const { sets } = useSets();
+  // Valeur de chaque carte (prix saisi, sinon tendance Cardmarket), comme dans « Ma collection ».
+  const wallet = useWallet(owned);
+  const values = wallet?.values;
   const [cards, setCards] = useState(null);
   const [query, setQuery] = useState('');
+  const [sort, setSort] = useState('value');
   const [picked, setPicked] = useState(() => current.map((c) => c.id));
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState(null);
@@ -213,10 +221,14 @@ function ShowcasePicker({ current, onClose }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const rank = useMemo(() => Object.fromEntries(sets.map((s, i) => [s.id, i])), [sets]);
   const shown = useMemo(() => {
     const q = query.trim().toLowerCase();
-    return (cards || []).filter((c) => !q || c.name.toLowerCase().includes(q) || (c.set?.name || '').toLowerCase().includes(q));
-  }, [cards, query]);
+    const list = (cards || []).filter((c) => !q || c.name.toLowerCase().includes(q) || (c.set?.name || '').toLowerCase().includes(q));
+    if (sort === 'value') return [...list].sort((a, b) => (values?.[b.id] ?? -1) - (values?.[a.id] ?? -1) || a.name.localeCompare(b.name));
+    if (sort === 'recent') return [...list].sort((a, b) => (rank[a.set?.id] ?? 9999) - (rank[b.set?.id] ?? 9999) || a.name.localeCompare(b.name));
+    return list; // déjà par nom
+  }, [cards, query, sort, values, rank]);
 
   const toggle = (id) => setPicked((p) => (p.includes(id) ? p.filter((x) => x !== id) : p.length < SHOWCASE_MAX ? [...p, id] : p));
 
@@ -247,6 +259,8 @@ function ShowcasePicker({ current, onClose }) {
         <p className="small muted">Jusqu'à {SHOWCASE_MAX} cartes, dans l'ordre où tu les touches. Sans vitrine, ton profil montre tes favoris.</p>
         {error && <p className="small" style={{ color: 'var(--danger)' }}>{error}</p>}
         <SearchField value={query} onChange={setQuery} placeholder="Chercher dans ma collection" />
+        <Segmented options={PICKER_SORTS} value={sort} onChange={setSort} />
+        {sort === 'value' && wallet?.pending > 0 && <p className="tiny dim">Actualisation des prix… {wallet.pending} restante{wallet.pending > 1 ? 's' : ''}</p>}
         {!cards && <Loading label="Chargement de ta collection…" />}
         {cards && !cards.length && <Empty title="Aucune carte" text="Ajoute des cartes à ta collection pour les mettre en avant." />}
         <div className="card-grid">
@@ -259,7 +273,10 @@ function ShowcasePicker({ current, onClose }) {
                   {image ? <img src={image} alt="" loading="lazy" /> : <CardPlaceholder card={card} />}
                   {n >= 0 && <span className="pick-check">{n + 1}</span>}
                 </span>
-                <span className="ctile-cap"><b className="clamp1">{card.name}</b><span className="clamp1">{card.set?.label || card.set?.name}</span></span>
+                <span className="ctile-cap">
+                  <b className="clamp1">{card.name}</b>
+                  <span className="clamp1">{sort === 'value' ? (values?.[card.id] != null ? formatEuro(values[card.id]) : 'Non évaluée') : card.set?.label || card.set?.name}</span>
+                </span>
               </button>
             );
           })}
