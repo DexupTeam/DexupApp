@@ -256,7 +256,10 @@ function ShowcasePicker({ current, onClose }) {
       footer={<button className="btn btn-violet grow" disabled={saving} onClick={submit}>Enregistrer ({picked.length} / {SHOWCASE_MAX})</button>}
     >
       <div className="stack" style={{ gap: 12 }}>
-        <p className="small muted">Jusqu'à {SHOWCASE_MAX} cartes, dans l'ordre où tu les touches. Sans vitrine, ton profil montre tes favoris.</p>
+        <div className="row" style={{ justifyContent: 'space-between', alignItems: 'flex-start', gap: 12 }}>
+          <p className="small muted">Jusqu'à {SHOWCASE_MAX} cartes, dans l'ordre où tu les touches. Sans vitrine, ton profil montre tes favoris.</p>
+          {picked.length > 0 && <button className="link" style={{ flexShrink: 0 }} onClick={() => setPicked([])}>Tout désélectionner</button>}
+        </div>
         {error && <p className="small" style={{ color: 'var(--danger)' }}>{error}</p>}
         <SearchField value={query} onChange={setQuery} placeholder="Chercher dans ma collection" />
         <Segmented options={PICKER_SORTS} value={sort} onChange={setSort} />

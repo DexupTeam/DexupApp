@@ -117,11 +117,12 @@ export function ProfileHeader({ profile, action, followers, children }) {
         {action && <div className="profile-action row" style={{ gap: 8 }}>{action}</div>}
       </div>
       {profile.bio && <p className="profile-bio">{profile.bio}</p>}
-      {profile.settings?.favoriteSet && <FavoriteSet setId={profile.settings.favoriteSet} />}
+      {/* Statistiques à gauche, set préféré à droite sur la même ligne (en dessous si la place manque). */}
       <div className="row" style={{ gap: 6, flexWrap: 'wrap' }}>
         {followers != null && <span className="tag">{plural(followers, 'abonné')}</span>}
         {profileStats(profile).map((s) => <span key={s} className="tag">{s}</span>)}
         {!profile.isPublic && <span className="tag tag-gold">Profil privé</span>}
+        {profile.settings?.favoriteSet && <FavoriteSet setId={profile.settings.favoriteSet} />}
       </div>
       {children && <div className="row" style={{ gap: 8, marginTop: 14, flexWrap: 'wrap' }}>{children}</div>}
     </div>
