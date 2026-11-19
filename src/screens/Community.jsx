@@ -4,9 +4,10 @@ import { Heart, Layers, ListChecks, Lock, SearchX, Users, WifiOff } from 'lucide
 import { useCollection } from '../store/collection';
 import { useProfile } from '../store/profile';
 import { CommunityUnavailable, getProfile, listProfiles } from '../lib/community';
-import { loadCardsByIds, setIdOf, useSets } from '../lib/tcg';
+import { loadCardsByIds } from '../lib/tcg';
 import { Avatar, ProfileHeader, Showcase, profileStats } from '../components/profile';
-import { CardPlaceholder, CardsView } from '../components/cards';
+import { CardPlaceholder } from '../components/cards';
+import CardBrowser from '../components/CardBrowser';
 import { PokeBall } from '../components/PokeBall';
 import { Empty, Loading, Page, SearchField, Segmented, Tappable, TopBar, plural } from '../components/ui';
 
@@ -96,7 +97,6 @@ export default function Community() {
 
 // ─── Profil d'un collectionneur ──────────────────────────────────────────────
 function OwnedCards({ collection }) {
-  const { sets } = useSets();
   const [state, setState] = useState({ loading: true, cards: [], failed: [] });
   const ids = useMemo(() => Object.keys(collection.owned || {}), [collection.owned]);
 
@@ -111,18 +111,12 @@ function OwnedCards({ collection }) {
     return () => { alive = false; };
   }, [ids, collection.custom]);
 
-  // Les extensions les plus récentes d'abord, comme la page des extensions.
-  const order = useMemo(() => Object.fromEntries(sets.map((s, i) => [s.id, i])), [sets]);
-  const sorted = useMemo(() => [...state.cards].sort((a, b) => (
-    (order[setIdOf(a.id)] ?? 9999) - (order[setIdOf(b.id)] ?? 9999) || a.name.localeCompare(b.name)
-  )), [state.cards, order]);
-
   if (state.loading) return <Loading label="Chargement de sa collection…" />;
-  if (!sorted.length) return <Empty icon={Layers} title="Aucune carte" />;
+  if (!state.cards.length) return <Empty icon={Layers} title="Aucune carte" />;
   return (
     <>
       {state.failed.length > 0 && <p className="tiny dim" style={{ marginBottom: 10 }}>Certaines extensions n'ont pas pu être chargées.</p>}
-      <CardsView cards={sorted} caption="name" dimMissing={false} />
+      <CardBrowser cards={state.cards} />
     </>
   );
 }
@@ -136,7 +130,7 @@ function Lists({ lists }) {
       <>
         <button className="link" style={{ marginBottom: 12 }} onClick={() => setOpen(null)}>← Toutes ses listes</button>
         <h3 className="h2" style={{ marginBottom: 12 }}>{current.name}</h3>
-        {current.cards.length ? <CardsView cards={current.cards} caption="name" dimMissing={false} /> : <Empty title="Liste vide" />}
+        {current.cards.length ? <CardBrowser cards={current.cards} /> : <Empty title="Liste vide" />}
       </>
     );
   }
@@ -208,7 +202,7 @@ export function PublicProfile() {
               {active === 'collection' && <OwnedCards collection={collection} />}
               {active === 'lists' && <Lists lists={collection.lists} />}
               {active === 'favorites' && (collection.favorites.length
-                ? <CardsView cards={collection.favorites} caption="name" dimMissing={false} />
+                ? <CardBrowser cards={collection.favorites} />
                 : <Empty icon={Heart} title="Aucun favori" />)}
             </>
           ) : (
