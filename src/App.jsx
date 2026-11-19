@@ -46,8 +46,8 @@ function TabBar() {
             aria-label={label}
             onClick={() => navigate(path)}
           >
-            <Icon size={primary ? 26 : 21} strokeWidth={active ? 2.4 : 2} />
-            {!primary && <span>{label}</span>}
+            {/* Barre du bas (téléphone) : icônes seules ; le nom reste lu par les lecteurs d'écran. */}
+            <Icon size={primary ? 26 : 23} strokeWidth={active ? 2.4 : 1.9} />
           </button>
         );
       })}

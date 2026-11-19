@@ -106,7 +106,9 @@ b { font-weight: 600; }
   color: var(--ink-3); font-family: var(--mono); font-size: 8.5px; text-transform: uppercase; letter-spacing: 0;
   transition: color 0.15s;
 }
-.tab.is-active { color: var(--ink); }
+.tab.is-active { color: var(--ink); position: relative; }
+/* Onglet actif : un point sous l'icône, faute de libellé. */
+.tab.is-active:not(.tab-scan)::after { content: ''; position: absolute; bottom: 7px; width: 4px; height: 4px; border-radius: 50%; background: var(--signal); }
 .tab.is-active svg { animation: bump 0.3s ease; }
 .tab-scan { flex: 0 0 auto; width: 52px; height: 52px; margin: 0 4px; border-radius: var(--r); background: var(--ink); color: #fff; }
 .tab-scan.is-active { color: #fff; box-shadow: 0 0 0 3px var(--surface), 0 0 0 4px var(--ink); }
