@@ -485,3 +485,4 @@ button.list-row:active, .list-row.tap:active { transform: scale(0.99); }
 .pick-check { position: absolute; top: 6px; right: 6px; width: 26px; height: 26px; border-radius: 50%; background: var(--signal); color: #fff; display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 13px; font-weight: 700; z-index: 2; }
 .fav-set { display: inline-flex; align-items: center; gap: 8px; max-width: 100%; padding: 6px 12px 6px 10px; margin-bottom: 10px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); }
 .fav-set img { height: 22px; max-width: 70px; object-fit: contain; }
+.profile-action { flex-shrink: 0; padding-bottom: 6px; }

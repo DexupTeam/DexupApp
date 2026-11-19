@@ -74,17 +74,21 @@ function FavoriteSet({ setId }) {
   );
 }
 
-/** Bannière, photo, nom, pseudo, bio et statistiques. `children` : boutons sous le nom. */
-export function ProfileHeader({ profile, children }) {
+/**
+ * Bannière, photo, nom, pseudo, bio et statistiques. `action` : bouton à droite du nom (partage),
+ * `children` : boutons sous les statistiques.
+ */
+export function ProfileHeader({ profile, action, children }) {
   return (
     <div className="profile-head">
       <div className="profile-banner">{profile.banner && <img src={profile.banner} alt="" />}</div>
       <div className="profile-id">
         <Avatar profile={profile} size={112} />
         <div className="grow" style={{ minWidth: 0 }}>
-          <h1 className="h1 clamp1" style={{ fontSize: 26 }}>{profile.displayName}</h1>
+          <h1 className="h1 clamp2" style={{ fontSize: 26 }}>{profile.displayName}</h1>
           <p className="small muted clamp1">@{profile.username}</p>
         </div>
+        {action && <div className="profile-action">{action}</div>}
       </div>
       {profile.bio && <p className="profile-bio">{profile.bio}</p>}
       {profile.settings?.favoriteSet && <FavoriteSet setId={profile.settings.favoriteSet} />}

@@ -325,9 +325,7 @@ export default function Profile({ email }) {
 
   return (
     <Page>
-      <TopBar title="Profil" back="/community">
-        {profile && status === 'ready' && <ShareButton profile={profile} />}
-      </TopBar>
+      <TopBar title="Profil" back="/community" />
       {guest && <p className="tiny dim" style={{ marginBottom: 12 }}>Mode invité : profils de démonstration enregistrés sur cet appareil.</p>}
 
       {status === 'loading' && <Loading />}
@@ -343,7 +341,7 @@ export default function Profile({ email }) {
 
       {status === 'ready' && profile && (
         <>
-          <ProfileHeader profile={profile}>
+          <ProfileHeader profile={profile} action={<ShareButton profile={profile} />}>
             <button className="btn btn-dark btn-sm" onClick={() => setSheet('edit')}><Pencil size={15} /> Modifier</button>
             <button className="btn btn-ghost btn-sm" onClick={() => navigate(`/community/${profile.username}`)}><Eye size={15} /> Voir mon profil public</button>
           </ProfileHeader>

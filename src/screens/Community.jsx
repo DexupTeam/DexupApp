@@ -1,8 +1,9 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Heart, ListChecks, Lock, SearchX, Users, WifiOff } from 'lucide-react';
+import { Heart, Layers, ListChecks, Lock, SearchX, Users, WifiOff } from 'lucide-react';
 import { useCollection } from '../store/collection';
 import { useProfile } from '../store/profile';
+import { loadCardsByIds } from '../lib/tcg';
 import { CommunityUnavailable, getProfile, listProfiles } from '../lib/community';
 import { Avatar, ProfileHeader, SHOWCASE_MAX, ShareButton, Showcase, profileStats } from '../components/profile';
 import { CardPlaceholder } from '../components/cards';
@@ -95,6 +96,31 @@ export default function Community() {
 }
 
 // ─── Profil d'un collectionneur ──────────────────────────────────────────────
+function OwnedCards({ collection }) {
+  const [state, setState] = useState({ loading: true, cards: [], failed: [] });
+  const ids = useMemo(() => Object.keys(collection.owned || {}), [collection.owned]);
+
+  useEffect(() => {
+    let alive = true;
+    setState({ loading: true, cards: [], failed: [] });
+    // Les cartes perso du collectionneur sont publiées avec leur description ; les autres se chargent.
+    const custom = new Map((collection.custom || []).map((c) => [c.id, c]));
+    loadCardsByIds(ids.filter((id) => !custom.has(id))).then(({ map, failed }) => {
+      if (alive) setState({ loading: false, cards: [...Object.values(map), ...custom.values()], failed });
+    });
+    return () => { alive = false; };
+  }, [ids, collection.custom]);
+
+  if (state.loading) return <Loading label="Chargement de sa collection…" />;
+  if (!state.cards.length) return <Empty icon={Layers} title="Aucune carte" />;
+  return (
+    <>
+      {state.failed.length > 0 && <p className="tiny dim" style={{ marginBottom: 10 }}>Certaines extensions n'ont pas pu être chargées.</p>}
+      <CardBrowser cards={state.cards} />
+    </>
+  );
+}
+
 function Lists({ lists }) {
   const [open, setOpen] = useState(null);
   if (!lists?.length) return <Empty icon={ListChecks} title="Aucune liste" />;
@@ -144,8 +170,9 @@ export function PublicProfile() {
   const hasShowcase = profile?.showcase.length > 0;
   const favorites = collection.favorites || [];
   const featured = hasShowcase ? profile.showcase : favorites;
-  // Sous la vitrine : ses listes, et ses favoris s'ils ne sont pas déjà en vitrine.
+  // Sous la vitrine : ses cartes possédées, ses listes, et ses favoris s'ils ne sont pas déjà en vitrine.
   const tabs = profile ? [
+    Object.keys(collection.owned || {}).length > 0 && { value: 'collection', label: 'Cartes possédées' },
     collection.lists?.length > 0 && { value: 'lists', label: 'Listes' },
     hasShowcase && favorites.length > 0 && { value: 'favorites', label: 'Favoris' },
   ].filter(Boolean) : [];
@@ -158,16 +185,14 @@ export function PublicProfile() {
 
   return (
     <Page>
-      <TopBar title={profile ? profile.displayName : `@${username}`} back="/community">
-        {profile && <ShareButton profile={profile} />}
-      </TopBar>
+      <TopBar title={profile ? profile.displayName : `@${username}`} back="/community" />
       {loading && <Loading />}
       {!loading && (error || !profile) && (
         <Empty icon={Lock} title="Profil introuvable" text={error || 'Ce profil n\'existe pas ou n\'est pas public.'} />
       )}
       {profile && (
         <>
-          <ProfileHeader profile={profile} />
+          <ProfileHeader profile={profile} action={<ShareButton profile={profile} />} />
           {!isMe && inCommon > 0 && <p className="small muted" style={{ margin: '-6px 0 16px' }}>{plural(inCommon, 'carte')} en commun avec toi</p>}
 
           {featured.length > 0 ? (
@@ -184,6 +209,7 @@ export function PublicProfile() {
               {tabs.length > 1
                 ? <div style={{ marginBottom: 14 }}><Segmented options={tabs} value={active} onChange={setTab} /></div>
                 : <h2 className="h2" style={{ marginBottom: 12 }}>{tabs[0].label}</h2>}
+              {active === 'collection' && <OwnedCards collection={collection} />}
               {active === 'lists' && <Lists lists={collection.lists} />}
               {active === 'favorites' && <CardBrowser cards={favorites} />}
             </section>
