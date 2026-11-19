@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Check, Share2 } from 'lucide-react';
+import { Check, Share2, UserCheck, UserPlus } from 'lucide-react';
 import { useCollection } from '../store/collection';
+import { useProfile } from '../store/profile';
 import { useLang } from '../utils/LanguageContext.jsx';
 import { getLocalizedSetName } from '../utils/setNames';
 import { formatEuro, setLogoUrl, useSets } from '../lib/tcg';
@@ -57,6 +58,31 @@ export function ShareButton({ profile }) {
   );
 }
 
+/**
+ * Suivre / ne plus suivre un collectionneur. Rien pour son propre profil, ni tant que la table
+ * des abonnements n'existe pas. `onChange(follow)` : après un changement réussi.
+ */
+export function FollowButton({ profile, onChange }) {
+  const { userId, following, followsStatus, toggleFollow } = useProfile();
+  const [error, setError] = useState(false);
+  if (!profile || profile.userId === userId || followsStatus === 'unavailable' || followsStatus === 'loading') return null;
+  const on = following.has(profile.userId);
+  const click = async () => {
+    setError(false);
+    try { onChange?.(await toggleFollow(profile.userId)); } catch (_) { setError(true); }
+  };
+  return (
+    <button
+      className={`btn btn-sm follow-btn ${on ? 'btn-ghost' : 'btn-violet'}`} onClick={click} aria-pressed={on}
+      aria-label={on ? `Ne plus suivre ${profile.displayName}` : `Suivre ${profile.displayName}`}
+      title={error ? 'Échec, réessaie' : undefined}
+    >
+      {on ? <UserCheck size={16} /> : <UserPlus size={16} />}
+      <span className="follow-label">{on ? 'Suivi' : 'Suivre'}</span>
+    </button>
+  );
+}
+
 /** L'extension préférée du collectionneur : logo et nom, ouvre l'extension. */
 function FavoriteSet({ setId }) {
   const navigate = useNavigate();
@@ -78,7 +104,7 @@ function FavoriteSet({ setId }) {
  * Bannière, photo, nom, pseudo, bio et statistiques. `action` : bouton à droite du nom (partage),
  * `children` : boutons sous les statistiques.
  */
-export function ProfileHeader({ profile, action, children }) {
+export function ProfileHeader({ profile, action, followers, children }) {
   return (
     <div className="profile-head">
       <div className="profile-banner">{profile.banner && <img src={profile.banner} alt="" />}</div>
@@ -88,11 +114,12 @@ export function ProfileHeader({ profile, action, children }) {
           <h1 className="h1 clamp2" style={{ fontSize: 26 }}>{profile.displayName}</h1>
           <p className="small muted clamp1">@{profile.username}</p>
         </div>
-        {action && <div className="profile-action">{action}</div>}
+        {action && <div className="profile-action row" style={{ gap: 8 }}>{action}</div>}
       </div>
       {profile.bio && <p className="profile-bio">{profile.bio}</p>}
       {profile.settings?.favoriteSet && <FavoriteSet setId={profile.settings.favoriteSet} />}
       <div className="row" style={{ gap: 6, flexWrap: 'wrap' }}>
+        {followers != null && <span className="tag">{plural(followers, 'abonné')}</span>}
         {profileStats(profile).map((s) => <span key={s} className="tag">{s}</span>)}
         {!profile.isPublic && <span className="tag tag-gold">Profil privé</span>}
       </div>

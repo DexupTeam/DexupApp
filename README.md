@@ -70,7 +70,8 @@
 
 ### Profil et communauté
 - **Profil** (ta photo en haut de l'accueil et de la Communauté) : photo de profil, bannière, nom affiché, pseudo, bio, set préféré, **vitrine** de 9 cartes au plus (avec ta photo perso si la carte en a une), visibilité, partage du lien du profil, et les paramètres (langue des extensions, synchronisation, déconnexion, version)
-- **Communauté** (onglet de la barre) : liste des profils publics (recherche par pseudo ou nom) ; chaque profil montre sa vitrine (ou, à défaut, ses favoris), puis ses cartes possédées, ses listes et ses favoris, avec recherche, filtre par extension, filtre « je l'ai / il me manque » et tri par extension, nom ou valeur ; « N cartes en commun avec toi » ; bouton de partage
+- **Communauté** (onglet de la barre) : liste des profils publics (recherche par pseudo ou nom) ; chaque profil montre sa vitrine (ou, à défaut, ses favoris), puis ses cartes possédées, ses listes et ses favoris, avec recherche, filtre par extension, filtre « je l'ai / il me manque » et tri par extension, nom ou valeur ; « N cartes en commun avec toi » ; boutons Suivre et Partager
+- **Abonnements** : on suit un collectionneur depuis son profil ; l'onglet Communauté s'ouvre sur « Suivis » (ou « Tous » tant qu'on ne suit personne), et chaque profil affiche son nombre d'abonnés. Table `pokecollect_follows` à créer avec [`docs/supabase-follows.sql`](docs/supabase-follows.sql) ; sans elle, les boutons Suivre n'apparaissent pas
 - Le profil publie un **instantané** de la collection (identifiants des cartes, listes, favoris, statistiques), republié automatiquement quand la collection change ; les données privées de `pokecollect_data` ne sont jamais exposées
 - Table `pokecollect_profiles` : à créer une fois avec [`docs/supabase-profiles.sql`](docs/supabase-profiles.sql). Sans elle, l'app affiche « Communauté bientôt disponible ». En mode invité (développement), une communauté de démonstration locale la remplace
 
@@ -182,6 +183,7 @@ Seules les données utilisateur sont synchronisées. Le cache API reste local.
 |---|---|
 | `pokecollect_data` | Données par utilisateur (collection, favoris, listes, produits possédés) — RLS user-scoped |
 | `pokecollect_shared` | Cache partagé global (sets, cartes, actualités, conventions) — lecture publique |
+| `pokecollect_follows` | Abonnements (qui suit qui) — lecture publique, chacun ne suit qu'en son nom |
 | `pokecollect_profiles` | Profils publics : pseudo, photo, bannière, bio, cartes mises en avant, instantané de la collection — lecture publique (profils publics), écriture par le propriétaire |
 
 `pokecollect_data` : RLS activé — chaque utilisateur n'accède qu'à ses propres données.  

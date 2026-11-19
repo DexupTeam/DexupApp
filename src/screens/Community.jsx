@@ -4,8 +4,8 @@ import { Heart, Layers, ListChecks, Lock, SearchX, Users, WifiOff } from 'lucide
 import { useCollection } from '../store/collection';
 import { useProfile } from '../store/profile';
 import { loadCardsByIds } from '../lib/tcg';
-import { CommunityUnavailable, getProfile, listProfiles } from '../lib/community';
-import { Avatar, ProfileHeader, SHOWCASE_MAX, ShareButton, Showcase, profileStats } from '../components/profile';
+import { CommunityUnavailable, getFollowerCount, getProfile, listProfiles, listProfilesByIds } from '../lib/community';
+import { Avatar, FollowButton, ProfileHeader, SHOWCASE_MAX, ShareButton, Showcase, profileStats } from '../components/profile';
 import { CardPlaceholder } from '../components/cards';
 import CardBrowser from '../components/CardBrowser';
 import { PokeBall } from '../components/PokeBall';
@@ -25,22 +25,32 @@ function ShowcaseThumbs({ cards }) {
 // ─── Liste des collectionneurs ───────────────────────────────────────────────
 export default function Community() {
   const navigate = useNavigate();
-  const { profile: me, status: myStatus } = useProfile();
+  const { profile: me, status: myStatus, following, followsStatus } = useProfile();
   const [query, setQuery] = useState('');
+  const [scope, setScope] = useState(null); // following | all ; null = choix par défaut
   const [state, setState] = useState({ loading: true, profiles: [], error: null });
   const [attempt, setAttempt] = useState(0);
+  // Par défaut : les comptes suivis s'il y en a, sinon tout le monde.
+  const view = scope ?? (following.size > 0 ? 'following' : 'all');
+  const followingKey = [...following].sort().join(',');
 
   useEffect(() => {
+    if (followsStatus === 'loading') return undefined;
     let alive = true;
     setState((s) => ({ ...s, loading: true }));
     // Petite attente pendant la frappe : une requête par pause, pas par lettre.
     const timer = setTimeout(() => {
-      listProfiles({ query })
+      const q = query.trim().toLowerCase();
+      const request = view === 'following'
+        ? listProfilesByIds([...following]).then((list) => list.filter((p) => !q || p.username.includes(q) || p.displayName.toLowerCase().includes(q)))
+        : listProfiles({ query });
+      request
         .then((profiles) => alive && setState({ loading: false, profiles, error: null }))
         .catch((e) => alive && setState({ loading: false, profiles: [], error: e instanceof CommunityUnavailable ? 'unavailable' : 'network' }));
     }, query ? 300 : 0);
     return () => { alive = false; clearTimeout(timer); };
-  }, [query, attempt]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [query, attempt, view, followingKey, followsStatus]);
 
   const { loading, profiles, error } = state;
   return (
@@ -63,8 +73,14 @@ export default function Community() {
         </Tappable>
       )}
 
-      <div style={{ marginBottom: 14 }}>
-        <SearchField value={query} onChange={setQuery} placeholder="Chercher un collectionneur" />
+      <div className="stack" style={{ gap: 10, marginBottom: 14 }}>
+        {followsStatus !== 'unavailable' && (
+          <Segmented
+            value={view} onChange={setScope}
+            options={[{ value: 'following', label: `Suivis${following.size ? ` (${following.size})` : ''}` }, { value: 'all', label: 'Tous' }]}
+          />
+        )}
+        <SearchField value={query} onChange={setQuery} placeholder={view === 'following' ? 'Chercher parmi tes abonnements' : 'Chercher un collectionneur'} />
       </div>
 
       {loading && !profiles.length && <Loading />}
@@ -74,9 +90,13 @@ export default function Community() {
           <button className="btn btn-dark" onClick={() => setAttempt((n) => n + 1)}>Réessayer</button>
         </Empty>
       )}
-      {!loading && !error && !profiles.length && (
+      {!loading && !error && !profiles.length && (view === 'following' && !query ? (
+        <Empty icon={Users} title="Tu ne suis personne" text="Ouvre le profil d'un collectionneur et touche « Suivre » pour le retrouver ici.">
+          <button className="btn btn-dark" onClick={() => setScope('all')}>Voir tous les collectionneurs</button>
+        </Empty>
+      ) : (
         <Empty icon={query ? SearchX : Users} title={query ? 'Aucun collectionneur' : 'Personne pour l\'instant'} text={query ? 'Essaie un autre pseudo.' : 'Sois le premier à rendre ton profil public.'} />
-      )}
+      ))}
 
       <div className="stack">
         {profiles.map((p) => (
@@ -153,10 +173,12 @@ export function PublicProfile() {
   const { owned } = useCollection();
   const [state, setState] = useState({ loading: true, profile: null, error: null });
   const [tab, setTab] = useState(null);
+  const [followers, setFollowers] = useState(null);
 
   useEffect(() => {
     let alive = true;
     setState({ loading: true, profile: null, error: null });
+    setFollowers(null);
     getProfile(username)
       .then((profile) => alive && setState({ loading: false, profile, error: null }))
       .catch((e) => alive && setState({ loading: false, profile: null, error: e.message }));
@@ -165,6 +187,13 @@ export function PublicProfile() {
 
   const { loading, profile, error } = state;
   const isMe = profile && me?.userId === profile.userId;
+
+  useEffect(() => {
+    if (!profile) return undefined;
+    let alive = true;
+    getFollowerCount(profile.userId).then((n) => alive && setFollowers(n)).catch(() => {});
+    return () => { alive = false; };
+  }, [profile]);
   const collection = profile?.collection || {};
   // En vitrine : les cartes choisies par le collectionneur, sinon ses favoris.
   const hasShowcase = profile?.showcase.length > 0;
@@ -192,7 +221,15 @@ export function PublicProfile() {
       )}
       {profile && (
         <>
-          <ProfileHeader profile={profile} action={<ShareButton profile={profile} />} />
+          <ProfileHeader
+            profile={profile} followers={followers}
+            action={(
+              <>
+                <FollowButton profile={profile} onChange={(follow) => setFollowers((n) => (n ?? 0) + (follow ? 1 : -1))} />
+                <ShareButton profile={profile} />
+              </>
+            )}
+          />
           {!isMe && inCommon > 0 && <p className="small muted" style={{ margin: '-6px 0 16px' }}>{plural(inCommon, 'carte')} en commun avec toi</p>}
 
           {featured.length > 0 ? (

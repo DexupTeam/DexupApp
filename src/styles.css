@@ -486,3 +486,11 @@ button.list-row:active, .list-row.tap:active { transform: scale(0.99); }
 .fav-set { display: inline-flex; align-items: center; gap: 8px; max-width: 100%; padding: 6px 12px 6px 10px; margin-bottom: 10px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); }
 .fav-set img { height: 22px; max-width: 70px; object-fit: contain; }
 .profile-action { flex-shrink: 0; padding-bottom: 6px; }
+/* Petits écrans : la photo rétrécit pour laisser la place au nom et aux boutons Suivre / Partager. */
+.profile-id > .avatar { width: min(112px, 27vw) !important; height: min(112px, 27vw) !important; }
+.follow-btn { height: 40px; }
+/* Téléphone : Suivre en icône seule, pour que le nom garde sa place à côté. */
+@media (max-width: 420px) {
+  .follow-btn { width: 40px; padding: 0; justify-content: center; }
+  .follow-label { display: none; }
+}

@@ -6,7 +6,7 @@ import { useProfile } from '../store/profile';
 import { useLang, LANGUAGES } from '../utils/LanguageContext.jsx';
 import { pushAllToRemote } from '../utils/persist';
 import { signOut, supabase } from '../utils/supabase';
-import { cardSnapshot, DEFAULT_SETTINGS, USERNAME_RE } from '../lib/community';
+import { cardSnapshot, DEFAULT_SETTINGS, getFollowerCount, USERNAME_RE } from '../lib/community';
 import { AVATAR, BANNER, cardImage, croppedFromFile } from '../lib/photos';
 import { loadCardsByIds, useSets } from '../lib/tcg';
 import { getLocalizedSetName } from '../utils/setNames';
@@ -312,7 +312,12 @@ function Settings({ email, guest }) {
 // ─── Écran ───────────────────────────────────────────────────────────────────
 export default function Profile({ email }) {
   const navigate = useNavigate();
-  const { status, profile, error, guest, save, remove, reload } = useProfile();
+  const { status, profile, error, guest, save, remove, reload, userId } = useProfile();
+  const [followers, setFollowers] = useState(null);
+  useEffect(() => {
+    if (status !== 'ready') return;
+    getFollowerCount(userId).then(setFollowers).catch(() => {});
+  }, [status, userId]);
   const [sheet, setSheet] = useState(null); // edit | showcase | delete
   const [saveError, setSaveError] = useState(null);
 
@@ -341,7 +346,7 @@ export default function Profile({ email }) {
 
       {status === 'ready' && profile && (
         <>
-          <ProfileHeader profile={profile} action={<ShareButton profile={profile} />}>
+          <ProfileHeader profile={profile} followers={followers} action={<ShareButton profile={profile} />}>
             <button className="btn btn-dark btn-sm" onClick={() => setSheet('edit')}><Pencil size={15} /> Modifier</button>
             <button className="btn btn-ghost btn-sm" onClick={() => navigate(`/community/${profile.username}`)}><Eye size={15} /> Voir mon profil public</button>
           </ProfileHeader>

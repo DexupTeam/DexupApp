@@ -184,3 +184,53 @@ export function buildSnapshot({ owned, lists, favCards, customCards }, settings)
 }
 
 export { cardSnapshot };
+
+// ─── Abonnements (table pokecollect_follows, voir docs/supabase-follows.sql) ──
+const FOLLOWS = 'pokecollect_follows';
+const DEMO_FOLLOWS_KEY = 'dexup_demo_follows';
+const demoFollows = () => { try { return JSON.parse(localStorage.getItem(DEMO_FOLLOWS_KEY)) || []; } catch (_) { return []; } };
+const demoFollowsWrite = (rows) => { try { localStorage.setItem(DEMO_FOLLOWS_KEY, JSON.stringify(rows)); } catch (_) {} };
+
+/** Identifiants des comptes que `userId` suit. */
+export async function getFollowing(userId) {
+  if (isDemo()) return demoFollows().filter((f) => f.follower === userId).map((f) => f.followee);
+  const { data, error } = await supabase.from(FOLLOWS).select('followee').eq('follower', userId);
+  check(error);
+  return (data || []).map((r) => r.followee);
+}
+
+export async function setFollowing(userId, targetId, follow) {
+  if (isDemo()) {
+    const rows = demoFollows().filter((f) => !(f.follower === userId && f.followee === targetId));
+    if (follow) rows.push({ follower: userId, followee: targetId });
+    demoFollowsWrite(rows);
+    return;
+  }
+  const { error } = follow
+    ? await supabase.from(FOLLOWS).insert({ follower: userId, followee: targetId })
+    : await supabase.from(FOLLOWS).delete().eq('follower', userId).eq('followee', targetId);
+  // Déjà suivi (double tap) : rien à faire.
+  if (error?.code === '23505') return;
+  check(error);
+}
+
+/** Nombre d'abonnés d'un compte. */
+export async function getFollowerCount(targetId) {
+  if (isDemo()) return demoFollows().filter((f) => f.followee === targetId).length;
+  const { count, error } = await supabase.from(FOLLOWS).select('follower', { count: 'exact', head: true }).eq('followee', targetId);
+  check(error);
+  return count ?? 0;
+}
+
+/** Profils publics des comptes donnés (les abonnements), les plus récemment actifs d'abord. */
+export async function listProfilesByIds(ids) {
+  if (!ids.length) return [];
+  if (isDemo()) {
+    return demoRead().filter((r) => ids.includes(r.user_id) && r.is_public)
+      .sort((a, b) => b.updated_at.localeCompare(a.updated_at)).map(fromRow);
+  }
+  const { data, error } = await supabase.from(TABLE).select(LIST_FIELDS).in('user_id', ids).eq('is_public', true)
+    .order('updated_at', { ascending: false });
+  check(error);
+  return (data || []).map(fromRow);
+}

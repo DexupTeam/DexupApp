@@ -3,7 +3,7 @@ import { useCollection } from './collection';
 import { useWallet } from '../lib/prices';
 import { setIdOf } from '../lib/tcg';
 import {
-  buildSnapshot, CommunityUnavailable, deleteMyProfile, getMyProfile, saveMyProfile, setDemoCommunity,
+  buildSnapshot, CommunityUnavailable, deleteMyProfile, getFollowing, getMyProfile, saveMyProfile, setDemoCommunity, setFollowing,
 } from '../lib/community';
 
 const Ctx = createContext(null);
@@ -22,6 +22,9 @@ export function ProfileProvider({ userId, guest, children }) {
   const wallet = useWallet(owned);
   const [state, setState] = useState({ status: 'loading', profile: null, error: null });
   const lastPublished = useRef(null);
+  // Comptes suivis : null tant que non chargés ; 'unavailable' si la table des abonnements manque.
+  const [following, setFollowingIds] = useState(null);
+  const [followsStatus, setFollowsStatus] = useState('loading');
 
   setDemoCommunity(guest);
 
@@ -36,6 +39,30 @@ export function ProfileProvider({ userId, guest, children }) {
   }, [userId]);
 
   useEffect(() => { load(); }, [load]);
+
+  useEffect(() => {
+    getFollowing(userId)
+      .then((ids) => { setFollowingIds(new Set(ids)); setFollowsStatus('ready'); })
+      .catch((e) => { setFollowingIds(new Set()); setFollowsStatus(e instanceof CommunityUnavailable ? 'unavailable' : 'error'); });
+  }, [userId]);
+
+  // Suivre / ne plus suivre : affiché tout de suite, annulé si le serveur refuse.
+  const toggleFollow = useCallback(async (targetId) => {
+    const follow = !following?.has(targetId);
+    const flip = (on) => setFollowingIds((set) => {
+      const next = new Set(set);
+      if (on) next.add(targetId); else next.delete(targetId);
+      return next;
+    });
+    flip(follow);
+    try {
+      await setFollowing(userId, targetId, follow);
+    } catch (e) {
+      flip(!follow);
+      throw e;
+    }
+    return follow;
+  }, [following, userId]);
 
   const save = useCallback(async (fields) => {
     const profile = await saveMyProfile(userId, fields);
@@ -79,6 +106,8 @@ export function ProfileProvider({ userId, guest, children }) {
     return () => clearTimeout(timer);
   }, [state.status, profile?.isPublic, snapshot, userId]);
 
-  const value = useMemo(() => ({ ...state, userId, guest, save, remove, reload: load, snapshot }), [state, userId, guest, save, remove, load, snapshot]);
+  const value = useMemo(() => ({
+    ...state, userId, guest, save, remove, reload: load, snapshot, following: following ?? new Set(), followsStatus, toggleFollow,
+  }), [state, userId, guest, save, remove, load, snapshot, following, followsStatus, toggleFollow]);
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }
