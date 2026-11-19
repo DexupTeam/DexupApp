@@ -8,8 +8,9 @@ import { pushAllToRemote } from '../utils/persist';
 import { signOut, supabase } from '../utils/supabase';
 import { cardSnapshot, DEFAULT_SETTINGS, USERNAME_RE } from '../lib/community';
 import { AVATAR, BANNER, cardImage, croppedFromFile } from '../lib/photos';
-import { loadCardsByIds } from '../lib/tcg';
-import { Avatar, ProfileHeader, Showcase } from '../components/profile';
+import { loadCardsByIds, useSets } from '../lib/tcg';
+import { getLocalizedSetName } from '../utils/setNames';
+import { Avatar, ProfileHeader, SHOWCASE_MAX, ShareButton, Showcase } from '../components/profile';
 import { CardPlaceholder } from '../components/cards';
 import { Confirm, Empty, Loading, Page, SearchField, Segmented, Sheet, TopBar } from '../components/ui';
 
@@ -95,9 +96,18 @@ function CreateProfile({ email }) {
 // ─── Modification ────────────────────────────────────────────────────────────
 function EditProfileSheet({ profile, onClose }) {
   const { save } = useProfile();
+  const { sets } = useSets();
+  const { lang } = useLang();
   const [form, setForm] = useState({
     displayName: profile.displayName, username: profile.username, bio: profile.bio, avatar: profile.avatar, banner: profile.banner,
   });
+  const [favoriteSet, setFavoriteSet] = useState(profile.settings.favoriteSet ?? '');
+  // Extensions groupées par série, dans l'ordre de la page des extensions.
+  const series = useMemo(() => {
+    const groups = new Map();
+    for (const set of sets) (groups.get(set.series) ?? groups.set(set.series, []).get(set.series)).push(set);
+    return [...groups];
+  }, [sets]);
   const [error, setError] = useState(null);
   const [saving, setSaving] = useState(false);
   const avatarInput = useRef(null);
@@ -115,7 +125,9 @@ function EditProfileSheet({ profile, onClose }) {
     setSaving(true);
     setError(null);
     try {
-      await save({ ...form, username: form.username.trim(), displayName: form.displayName.trim(), bio: form.bio.trim() });
+      const settings = { ...profile.settings };
+      if (favoriteSet) settings.favoriteSet = favoriteSet; else delete settings.favoriteSet;
+      await save({ ...form, username: form.username.trim(), displayName: form.displayName.trim(), bio: form.bio.trim(), settings });
       onClose();
     } catch (e) {
       setError(e.message);
@@ -162,6 +174,17 @@ function EditProfileSheet({ profile, onClose }) {
           <textarea className="input" rows={3} maxLength={200} value={form.bio} onChange={(e) => set('bio', e.target.value)} placeholder="Ce que tu collectionnes, ce que tu recherches…" style={{ resize: 'vertical', paddingTop: 10 }} />
           <span className="tiny dim" style={{ textAlign: 'right' }}>{form.bio.length} / 200</span>
         </label>
+        <label className="stack" style={{ gap: 6 }}>
+          <span className="label" style={{ margin: 0 }}>Set préféré</span>
+          <select className="input" value={favoriteSet} onChange={(e) => setFavoriteSet(e.target.value)}>
+            <option value="">— Aucun —</option>
+            {series.map(([name, list]) => (
+              <optgroup key={name} label={name}>
+                {list.map((set) => <option key={set.id} value={set.id}>{getLocalizedSetName(set.name, lang)}</option>)}
+              </optgroup>
+            ))}
+          </select>
+        </label>
         {error && <p className="small" style={{ color: 'var(--danger)' }}>{error}</p>}
       </div>
     </Sheet>
@@ -195,7 +218,7 @@ function ShowcasePicker({ current, onClose }) {
     return (cards || []).filter((c) => !q || c.name.toLowerCase().includes(q) || (c.set?.name || '').toLowerCase().includes(q));
   }, [cards, query]);
 
-  const toggle = (id) => setPicked((p) => (p.includes(id) ? p.filter((x) => x !== id) : p.length < 3 ? [...p, id] : p));
+  const toggle = (id) => setPicked((p) => (p.includes(id) ? p.filter((x) => x !== id) : p.length < SHOWCASE_MAX ? [...p, id] : p));
 
   const submit = async () => {
     setSaving(true);
@@ -217,10 +240,11 @@ function ShowcasePicker({ current, onClose }) {
 
   return (
     <Sheet
-      title="Mes 3 cartes" onClose={onClose} tall
-      footer={<button className="btn btn-violet grow" disabled={saving} onClick={submit}>Enregistrer ({picked.length} / 3)</button>}
+      title="Ma vitrine" onClose={onClose} tall
+      footer={<button className="btn btn-violet grow" disabled={saving} onClick={submit}>Enregistrer ({picked.length} / {SHOWCASE_MAX})</button>}
     >
       <div className="stack" style={{ gap: 12 }}>
+        <p className="small muted">Jusqu'à {SHOWCASE_MAX} cartes, dans l'ordre où tu les touches. Sans vitrine, ton profil montre tes favoris.</p>
         {error && <p className="small" style={{ color: 'var(--danger)' }}>{error}</p>}
         <SearchField value={query} onChange={setQuery} placeholder="Chercher dans ma collection" />
         {!cards && <Loading label="Chargement de ta collection…" />}
@@ -301,7 +325,9 @@ export default function Profile({ email }) {
 
   return (
     <Page>
-      <TopBar title="Profil" back="/community" />
+      <TopBar title="Profil" back="/community">
+        {profile && status === 'ready' && <ShareButton profile={profile} />}
+      </TopBar>
       {guest && <p className="tiny dim" style={{ marginBottom: 12 }}>Mode invité : profils de démonstration enregistrés sur cet appareil.</p>}
 
       {status === 'loading' && <Loading />}
@@ -324,7 +350,7 @@ export default function Profile({ email }) {
 
           <section className="section">
             <div className="section-head">
-              <h2 className="h2">Mes 3 cartes</h2>
+              <h2 className="h2">Ma vitrine</h2>
               <button className="link" onClick={() => setSheet('showcase')}>{profile.showcase.length ? 'Modifier' : 'Choisir'}</button>
             </div>
             <Showcase
@@ -332,7 +358,7 @@ export default function Profile({ email }) {
               empty={(
                 <button className="card card-pad row" style={{ width: '100%', gap: 12, textAlign: 'left' }} onClick={() => setSheet('showcase')}>
                   <Sparkles size={22} />
-                  <span><b>Mets 3 cartes en avant</b><span className="small muted" style={{ display: 'block' }}>Elles apparaissent en tête de ton profil.</span></span>
+                  <span><b>Mets jusqu'à {SHOWCASE_MAX} cartes en vitrine</b><span className="small muted" style={{ display: 'block' }}>Elles apparaissent sur ton profil. Sans vitrine, ce sont tes favoris qui s'affichent.</span></span>
                 </button>
               )}
             />

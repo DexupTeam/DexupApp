@@ -69,8 +69,8 @@
 - Cache partagé 24 h dans Supabase
 
 ### Profil et communauté
-- **Onglet Profil** : photo de profil, bannière, nom affiché, pseudo, bio, 3 cartes mises en avant (avec ta photo perso si la carte en a une), visibilité, et les paramètres (langue des extensions, synchronisation, déconnexion, version)
-- **Communauté** : liste des profils publics (recherche par pseudo ou nom), et pour chacun ses 3 cartes, ses cartes possédées, ses listes et ses favoris, selon ce qu'il choisit de montrer ; « N cartes en commun avec toi »
+- **Profil** (ta photo en haut de l'accueil et de la Communauté) : photo de profil, bannière, nom affiché, pseudo, bio, set préféré, **vitrine** de 9 cartes au plus (avec ta photo perso si la carte en a une), visibilité, partage du lien du profil, et les paramètres (langue des extensions, synchronisation, déconnexion, version)
+- **Communauté** (onglet de la barre) : liste des profils publics (recherche par pseudo ou nom) ; chaque profil montre sa vitrine (ou, à défaut, ses favoris), puis ses listes et ses favoris, avec recherche, filtre par extension, filtre « je l'ai / il me manque » et tri par extension, nom ou valeur ; « N cartes en commun avec toi » ; bouton de partage
 - Le profil publie un **instantané** de la collection (identifiants des cartes, listes, favoris, statistiques), republié automatiquement quand la collection change ; les données privées de `pokecollect_data` ne sont jamais exposées
 - Table `pokecollect_profiles` : à créer une fois avec [`docs/supabase-profiles.sql`](docs/supabase-profiles.sql). Sans elle, l'app affiche « Communauté bientôt disponible ». En mode invité (développement), une communauté de démonstration locale la remplace
 

@@ -7,7 +7,8 @@
 import { supabase } from '../utils/supabase';
 
 const TABLE = 'pokecollect_profiles';
-const LIST_FIELDS = 'user_id, username, display_name, avatar, showcase, stats, updated_at';
+// La liste n'a besoin que des 3 premières cartes de la vitrine (elle peut en compter 9, avec photos).
+const LIST_FIELDS = 'user_id, username, display_name, avatar, settings, stats, updated_at, s0:showcase->0, s1:showcase->1, s2:showcase->2';
 export const USERNAME_RE = /^[a-z0-9_.]{3,20}$/;
 export const DEFAULT_SETTINGS = { collection: true, lists: true, favorites: true, value: true };
 
@@ -22,7 +23,7 @@ const fromRow = (r) => r && ({
   banner: r.banner || null,
   isPublic: r.is_public ?? true,
   settings: { ...DEFAULT_SETTINGS, ...(r.settings || {}) },
-  showcase: r.showcase || [],
+  showcase: r.showcase || [r.s0, r.s1, r.s2].filter(Boolean),
   collection: r.collection || {},
   stats: r.stats || {},
   updatedAt: r.updated_at,

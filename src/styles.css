@@ -459,12 +459,13 @@ button.list-row:active, .list-row.tap:active { transform: scale(0.99); }
 .avatar { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; border-radius: 50%; overflow: hidden; background: var(--surface-2); border: 1px solid var(--line); font-family: var(--display); color: var(--ink-2); }
 .avatar img { width: 100%; height: 100%; object-fit: cover; }
 .profile-head { margin-bottom: 18px; }
-.profile-banner { aspect-ratio: 3 / 1; border-radius: var(--r); overflow: hidden; background: radial-gradient(circle at 20% 30%, rgba(101, 91, 164, 0.18), transparent 55%), var(--panel); }
+.profile-banner { aspect-ratio: 4 / 1; border-radius: var(--r); overflow: hidden; background: radial-gradient(circle at 20% 30%, rgba(101, 91, 164, 0.18), transparent 55%), var(--panel); }
 .profile-banner img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.profile-id { display: flex; align-items: flex-end; gap: 14px; margin: -38px 0 10px 14px; position: relative; }
+.profile-id { display: flex; align-items: flex-end; gap: 14px; margin: -40px 0 12px 12px; position: relative; }
+.profile-id > .grow { padding-bottom: 6px; }
 .profile-id .avatar { border: 3px solid var(--bg, #f5f5f5); box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12); }
 .profile-bio { font-size: 14px; line-height: 1.45; color: var(--ink-2); margin-bottom: 10px; white-space: pre-line; }
-.showcase { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; max-width: 520px; }
+.showcase { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px 10px; max-width: 520px; }
 .showcase-card { display: flex; flex-direction: column; gap: 4px; text-align: left; min-width: 0; }
 .showcase-card b { font-size: 12.5px; font-weight: 600; }
 .showcase-img { position: relative; display: block; aspect-ratio: 63 / 88; border-radius: 8px; overflow: hidden; background: var(--panel); box-shadow: 0 10px 22px rgba(0, 0, 0, 0.14); transition: transform 0.15s; }
@@ -482,3 +483,5 @@ button.list-row:active, .list-row.tap:active { transform: scale(0.99); }
 .banner-pick { display: block; width: 100%; aspect-ratio: 3 / 1; border-radius: var(--r); overflow: hidden; border: 1px dashed var(--ink-3); background: var(--panel); color: var(--ink-2); }
 .banner-pick img { width: 100%; height: 100%; object-fit: cover; }
 .pick-check { position: absolute; top: 6px; right: 6px; width: 26px; height: 26px; border-radius: 50%; background: var(--signal); color: #fff; display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 13px; font-weight: 700; z-index: 2; }
+.fav-set { display: inline-flex; align-items: center; gap: 8px; max-width: 100%; padding: 6px 12px 6px 10px; margin-bottom: 10px; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); }
+.fav-set img { height: 22px; max-width: 70px; object-fit: contain; }
