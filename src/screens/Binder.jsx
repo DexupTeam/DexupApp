@@ -149,7 +149,8 @@ function FavoritesTab() {
 }
 
 export default function Binder() {
-  const [tab, setTab] = usePersistedState('pc_binder_tab', 'lists');
+  // Toujours ouvert sur les listes (l'onglet n'est pas mémorisé d'une visite à l'autre).
+  const [tab, setTab] = useState('lists');
   return (
     <Page>
       <TopBar title="Classeur" />
