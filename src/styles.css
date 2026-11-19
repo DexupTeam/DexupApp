@@ -482,4 +482,3 @@ button.list-row:active, .list-row.tap:active { transform: scale(0.99); }
 .banner-pick { display: block; width: 100%; aspect-ratio: 3 / 1; border-radius: var(--r); overflow: hidden; border: 1px dashed var(--ink-3); background: var(--panel); color: var(--ink-2); }
 .banner-pick img { width: 100%; height: 100%; object-fit: cover; }
 .pick-check { position: absolute; top: 6px; right: 6px; width: 26px; height: 26px; border-radius: 50%; background: var(--signal); color: #fff; display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 13px; font-weight: 700; z-index: 2; }
-.tile-wide { grid-column: 1 / -1; flex-direction: row; align-items: center; min-height: 0; gap: 14px; }

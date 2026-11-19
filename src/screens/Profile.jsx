@@ -286,9 +286,7 @@ export default function Profile({ email }) {
 
   return (
     <Page>
-      <TopBar title="Profil">
-        <button className="icon-btn" onClick={() => navigate('/community')} aria-label="Communauté"><Users size={20} /></button>
-      </TopBar>
+      <TopBar title="Profil" back="/community" />
       {guest && <p className="tiny dim" style={{ marginBottom: 12 }}>Mode invité : profils de démonstration enregistrés sur cet appareil.</p>}
 
       {status === 'loading' && <Loading />}

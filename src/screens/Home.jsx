@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowUpRight, CalendarDays, Layers, Newspaper, ShoppingBag, Users } from 'lucide-react';
+import { ArrowUpRight, CalendarDays, Layers, Newspaper, ShoppingBag } from 'lucide-react';
 import { useCollection } from '../store/collection';
 import { useLang } from '../utils/LanguageContext.jsx';
 import { getLocalizedSetName } from '../utils/setNames';
@@ -103,10 +103,6 @@ export default function Home() {
         <button className="tile tile-mint" onClick={() => navigate('/products')}>
           <ShoppingBag size={24} />
           <div><b>Produits</b><span>Boosters, ETB, displays</span></div>
-        </button>
-        <button className="tile tile-wide" onClick={() => navigate('/community')}>
-          <Users size={24} />
-          <div><b>Communauté</b><span>Les classeurs des autres collectionneurs</span></div>
         </button>
       </div>
 

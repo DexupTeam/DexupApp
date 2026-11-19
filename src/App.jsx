@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { HashRouter, Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
-import { BookMarked, Home as HomeIcon, LayoutGrid, ScanLine, Search as SearchIcon, UserRound } from 'lucide-react';
+import { BookMarked, Home as HomeIcon, LayoutGrid, ScanLine, Search as SearchIcon, Users } from 'lucide-react';
 import { LanguageProvider } from './utils/LanguageContext.jsx';
 import { hydrateFromRemote } from './utils/persist';
 import { supabase } from './utils/supabase';
@@ -28,7 +28,7 @@ const TABS = [
   { path: '/scan', label: 'Scanner', Icon: ScanLine, match: (p) => p.startsWith('/scan'), primary: true },
   { path: '/search', label: 'Recherche', Icon: SearchIcon, match: (p) => p.startsWith('/search') },
   { path: '/binder', label: 'Classeur', Icon: BookMarked, match: (p) => p.startsWith('/binder') },
-  { path: '/profile', label: 'Profil', Icon: UserRound, match: (p) => p.startsWith('/profile') || p.startsWith('/community') },
+  { path: '/community', label: 'Communauté', Icon: Users, match: (p) => p.startsWith('/community') || p.startsWith('/profile') },
 ];
 
 function TabBar() {
@@ -62,7 +62,7 @@ function Sidebar({ email }) {
   return (
     <aside className="sidebar">
       <div className="sidebar-brand"><Logo size={28} />Dexup</div>
-      {TABS.filter((t) => t.path !== '/profile').map(({ path, label, Icon, match }) => {
+      {TABS.map(({ path, label, Icon, match }) => {
         const active = match(pathname);
         return (
           <button
@@ -74,7 +74,7 @@ function Sidebar({ email }) {
         );
       })}
       <button
-        className={`side-link sidebar-foot${pathname.startsWith('/profile') || pathname.startsWith('/community') ? ' is-active' : ''}`}
+        className={`side-link sidebar-foot${pathname.startsWith('/profile') ? ' is-active' : ''}`}
         onClick={() => navigate('/profile')}
       >
         <Avatar profile={profile} size={26} />

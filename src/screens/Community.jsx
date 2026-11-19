@@ -24,7 +24,7 @@ function ShowcaseThumbs({ cards }) {
 // ─── Liste des collectionneurs ───────────────────────────────────────────────
 export default function Community() {
   const navigate = useNavigate();
-  const { profile: me } = useProfile();
+  const { profile: me, status: myStatus } = useProfile();
   const [query, setQuery] = useState('');
   const [state, setState] = useState({ loading: true, profiles: [], error: null });
   const [attempt, setAttempt] = useState(0);
@@ -44,7 +44,24 @@ export default function Community() {
   const { loading, profiles, error } = state;
   return (
     <Page>
-      <TopBar title="Communauté" back="/profile" />
+      <TopBar title="Communauté">
+        <button className="avatar-btn" style={{ borderRadius: '50%', padding: 0, overflow: 'hidden' }} onClick={() => navigate('/profile')} aria-label="Mon profil">
+          <Avatar profile={me} size={42} />
+        </button>
+      </TopBar>
+
+      {/* Pas encore de profil : on invite à le créer (sinon, la photo en haut à droite y mène). */}
+      {myStatus === 'none' && (
+        <Tappable className="list-row" onClick={() => navigate('/profile')} style={{ marginBottom: 12 }}>
+          <Avatar profile={me} size={46} />
+          <div className="grow" style={{ minWidth: 0 }}>
+            <b className="clamp1">{me ? me.displayName : 'Crée ton profil'}</b>
+            <p className="small muted clamp1">{me ? `@${me.username} · ${me.isPublic ? 'profil public' : 'profil privé'}` : 'Photo, bannière, tes 3 plus belles cartes'}</p>
+          </div>
+          <span className="link">{me ? 'Mon profil' : 'Créer'}</span>
+        </Tappable>
+      )}
+
       <div style={{ marginBottom: 14 }}>
         <SearchField value={query} onChange={setQuery} placeholder="Chercher un collectionneur" />
       </div>
