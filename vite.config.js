@@ -48,13 +48,14 @@ function netlifyFunctionsDevPlugin() {
   };
 }
 
-// Version affichée dans « Mon compte » : majeure.mineure de package.json, montée à chaque mise en ligne.
+// Version affichée dans le Profil : celle de package.json, montée à chaque mise en ligne (correctif ou fonctionnalité).
 const { version } = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'package.json'), 'utf8'));
 
 export default defineConfig({
   // Le fil de travail du scanner importe OpenCV et ONNX Runtime à la demande : format module.
   worker: { format: 'es' },
-  define: { __APP_VERSION__: JSON.stringify(version.split('.').slice(0, 2).join('.')) },
+  // « 2.9.0 » s'affiche « 2.9 », « 2.9.1 » en entier : le correctif se voit, le zéro non.
+  define: { __APP_VERSION__: JSON.stringify(version.replace(/\.0$/, '')) },
   plugins: [
     react(),
     sqlWasmPlugin(),

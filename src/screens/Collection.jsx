@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import { ChevronDown, Layers, Plus, Trophy } from 'lucide-react';
+import { ArrowDownUp, ChevronDown, Layers, Plus, Trophy } from 'lucide-react';
 import { useCollection } from '../store/collection';
 import { useLang } from '../utils/LanguageContext.jsx';
 import { getLocalizedSetName } from '../utils/setNames';
@@ -53,6 +53,10 @@ export function Collection() {
   // Depuis « Valeur de la collection » (statistiques), on arrive directement sur le tri par valeur.
   const [sort, setSortState] = useState(params.get('sort') === 'value' ? 'value' : savedSort);
   const changeSort = (v) => { setSortState(v); setSort(v); };
+  // Sens du tri : extensions les plus récentes ou les plus anciennes d'abord ; cartes les plus
+  // chères ou les moins chères d'abord.
+  const [direction, setDirection] = usePersistedState('pc_cards_sort_direction', 'desc');
+  const newestFirst = direction === 'desc';
   const { map: loaded, failed, loading, retry } = useCardData(Object.keys(owned), ready);
   // Les cartes perso viennent du store (pas du réseau) : toujours à jour, même juste après un ajout.
   const map = useMemo(() => {
@@ -66,9 +70,15 @@ export function Collection() {
   // Les plus chères d'abord ; les cartes non évaluées à la fin.
   const byValue = useMemo(() => (
     sort === 'value' && values
-      ? Object.values(map).sort((a, b) => (values[b.id] ?? -1) - (values[a.id] ?? -1) || a.name.localeCompare(b.name))
+      ? Object.values(map).sort((a, b) => {
+        // Les cartes non évaluées restent à la fin dans les deux sens.
+        const va = values[a.id] ?? null;
+        const vb = values[b.id] ?? null;
+        if (va === null || vb === null) return (va === null) - (vb === null) || a.name.localeCompare(b.name);
+        return (newestFirst ? vb - va : va - vb) || a.name.localeCompare(b.name);
+      })
       : []
-  ), [sort, values, map]);
+  ), [sort, values, map, newestFirst]);
 
   const groups = useMemo(() => {
     const meta = Object.fromEntries(sets.map((s) => [s.id, s]));
@@ -79,11 +89,12 @@ export function Collection() {
         sid,
         cards: sid === CUSTOM_SET_ID ? cards.sort((a, b) => a.name.localeCompare(b.name)) : sortCards(cards),
         name: meta[sid] ? getLocalizedSetName(meta[sid].name, lang) : cards[0].set?.name ?? sid.toUpperCase(),
-        // Les cartes perso en premier (les groupes sont triés par date de sortie croissante).
         date: sid === CUSTOM_SET_ID ? '0000' : meta[sid]?.releaseDate ?? cards[0].set?.releaseDate ?? sid,
       }))
-      .sort((a, b) => a.date.localeCompare(b.date));
-  }, [map, sets, lang]);
+      // Cartes perso toujours en tête ; les extensions de la plus récente à la plus ancienne, ou l'inverse.
+      .sort((a, b) => (b.sid === CUSTOM_SET_ID) - (a.sid === CUSTOM_SET_ID)
+        || (newestFirst ? b.date.localeCompare(a.date) : a.date.localeCompare(b.date)));
+  }, [map, sets, lang, newestFirst]);
 
   const total = Object.keys(owned).length;
 
@@ -108,15 +119,23 @@ export function Collection() {
       {ready && !loading && groups.length > 0 && (
         <>
           <div style={{ marginBottom: 12 }}><Segmented options={SORTS} value={sort} onChange={changeSort} /></div>
-          <p className="small muted" style={{ marginBottom: 12 }}>
-            {sort === 'value'
-              ? [
-                plural(total, 'carte'),
-                wallet && formatEuro(wallet.value),
-                wallet?.pending > 0 ? `actualisation des prix… ${wallet.pending} restante${wallet.pending > 1 ? 's' : ''}` : 'de la plus chère à la moins chère',
-              ].filter(Boolean).join(' · ')
-              : `${plural(total, 'carte')} · ${plural(groups.length, 'extension')} · triées par date de sortie`}
-          </p>
+          <div className="row" style={{ justifyContent: 'space-between', gap: 10, marginBottom: 12 }}>
+            <p className="small muted">
+              {sort === 'value'
+                ? [
+                  plural(total, 'carte'),
+                  wallet && formatEuro(wallet.value),
+                  wallet?.pending > 0 && `actualisation des prix… ${wallet.pending} restante${wallet.pending > 1 ? 's' : ''}`,
+                ].filter(Boolean).join(' · ')
+                : `${plural(total, 'carte')} · ${plural(groups.length, 'extension')}`}
+            </p>
+            <button className="link row" style={{ gap: 5, flexShrink: 0 }} onClick={() => setDirection(newestFirst ? 'asc' : 'desc')} aria-label="Inverser l'ordre">
+              <ArrowDownUp size={14} />
+              {sort === 'value'
+                ? (newestFirst ? 'Plus chères d\'abord' : 'Moins chères d\'abord')
+                : (newestFirst ? 'Plus récentes d\'abord' : 'Plus anciennes d\'abord')}
+            </button>
+          </div>
           {sort === 'value' && (values
             ? <CardsView cards={byValue} mode={mode} caption="name" values={values} />
             : <Loading label="Calcul des valeurs…" />)}
