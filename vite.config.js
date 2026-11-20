@@ -79,7 +79,7 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,wasm}'],
-        // Le scanner (modèle, OpenCV, moteur WebAssembly, index : ≈ 45 Mo) n'est pas préchargé pour
+        // Le scanner (modèles, OpenCV, moteur WebAssembly, index : ≈ 100 Mo) n'est pas préchargé pour
         // tout le monde : il se télécharge à la première ouverture du scanner, puis reste en cache.
         globIgnores: ['**/scan/**', '**/assets/worker-*.js', '**/assets/opencv-*.js', '**/assets/ort-*.wasm'],
         runtimeCaching: [

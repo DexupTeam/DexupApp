@@ -6,9 +6,6 @@ ios/build/
 
 # Build output
 dist/
-# Index du scanner assemblé au build depuis scan-index/ (scripts/pack-scan-index.mjs)
-public/scan/index.json
-public/scan/index-*.bin
 
 # Environment
 .env

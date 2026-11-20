@@ -2,7 +2,8 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CameraOff, ImageUp, Keyboard, Layers, ScanLine, SwitchCamera, X } from 'lucide-react';
 import { useCollection } from '../store/collection';
-import { loadFullCard, searchCards } from '../lib/tcg';
+import { loadFullCard, loadSetCards, searchCards, setIdOf } from '../lib/tcg';
+import { isExtraCard } from '../lib/extraCards';
 import { isCardNumber, sourceRect } from '../lib/scan';
 import { recognize, warmRecognizer } from '../lib/vision/recognizer';
 import { getCached, setCached } from '../utils/cache';
@@ -28,6 +29,8 @@ const CAPTURE_MAX_SIDE = 1280;
 
 /** Fiche d'une carte par son identifiant, depuis le cache local quand on l'a déjà vue. */
 async function cardById(id) {
+  // Carte japonaise ou chinoise : dans les fichiers de son extension.
+  if (isExtraCard(id)) return (await loadSetCards(setIdOf(id))).find((c) => c.id === id) ?? null;
   const key = `fullcard:${id}`;
   const cached = await getCached(key);
   if (cached) return cached;
@@ -172,7 +175,7 @@ export default function Scan() {
     onStable: () => { setMessage(null); readRef.current?.(true); },
   });
 
-  // Le moteur de reconnaissance (≈ 45 Mo la première fois, en cache ensuite) se charge dès
+  // Le moteur de reconnaissance (≈ 100 Mo la première fois, en cache ensuite) se charge dès
   // l'ouverture du scanner, pendant que l'utilisateur sort sa carte.
   useEffect(() => {
     let alive = true;

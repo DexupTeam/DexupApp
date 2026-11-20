@@ -178,10 +178,34 @@ export async function searchCards({ name, exactName, rarity, number, printedTota
   return { cards: json.data || [], total: json.totalCount || 0 };
 }
 
+// Copie publique des données de l'API (même format, sans les prix), lue quand l'API est en panne.
+const API_MIRROR = 'https://raw.githubusercontent.com/PokemonTCG/pokemon-tcg-data/master';
+const mirrorSets = new Map();
+
+async function loadCardFromMirror(cardId) {
+  const setId = setIdOf(cardId);
+  if (!mirrorSets.has(setId)) {
+    mirrorSets.set(setId, fetch(`${API_MIRROR}/cards/en/${setId}.json`).then((r) => {
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      return r.json();
+    }).catch((e) => { mirrorSets.delete(setId); throw e; }));
+  }
+  const card = (await mirrorSets.get(setId)).find((c) => c.id === cardId);
+  if (!card) return null;
+  const set = (await loadSets().catch(() => [])).find((s) => s.id === setId);
+  return { ...card, set: set ?? { id: setId, name: setId } };
+}
+
 export async function loadFullCard(cardId) {
   if (isExtraCard(cardId)) return null; // pas de fiche dans l'API : la carte affichée est déjà complète
-  const json = await getJson(pokemonApiUrl(`/cards/${cardId}`));
-  return json.data;
+  try {
+    const json = await getJson(pokemonApiUrl(`/cards/${cardId}`));
+    return json.data;
+  } catch (e) {
+    const card = await loadCardFromMirror(cardId).catch(() => null);
+    if (card) return card;
+    throw e;
+  }
 }
 
 export const openUrl = (url) => window.open(url, '_blank', 'noopener,noreferrer');

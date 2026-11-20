@@ -40,14 +40,16 @@
 - Filtre par rareté, résultats paginés (« Voir plus »)
 
 ### Scanner
-- **Reconnaissance par l'image**, dans le navigateur, sans serveur (méthode et modèle de [pokeum](https://github.com/TBLgGamin/pokeum), MIT) :
-  1. la carte est cherchée dans toute l'image (bords détectés avec OpenCV.js, sur la luminosité et la saturation des couleurs) — pas de cadre à viser au pixel près, carte penchée, décentrée ou à l'envers acceptée ;
-  2. elle est redressée, puis réduite à son empreinte visuelle par un modèle DINOv2 affiné pour ignorer reflets, flou et lumière (24 Mo, quantifié en 8 bits, ONNX Runtime Web) ;
-  3. cette empreinte est comparée à celles de toutes les cartes connues ; une correspondance nette ouvre la fiche, sinon les cartes possibles sont proposées (rééditions d'une même illustration, image moyenne)
+- **Reconnaissance par l'image**, dans le navigateur, sans serveur, avec les modèles du [scanner CardCorpus](https://github.com/cardcorpus/pokemon-card-scanner) (Apache 2.0 ; matcher sous licence DINOv3, voir `third_party/cardcorpus`) :
+  1. la carte est trouvée dans toute l'image par un détecteur de coins (QuadDet) — pas de cadre à viser, carte penchée, décentrée ou à l'envers acceptée ;
+  2. elle est redressée, puis réduite à son empreinte par un modèle DINOv3 affiné (23,5 Mo, poids en 8 bits), avec une tête qui dit si la carte est à l'endroit ;
+  3. l'empreinte est comparée à 102 000 images de cartes **anglaises, japonaises et chinoises** ; chacune est reliée à sa fiche Dexup (pokemontcg.io, extensions `ja_…` et `cn…`) ;
+  4. quand plusieurs rééditions d'une illustration sont proches, le **numéro de collection** est lu (petit réseau CRNN) pour choisir la bonne ; une correspondance nette ouvre la fiche, sinon les cartes possibles sont proposées
+  - Cartes françaises : même illustration et même numéro que l'anglaise, elles sont reconnues comme leur version anglaise
 - **Scan automatique** : la reconnaissance se déclenche dès que l'image est nette, immobile et bien éclairée (conseils « Ne bouge plus », « Plus de lumière », « Trop de reflets »), puis attend que la carte change
 - **Reconnaître une photo** déjà prise (galerie, capture d'écran), y compris sans accès à la caméra
-- Calcul dans un fil de travail séparé : la caméra reste fluide. Le moteur (≈ 45 Mo) se télécharge à la première ouverture du scanner puis reste en cache, sans alourdir le reste de l'app
-- **Index** : `scripts/update-scan-index.mjs` calcule l'empreinte de chaque carte (un fichier par extension dans `scan-index/`), relancé chaque lundi par le workflow pour les nouvelles extensions ; `scripts/pack-scan-index.mjs` les assemble avant chaque build
+- Calcul dans un fil de travail séparé : la caméra reste fluide. Le moteur (≈ 100 Mo : modèles, index, OpenCV) se télécharge à la première ouverture du scanner puis reste en cache, sans alourdir le reste de l'app
+- **Modèles et index** (`public/scan/`) : `scripts/scanner/export_models.py` convertit les modèles CardCorpus en ONNX, `scripts/scanner/build_index.py` construit l'index et le relie aux cartes Dexup (Python, à relancer quand CardCorpus publie un nouvel index)
 - **BarcodeDetector** natif (Chrome / Safari) pour détecter QR codes et codes-barres automatiquement
 - Recherche manuelle par numéro de carte (ex : `025`, `163/193`) ou par nom
 
@@ -272,7 +274,7 @@ L'API Pokémon TCG ne fournit plus de prix exploitables (rien pour les sets sort
 | Produits des nouvelles extensions (booster, display, ETB) | Cardmarket | chaque lundi (workflow) |
 | Prix et photos des produits | Cardmarket, tcgcsv.com | chaque lundi (workflow) et à chaque build pour les prix |
 | Extensions chinoises (cartes et prix) | catalogue Cardmarket | chaque lundi (workflow) |
-| Index du scanner (empreinte de chaque carte) | images api.pokemontcg.io | chaque lundi (workflow), extensions nouvelles ou complétées seulement |
+| Index du scanner (empreinte de chaque carte) | index CardCorpus (Hugging Face) | à la main, `scripts/scanner/build_index.py`, quand CardCorpus le met à jour |
 | Conventions | `src/lib/events.js` | **à la main** : aucune source publique fiable |
 
 Le workflow GitHub `.github/workflows/refresh-data.yml` lance les scripts de `scripts/` chaque lundi, pousse les fichiers de `src/data/` qui ont changé, et Netlify redéploie. Il se lance aussi à la main depuis l'onglet Actions. Les produits spéciaux (tins, coffrets, decks) restent ajoutés à la main dans `src/data/products.js`.

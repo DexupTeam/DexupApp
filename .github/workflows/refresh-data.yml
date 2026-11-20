@@ -3,7 +3,7 @@
 #   - noms français des extensions (TCGdex)
 #   - produits des nouvelles extensions, leurs prix (Cardmarket) et leurs photos (tcgcsv.com)
 #   - extensions exclusives à la Chine (catalogue Cardmarket : cartes et prix)
-#   - index du scanner : empreinte visuelle des cartes des extensions nouvelles ou complétées
+#   - extensions japonaises (CardCorpus : cartes, images ; prix Cardmarket)
 # Lançable aussi à la main : onglet Actions → « Refresh data » → Run workflow.
 name: Refresh data
 
@@ -48,23 +48,16 @@ jobs:
       - name: Extensions japonaises
         run: node scripts/update-japan-sets.mjs
 
-      # Outils de calcul de l'index, hors dépendances de l'app : installés ici sans être enregistrés.
-      - name: Index du scanner
-        run: |
-          npm install --no-save --no-audit --no-fund onnxruntime-node@1.20.1 sharp@0.33.5
-          node scripts/update-scan-index.mjs
-        env:
-          POKEMON_TCG_API_KEY: ${{ secrets.POKEMON_TCG_API_KEY }}
 
       - name: Pousser les changements
         run: |
-          git add src/data/setNamesFr.json src/data/productsAuto.json src/data/productPrices.json src/data/productImages.json src/data/chinaSets.json src/data/japanSets.json public/extra scan-index
+          git add src/data/setNamesFr.json src/data/productsAuto.json src/data/productPrices.json src/data/productImages.json src/data/chinaSets.json src/data/japanSets.json public/extra
           if git diff --cached --quiet; then
             echo "Rien de nouveau."
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "Refresh set names, products, prices, photos, Chinese and Japanese sets and scan index"
+          git commit -m "Refresh set names, products, prices, photos, Chinese and Japanese sets"
           git pull --rebase origin main
           git push origin HEAD:main

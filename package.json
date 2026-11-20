@@ -5,8 +5,7 @@
   "scripts": {
     "dev": "vite",
     "prices": "node scripts/update-product-prices.mjs --report",
-    "prebuild": "node scripts/update-product-prices.mjs && node scripts/pack-scan-index.mjs",
-    "predev": "node scripts/pack-scan-index.mjs",
+    "prebuild": "node scripts/update-product-prices.mjs",
     "build": "vite build",
     "preview": "vite preview"
   },

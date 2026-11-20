@@ -1,0 +1,8 @@
+Scanner de cartes de Dexup : modèles et index du scanner CardCorpus
+https://github.com/cardcorpus/pokemon-card-scanner — https://huggingface.co/cardcorpus/pokemon-card-scanner
+
+matcher.onnx    fine-tune de DINOv3 ViT-S/16, sous la DINOv3 License (DINOv3-LICENSE.md). Built with DINOv3.
+detector.onnx, number.onnx    Apache License 2.0
+emb-*.bin, meta-*.json        index CardCorpus, CC BY 4.0 (https://cardcorpus.com)
+
+Convertis en ONNX par scripts/scanner/export_models.py et scripts/scanner/build_index.py.
