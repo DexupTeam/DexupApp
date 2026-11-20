@@ -5,7 +5,7 @@ import { useCollection } from '../store/collection';
 import { useLang } from '../utils/LanguageContext.jsx';
 import { getLocalizedSetName } from '../utils/setNames';
 import { loadSetCards, useSets } from '../lib/tcg';
-import { CARDCORPUS_URL, CHINA_SERIES } from '../lib/extraCards';
+import { CARDCORPUS_URL, CHINA_SERIES, isJapanSet } from '../lib/extraCards';
 import { CardsView, OWNERSHIP_FILTERS, filterByOwnership } from '../components/cards';
 import { Empty, Loading, Page, Progress, Segmented, StarButton, TopBar, ViewToggle, pct, plural, usePersistedState } from '../components/ui';
 
@@ -59,6 +59,13 @@ export default function SetDetail() {
             </div>
             <Progress value={ownedCount} total={cards.length} />
             {set && <p className="tiny dim" style={{ marginTop: 10 }}>{set.series} · {(set.code || set.id).toUpperCase()} · sortie le {set.releaseDate}</p>}
+            {set && isJapanSet(set.id) && (
+              <p className="tiny dim" style={{ marginTop: 6 }}>
+                Édition japonaise. Cartes, numéros et images :{' '}
+                <a href={CARDCORPUS_URL} target="_blank" rel="noreferrer" style={{ textDecoration: 'underline' }}>CardCorpus</a> (CC BY 4.0) ;
+                prix Cardmarket de la version japonaise.
+              </p>
+            )}
             {set?.series === CHINA_SERIES && (
               <p className="tiny dim" style={{ marginTop: 6 }}>
                 Cartes et prix d'après le catalogue Cardmarket, les variantes d'une même carte listées séparément. Images et numéros :{' '}

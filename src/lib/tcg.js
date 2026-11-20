@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { pokemonApiUrl } from '../utils/api';
 import { getApiCache, setApiCache, CARDS_TTL } from '../utils/sharedCache';
-import { chinaSets, getCustomCards, isChinaSet, isCustomSet, isExtraCard, loadChinaCards } from './extraCards';
+import { chinaSets, getCustomCards, isCustomSet, isExtraCard, japanSets, loadRegionCards, setRegion } from './extraCards';
 
 const DAY = 24 * 60 * 60 * 1000;
 
@@ -45,13 +45,13 @@ export function loadSets() {
   if (!setsPromise) {
     setsPromise = (async () => {
       // Relue chaque jour : une nouvelle extension apparaît le lendemain de son ajout à l'API.
-      // Les extensions chinoises (hors API) viennent après toutes les autres.
+      // Les extensions chinoises et japonaises (hors API) viennent après toutes les autres.
       const cached = await getApiCache('sets:en', DAY);
-      if (cached) return [...cached, ...chinaSets];
+      if (cached) return [...cached, ...chinaSets, ...japanSets];
       const json = await getJson(pokemonApiUrl('/sets', { orderBy: '-releaseDate', pageSize: API_MAX_PAGE }));
       const sets = json.data || [];
       await setApiCache('sets:en', sets);
-      return [...sets, ...chinaSets];
+      return [...sets, ...chinaSets, ...japanSets];
     })().catch((e) => { setsPromise = null; throw e; });
   }
   return setsPromise;
@@ -98,7 +98,7 @@ const cardsInFlight = {};
 
 export function loadSetCards(setId) {
   if (isCustomSet(setId)) return Promise.resolve(getCustomCards());
-  if (isChinaSet(setId)) return loadChinaCards(setId);
+  if (setRegion(setId)) return loadRegionCards(setId);
   if (cardsInMemory.has(setId)) return Promise.resolve(cardsInMemory.get(setId));
   if (!cardsInFlight[setId]) {
     cardsInFlight[setId] = (async () => {

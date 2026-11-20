@@ -7,7 +7,7 @@
 import { useEffect, useState } from 'react';
 import { getCachedRaw, setCached } from '../utils/cache';
 import { isGraded, loadSetCards, loadSets, setIdOf } from './tcg';
-import { isChinaSet, isExtraCard } from './extraCards';
+import { isExtraCard, setRegion } from './extraCards';
 
 const DEX = 'https://api.tcgdex.net/v2/en';
 const DAY = 24 * 60 * 60 * 1000;
@@ -156,10 +156,10 @@ function scheduleSave() {
 }
 
 const inFlight = {};
-// Cartes hors API : prix tendance relevé dans le catalogue Cardmarket (extensions chinoises),
+// Cartes hors API : prix tendance relevé dans le catalogue Cardmarket (extensions chinoises et japonaises),
 // rien pour les cartes perso (leur valeur est le prix saisi par le collectionneur).
 async function extraPrice(cardId) {
-  if (!isChinaSet(setIdOf(cardId))) return null;
+  if (!setRegion(setIdOf(cardId))) return null;
   const card = (await loadSetCards(setIdOf(cardId))).find((c) => c.id === cardId);
   return card?.marketPrice ?? null;
 }

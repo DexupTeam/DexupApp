@@ -1,0 +1,4492 @@
+[
+ {
+  "id": "ja_30th_celebration",
+  "code": "M6a",
+  "name": "30th Celebration",
+  "era": "Mega Evolution",
+  "total": 176,
+  "printedTotal": 103,
+  "logo": "a1cedead1e16095bea12f375531cf3cb",
+  "releaseDate": "2026/09/16"
+ },
+ {
+  "id": "ja_30th_celebration_premium_deck_set_espeon_umbreon",
+  "code": "MF",
+  "name": "30th Celebration Premium Deck Set Espeon & Umbreon",
+  "era": "Mega Evolution",
+  "total": 49,
+  "printedTotal": 40,
+  "logo": "30262957e324aecfabfc1fcfb3761502",
+  "releaseDate": "2026/09/16"
+ },
+ {
+  "id": "ja_eevee_ex_starter_set_ex",
+  "code": "MEE",
+  "name": "Eevee ex Starter Set ex",
+  "era": "Mega Evolution",
+  "total": 20,
+  "printedTotal": 19,
+  "logo": "010862faab94bab7f54b57436ecdd2cf",
+  "releaseDate": "2026/07/31"
+ },
+ {
+  "id": "ja_sprigatito_meowscarada_ex_starter_set_ex",
+  "code": "MEM",
+  "name": "Sprigatito & Meowscarada ex Starter Set ex",
+  "era": "Mega Evolution",
+  "total": 18,
+  "printedTotal": 17,
+  "logo": "7ea071f848829d170e3442895652d8f1",
+  "releaseDate": "2026/07/31"
+ },
+ {
+  "id": "ja_storm_emeralda",
+  "code": "M6",
+  "name": "Storm Emeralda",
+  "era": "Mega Evolution",
+  "total": 113,
+  "printedTotal": 76,
+  "logo": "564d12db1ef2cccbfc67f1f38df41dd5",
+  "releaseDate": "2026/07/31"
+ },
+ {
+  "id": "ja_zorua_zoroark_ex_starter_set_ex",
+  "code": "MEZ",
+  "name": "Zorua & Zoroark ex Starter Set ex",
+  "era": "Mega Evolution",
+  "total": 20,
+  "printedTotal": 19,
+  "logo": "d397a803d0e62fa0b9f3667597e6999c",
+  "releaseDate": "2026/07/31"
+ },
+ {
+  "id": "ja_abyss_eye",
+  "code": "M5",
+  "name": "Abyss Eye",
+  "era": "Mega Evolution",
+  "total": 118,
+  "printedTotal": 81,
+  "logo": "123e34ad1db8bffdbfe18c8b93971e1c",
+  "releaseDate": "2026/05/22"
+ },
+ {
+  "id": "ja_ninja_spinner",
+  "code": "M4",
+  "name": "Ninja Spinner",
+  "era": "Mega Evolution",
+  "total": 120,
+  "printedTotal": 83,
+  "logo": "f941a67d5ac9e8811f6001b50bd3c479",
+  "releaseDate": "2026/03/13"
+ },
+ {
+  "id": "ja_nihil_zero",
+  "code": "M3",
+  "name": "Nihil Zero",
+  "era": "Mega Evolution",
+  "total": 117,
+  "printedTotal": 80,
+  "logo": "10271f5c85cabc1678c2ca0ba8890643",
+  "releaseDate": "2026/01/23"
+ },
+ {
+  "id": "ja_start_deck_100_battle_collection",
+  "code": "MC",
+  "name": "Start Deck 100 Battle Collection",
+  "era": "Mega Evolution",
+  "total": 774,
+  "printedTotal": 742,
+  "logo": "469845b4c5a789ca6f79c88b91cb0b33",
+  "releaseDate": "2025/12/19"
+ },
+ {
+  "id": "ja_start_deck_100_battle_collection_corociao_version",
+  "code": "MP1",
+  "name": "Start Deck 100 Battle Collection CoroCiao Version",
+  "era": "Mega Evolution",
+  "total": 23,
+  "printedTotal": 23,
+  "logo": "cca176653840afc946d5ce033ca13d8c",
+  "releaseDate": "2025/12/19"
+ },
+ {
+  "id": "ja_mega_dream_ex",
+  "code": "M2a",
+  "name": "MEGA Dream ex",
+  "era": "Mega Evolution",
+  "total": 250,
+  "printedTotal": 193,
+  "logo": "865324e2119861964178677425ac7480",
+  "releaseDate": "2025/11/28"
+ },
+ {
+  "id": "ja_inferno_x",
+  "code": "M2",
+  "name": "Inferno X",
+  "era": "Mega Evolution",
+  "total": 116,
+  "printedTotal": 80,
+  "logo": "a2bcdbfb41077264d0abcdb08df85534",
+  "releaseDate": "2025/09/26"
+ },
+ {
+  "id": "ja_mega_diancie_ex_starter_set_mega",
+  "code": "MBD",
+  "name": "Mega Diancie ex Starter Set MEGA",
+  "era": "Mega Evolution",
+  "total": 22,
+  "printedTotal": 21,
+  "logo": "be615248aa61303e3bc4e5a3a075473a",
+  "releaseDate": "2025/09/05"
+ },
+ {
+  "id": "ja_mega_starter_set_mega_gengar_ex",
+  "code": "MBG",
+  "name": "MEGA Starter Set Mega Gengar ex",
+  "era": "Mega Evolution",
+  "total": 22,
+  "printedTotal": 21,
+  "logo": "ffb402ef04e462e6ecb02139f676b858",
+  "releaseDate": "2025/09/05"
+ },
+ {
+  "id": "ja_mega_brave",
+  "code": "M1L",
+  "name": "Mega Brave",
+  "era": "Mega Evolution",
+  "total": 92,
+  "printedTotal": 63,
+  "logo": "2a60f1bfdc8eee93b42109f3c700bb52",
+  "releaseDate": "2025/08/01"
+ },
+ {
+  "id": "ja_mega_evolution_energies",
+  "code": null,
+  "name": "Mega Evolution Energies",
+  "era": "Mega Evolution",
+  "total": 8,
+  "printedTotal": 8,
+  "logo": null,
+  "releaseDate": "2025/08/01"
+ },
+ {
+  "id": "ja_mega_evolution_promos",
+  "code": "M-P",
+  "name": "Mega Evolution Promos",
+  "era": "Mega Evolution",
+  "total": 164,
+  "printedTotal": 164,
+  "logo": "63c6d43442c747ca86cb8967801bd5f8",
+  "releaseDate": "2025/08/01"
+ },
+ {
+  "id": "ja_mega_symphonia",
+  "code": "M1S",
+  "name": "Mega Symphonia",
+  "era": "Mega Evolution",
+  "total": 92,
+  "printedTotal": 63,
+  "logo": "c1daa5c9a8f0d211a8cc78d2546042b4",
+  "releaseDate": "2025/08/01"
+ },
+ {
+  "id": "ja_premium_trainer_box_mega",
+  "code": "MA",
+  "name": "Premium Trainer Box MEGA",
+  "era": "Mega Evolution",
+  "total": 43,
+  "printedTotal": 43,
+  "logo": "5c4494a886f21d706418198d703d2264",
+  "releaseDate": "2025/08/01"
+ },
+ {
+  "id": "ja_japanese_black_bolt",
+  "code": "SV11B",
+  "name": "Japanese Black Bolt",
+  "era": "Scarlet & Violet",
+  "total": 174,
+  "printedTotal": 86,
+  "logo": "bae326f5e47870e586e735e719165702",
+  "releaseDate": "2025/06/06"
+ },
+ {
+  "id": "ja_japanese_white_flare",
+  "code": "SV11W",
+  "name": "Japanese White Flare",
+  "era": "Scarlet & Violet",
+  "total": 174,
+  "printedTotal": 86,
+  "logo": "0ab7525479ecc95f88bf8cb5953e78e3",
+  "releaseDate": "2025/06/06"
+ },
+ {
+  "id": "ja_the_glory_of_team_rocket",
+  "code": "SV10",
+  "name": "The Glory of Team Rocket",
+  "era": "Scarlet & Violet",
+  "total": 132,
+  "printedTotal": 98,
+  "logo": "769dfcfbde5691b961db6cec93edaa05",
+  "releaseDate": "2025/04/18"
+ },
+ {
+  "id": "ja_hot_wind_arena",
+  "code": "SV9a",
+  "name": "Hot Wind Arena",
+  "era": "Scarlet & Violet",
+  "total": 92,
+  "printedTotal": 63,
+  "logo": "e9336438ec84ecccc8b97812da6eedf4",
+  "releaseDate": "2025/03/14"
+ },
+ {
+  "id": "ja_ex_starter_set_steven_s_beldum_metagross_ex",
+  "code": "SVOD",
+  "name": "ex Starter Set Steven's Beldum & Metagross ex",
+  "era": "Scarlet & Violet",
+  "total": 21,
+  "printedTotal": 18,
+  "logo": null,
+  "releaseDate": "2025/02/21"
+ },
+ {
+  "id": "ja_marnie_s_morpeko_grimmsnarl_ex_starter_set_ex",
+  "code": "SVOM",
+  "name": "Marnie's Morpeko & Grimmsnarl ex Starter Set ex",
+  "era": "Scarlet & Violet",
+  "total": 21,
+  "printedTotal": 19,
+  "logo": "c7a1268b4f3517c36295145afe5f9668",
+  "releaseDate": "2025/02/21"
+ },
+ {
+  "id": "ja_battle_partners",
+  "code": "SV9",
+  "name": "Battle Partners",
+  "era": "Scarlet & Violet",
+  "total": 132,
+  "printedTotal": 100,
+  "logo": "492bb83af17bc557a1641c628c855b79",
+  "releaseDate": "2025/01/24"
+ },
+ {
+  "id": "ja_battle_partners_deck_build_box",
+  "code": "SVN",
+  "name": "Battle Partners Deck Build Box",
+  "era": "Scarlet & Violet",
+  "total": 53,
+  "printedTotal": 45,
+  "logo": "bec48ab0061a5f920584ac21a47d8d61",
+  "releaseDate": "2025/01/24"
+ },
+ {
+  "id": "ja_terastal_festival_ex",
+  "code": "SV8a",
+  "name": "Terastal Festival ex",
+  "era": "Scarlet & Violet",
+  "total": 237,
+  "printedTotal": 187,
+  "logo": "abd2d45b3f8ac54c9239084fe07358c9",
+  "releaseDate": "2024/12/06"
+ },
+ {
+  "id": "ja_generations_start_decks",
+  "code": "SVM",
+  "name": "Generations Start Decks",
+  "era": "Scarlet & Violet",
+  "total": 175,
+  "printedTotal": 175,
+  "logo": "edb63e3bba626b35ff96edf327667d4c",
+  "releaseDate": "2024/11/22"
+ },
+ {
+  "id": "ja_super_electric_breaker",
+  "code": "SV8",
+  "name": "Super Electric Breaker",
+  "era": "Scarlet & Violet",
+  "total": 138,
+  "printedTotal": 106,
+  "logo": "7598633a19e809b1bd3c3384eb2b4db3",
+  "releaseDate": "2024/10/18"
+ },
+ {
+  "id": "ja_paradise_dragona",
+  "code": "SV7a",
+  "name": "Paradise Dragona",
+  "era": "Scarlet & Violet",
+  "total": 94,
+  "printedTotal": 64,
+  "logo": "a777ebc155144f87fad7b09ffa49b201",
+  "releaseDate": "2024/09/13"
+ },
+ {
+  "id": "ja_ceruledge_ex_starter_set_tera_type_stellar",
+  "code": "SVLS",
+  "name": "Ceruledge ex Starter Set Tera Type: Stellar",
+  "era": "Scarlet & Violet",
+  "total": 25,
+  "printedTotal": 22,
+  "logo": "75a46eaaf29b1b9190952ff0acd30093",
+  "releaseDate": "2024/08/30"
+ },
+ {
+  "id": "ja_sylveon_ex_starter_set_tera_type_stellar",
+  "code": "SVLN",
+  "name": "Sylveon ex Starter Set Tera Type: Stellar",
+  "era": "Scarlet & Violet",
+  "total": 25,
+  "printedTotal": 22,
+  "logo": "49363c95737b47d82defb3e8fca19f77",
+  "releaseDate": "2024/08/30"
+ },
+ {
+  "id": "ja_stellar_miracle",
+  "code": "SV7",
+  "name": "Stellar Miracle",
+  "era": "Scarlet & Violet",
+  "total": 135,
+  "printedTotal": 102,
+  "logo": "49f27c6ea477aeb0bbe1b0ce096c174e",
+  "releaseDate": "2024/07/19"
+ },
+ {
+  "id": "ja_stellar_miracle_deck_build_box",
+  "code": "SVK",
+  "name": "Stellar Miracle Deck Build Box",
+  "era": "Scarlet & Violet",
+  "total": 52,
+  "printedTotal": 44,
+  "logo": "034c0e6a28ea5d48290c7357e4d3ff6a",
+  "releaseDate": "2024/07/19"
+ },
+ {
+  "id": "ja_night_wanderer",
+  "code": "SV6a",
+  "name": "Night Wanderer",
+  "era": "Scarlet & Violet",
+  "total": 94,
+  "printedTotal": 64,
+  "logo": "387a3746cd36745c3ff2839660c4012c",
+  "releaseDate": "2024/06/07"
+ },
+ {
+  "id": "ja_chien_pao_ex_battle_master_deck",
+  "code": "SVJP",
+  "name": "Chien-Pao ex Battle Master Deck",
+  "era": "Scarlet & Violet",
+  "total": 19,
+  "printedTotal": 19,
+  "logo": "fc2499ed9eaa80a080845c58c6373f62",
+  "releaseDate": "2024/05/17"
+ },
+ {
+  "id": "ja_terastal_charizard_ex_battle_master_deck",
+  "code": "SVJL",
+  "name": "Terastal Charizard ex Battle Master Deck",
+  "era": "Scarlet & Violet",
+  "total": 21,
+  "printedTotal": 21,
+  "logo": "29e17abea0f77cf0ed8f95330315359a",
+  "releaseDate": "2024/05/17"
+ },
+ {
+  "id": "ja_mask_of_change",
+  "code": "SV6",
+  "name": "Mask of Change",
+  "era": "Scarlet & Violet",
+  "total": 133,
+  "printedTotal": 101,
+  "logo": "b20b0f6ad0cbdb6b1c0accfcbc3c164c",
+  "releaseDate": "2024/04/26"
+ },
+ {
+  "id": "ja_crimson_haze",
+  "code": "SV5a",
+  "name": "Crimson Haze",
+  "era": "Scarlet & Violet",
+  "total": 96,
+  "printedTotal": 66,
+  "logo": "5138fcc4fbb94bad48ba30b468727fed",
+  "releaseDate": "2024/03/22"
+ },
+ {
+  "id": "ja_pokemon_card_game_battle_academy",
+  "code": "SVI",
+  "name": "Pokémon Card Game Battle Academy",
+  "era": "Scarlet & Violet",
+  "total": 74,
+  "printedTotal": 66,
+  "logo": "c7b5e492c6c4f0c5d0be8eec40abf89c",
+  "releaseDate": "2024/03/08"
+ },
+ {
+  "id": "ja_ancient_koraidon_ex_starter_deck_build_set",
+  "code": "SVHK",
+  "name": "Ancient Koraidon ex Starter Deck & Build Set",
+  "era": "Scarlet & Violet",
+  "total": 53,
+  "printedTotal": 53,
+  "logo": "81fa10e86a76f69226e67d46e1a67f1b",
+  "releaseDate": "2024/01/26"
+ },
+ {
+  "id": "ja_cyber_judge",
+  "code": "SV5M",
+  "name": "Cyber Judge",
+  "era": "Scarlet & Violet",
+  "total": 100,
+  "printedTotal": 71,
+  "logo": "f72c7af2d1856ce72e05fa27b715cd0c",
+  "releaseDate": "2024/01/26"
+ },
+ {
+  "id": "ja_future_miraidon_ex_starter_deck_build_set",
+  "code": "SVHM",
+  "name": "Future Miraidon ex Starter Deck & Build Set",
+  "era": "Scarlet & Violet",
+  "total": 53,
+  "printedTotal": 53,
+  "logo": "507ca68fd512ec4d19f6c9d8ec00e816",
+  "releaseDate": "2024/01/26"
+ },
+ {
+  "id": "ja_wild_force",
+  "code": "SV5K",
+  "name": "Wild Force",
+  "era": "Scarlet & Violet",
+  "total": 100,
+  "printedTotal": 71,
+  "logo": "87b2b650a1f191b75a95de59ee2a21c6",
+  "releaseDate": "2024/01/26"
+ },
+ {
+  "id": "ja_shiny_treasure_ex",
+  "code": "SV4a",
+  "name": "Shiny Treasure ex",
+  "era": "Scarlet & Violet",
+  "total": 360,
+  "printedTotal": 190,
+  "logo": "60d9a3e810068536f9c524ff80b1b108",
+  "releaseDate": "2023/12/01"
+ },
+ {
+  "id": "ja_svg_special_deck_set",
+  "code": "SVG",
+  "name": "SVG Special Deck Set",
+  "era": "Scarlet & Violet",
+  "total": 52,
+  "printedTotal": 49,
+  "logo": "6ce6d7a0d4b1d1294ae3b4b8b612b782",
+  "releaseDate": "2023/11/10"
+ },
+ {
+  "id": "ja_pokemon_tcg_classic_blastoise",
+  "code": "CLK",
+  "name": "Pokémon TCG Classic (Blastoise)",
+  "era": "Scarlet & Violet",
+  "total": 34,
+  "printedTotal": 32,
+  "logo": "6f4e4b5b2e348169eca3310052820dab",
+  "releaseDate": "2023/10/31"
+ },
+ {
+  "id": "ja_pokemon_tcg_classic_charizard",
+  "code": "CLL",
+  "name": "Pokémon TCG Classic (Charizard)",
+  "era": "Scarlet & Violet",
+  "total": 34,
+  "printedTotal": 32,
+  "logo": "fe80f90eb000570cf4eafd3eaa1c2a51",
+  "releaseDate": "2023/10/31"
+ },
+ {
+  "id": "ja_pokemon_tcg_classic_venusaur",
+  "code": "CLF",
+  "name": "Pokémon TCG Classic (Venusaur)",
+  "era": "Scarlet & Violet",
+  "total": 34,
+  "printedTotal": 32,
+  "logo": "ebc3d0b080ba87c673b0f0a8713a28d8",
+  "releaseDate": "2023/10/31"
+ },
+ {
+  "id": "ja_ancient_roar",
+  "code": "SV4K",
+  "name": "Ancient Roar",
+  "era": "Scarlet & Violet",
+  "total": 95,
+  "printedTotal": 66,
+  "logo": "fec4415da573a5493cf5090bdc75592c",
+  "releaseDate": "2023/10/27"
+ },
+ {
+  "id": "ja_future_flash",
+  "code": "SV4M",
+  "name": "Future Flash",
+  "era": "Scarlet & Violet",
+  "total": 95,
+  "printedTotal": 66,
+  "logo": "c2b7d8cf0a9dd08a30d485a061e5bacb",
+  "releaseDate": "2023/10/27"
+ },
+ {
+  "id": "ja_mewtwo_ex_starter_set_terastal",
+  "code": "SVEM",
+  "name": "Mewtwo ex Starter Set Terastal",
+  "era": "Scarlet & Violet",
+  "total": 20,
+  "printedTotal": 20,
+  "logo": "6059e1639d5f72dd569c3ceef93af6da",
+  "releaseDate": "2023/09/22"
+ },
+ {
+  "id": "ja_raging_surf",
+  "code": "SV3a",
+  "name": "Raging Surf",
+  "era": "Scarlet & Violet",
+  "total": 92,
+  "printedTotal": 62,
+  "logo": "b7a1adda0a3002c6e9e020648fc338d4",
+  "releaseDate": "2023/09/22"
+ },
+ {
+  "id": "ja_skeledirge_ex_starter_set_terastal",
+  "code": "SVEL",
+  "name": "Skeledirge ex Starter Set Terastal",
+  "era": "Scarlet & Violet",
+  "total": 20,
+  "printedTotal": 20,
+  "logo": "3dc5482b3b0e8e76b0f117491edb098c",
+  "releaseDate": "2023/09/22"
+ },
+ {
+  "id": "ja_2023_pokemon_world_championships_yokohama_deck_pikachu",
+  "code": "WCS23",
+  "name": "2023 Pokémon World Championships Yokohama Deck: Pikachu",
+  "era": "Scarlet & Violet",
+  "total": 32,
+  "printedTotal": 30,
+  "logo": "554238d2d9fef1c3ce8e625a9fb0045e",
+  "releaseDate": "2023/07/28"
+ },
+ {
+  "id": "ja_ruler_of_the_black_flame",
+  "code": "SV3",
+  "name": "Ruler of the Black Flame",
+  "era": "Scarlet & Violet",
+  "total": 141,
+  "printedTotal": 108,
+  "logo": "28e330c02a0d628cba2f4435370ab2f8",
+  "releaseDate": "2023/07/28"
+ },
+ {
+  "id": "ja_ruler_of_the_black_flame_deck_build_box",
+  "code": "SVF",
+  "name": "Ruler of the Black Flame Deck Build Box",
+  "era": "Scarlet & Violet",
+  "total": 38,
+  "printedTotal": 38,
+  "logo": "1e3f02d7a62da2d8b5cc3114b4300c63",
+  "releaseDate": "2023/07/28"
+ },
+ {
+  "id": "ja_sv_ex_start_decks",
+  "code": "SVD",
+  "name": "SV: ex Start Decks",
+  "era": "Scarlet & Violet",
+  "total": 139,
+  "printedTotal": 139,
+  "logo": "81eb068d1b340b4deca41dc2ff43ad72",
+  "releaseDate": "2023/07/07"
+ },
+ {
+  "id": "ja_pokemon_card_151",
+  "code": "SV2a",
+  "name": "Pokémon Card 151",
+  "era": "Scarlet & Violet",
+  "total": 210,
+  "printedTotal": 165,
+  "logo": "c42bcc2260c67183fcfc98764fc627be",
+  "releaseDate": "2023/06/16"
+ },
+ {
+  "id": "ja_ex_special_set",
+  "code": "SVP1",
+  "name": "ex Special Set",
+  "era": "Scarlet & Violet",
+  "total": 7,
+  "printedTotal": 7,
+  "logo": "d5d58f48842385a85eb810b9074c0114",
+  "releaseDate": "2023/05/19"
+ },
+ {
+  "id": "ja_clay_burst",
+  "code": "SV2D",
+  "name": "Clay Burst",
+  "era": "Scarlet & Violet",
+  "total": 99,
+  "printedTotal": 71,
+  "logo": "c87719691500ccd262abc936a27a4f87",
+  "releaseDate": "2023/04/14"
+ },
+ {
+  "id": "ja_snow_hazard",
+  "code": "SV2P",
+  "name": "Snow Hazard",
+  "era": "Scarlet & Violet",
+  "total": 99,
+  "printedTotal": 71,
+  "logo": "5809d159e519e019347dcf73b540ca06",
+  "releaseDate": "2023/04/14"
+ },
+ {
+  "id": "ja_ex_starter_set_pikachu_ex_pawmot",
+  "code": "SVC",
+  "name": "ex Starter Set Pikachu ex & Pawmot",
+  "era": "Scarlet & Violet",
+  "total": 21,
+  "printedTotal": 21,
+  "logo": "bbb4aa00c176a0ff93bc1104d93bceb1",
+  "releaseDate": "2023/03/24"
+ },
+ {
+  "id": "ja_triplet_beat",
+  "code": "SV1a",
+  "name": "Triplet Beat",
+  "era": "Scarlet & Violet",
+  "total": 103,
+  "printedTotal": 73,
+  "logo": "80fc9e284ed6842278af3f35cea96fd5",
+  "releaseDate": "2023/03/10"
+ },
+ {
+  "id": "ja_fuecoco_ampharos_ex_starter_set_ex",
+  "code": "SVAL",
+  "name": "Fuecoco & Ampharos ex Starter Set ex",
+  "era": "Scarlet & Violet",
+  "total": 21,
+  "printedTotal": 21,
+  "logo": "c661a987de80fccaea59121729ff250e",
+  "releaseDate": "2023/01/20"
+ },
+ {
+  "id": "ja_premium_trainer_box_ex",
+  "code": "SVB",
+  "name": "Premium Trainer Box ex",
+  "era": "Scarlet & Violet",
+  "total": 28,
+  "printedTotal": 28,
+  "logo": "d7f5fb344097822c203ee72f49ecbf2e",
+  "releaseDate": "2023/01/20"
+ },
+ {
+  "id": "ja_quaxly_mimikyu_ex_starter_set_ex",
+  "code": "SVAW",
+  "name": "Quaxly & Mimikyu ex Starter Set ex",
+  "era": "Scarlet & Violet",
+  "total": 23,
+  "printedTotal": 23,
+  "logo": "334a9bdd7bb3408244b258b7ea35b999",
+  "releaseDate": "2023/01/20"
+ },
+ {
+  "id": "ja_scarlet_ex",
+  "code": "SV1S",
+  "name": "Scarlet ex",
+  "era": "Scarlet & Violet",
+  "total": 108,
+  "printedTotal": 78,
+  "logo": "fbe96f9795e363dd5e98ef65490ed23a",
+  "releaseDate": "2023/01/20"
+ },
+ {
+  "id": "ja_sprigatito_lucario_ex_starter_set_ex",
+  "code": "SVAM",
+  "name": "Sprigatito & Lucario ex Starter Set ex",
+  "era": "Scarlet & Violet",
+  "total": 23,
+  "printedTotal": 23,
+  "logo": "e4bf80844cebe9da5aed78e72370a6b2",
+  "releaseDate": "2023/01/20"
+ },
+ {
+  "id": "ja_violet_ex",
+  "code": "SV1V",
+  "name": "Violet ex",
+  "era": "Scarlet & Violet",
+  "total": 108,
+  "printedTotal": 78,
+  "logo": "5df46e132b5c4069b83f38e0128d02da",
+  "releaseDate": "2023/01/20"
+ },
+ {
+  "id": "ja_vstar_universe",
+  "code": "S12a",
+  "name": "VSTAR Universe",
+  "era": "Sword & Shield",
+  "total": 262,
+  "printedTotal": 172,
+  "logo": "f08cde35200f33756f7b554174ccd092",
+  "releaseDate": "2022/12/02"
+ },
+ {
+  "id": "ja_charizard_vstar_vs_rayquaza_vmax_special_deck_set",
+  "code": "SO",
+  "name": "Charizard VSTAR vs Rayquaza VMAX Special Deck Set",
+  "era": "Sword & Shield",
+  "total": 32,
+  "printedTotal": 30,
+  "logo": "d16050d1402b364698e8e3a60a87e0ee",
+  "releaseDate": "2022/11/04"
+ },
+ {
+  "id": "ja_scarlet_violet_promos",
+  "code": "SV-P",
+  "name": "Scarlet & Violet Promos",
+  "era": "Scarlet & Violet",
+  "total": 303,
+  "printedTotal": 303,
+  "logo": "6ef21c0159e80c8045f322358158c271",
+  "releaseDate": "2022/11/01"
+ },
+ {
+  "id": "ja_paradigm_trigger",
+  "code": "S12",
+  "name": "Paradigm Trigger",
+  "era": "Sword & Shield",
+  "total": 125,
+  "printedTotal": 98,
+  "logo": "e8ba6f9560b70c865bee423f3cb0896c",
+  "releaseDate": "2022/10/21"
+ },
+ {
+  "id": "ja_incandescent_arcana",
+  "code": "S11a",
+  "name": "Incandescent Arcana",
+  "era": "Sword & Shield",
+  "total": 94,
+  "printedTotal": 68,
+  "logo": "3a2b79ccecee8fdd3d31fa478e0f0a42",
+  "releaseDate": "2022/09/02"
+ },
+ {
+  "id": "ja_vstar_special_set",
+  "code": "SP6",
+  "name": "VSTAR Special Set",
+  "era": "Sword & Shield",
+  "total": 6,
+  "printedTotal": 6,
+  "logo": "62b721c67a46dcb65b8452a77a90f8a5",
+  "releaseDate": "2022/08/05"
+ },
+ {
+  "id": "ja_deoxys_vstar_vmax_high_class_deck",
+  "code": "SPD",
+  "name": "Deoxys VSTAR & VMAX High-Class Deck",
+  "era": "Sword & Shield",
+  "total": 21,
+  "printedTotal": 20,
+  "logo": "bdd620ffc3e716650f7c235f5cc6a147",
+  "releaseDate": "2022/07/15"
+ },
+ {
+  "id": "ja_lost_abyss",
+  "code": "S11",
+  "name": "Lost Abyss",
+  "era": "Sword & Shield",
+  "total": 127,
+  "printedTotal": 100,
+  "logo": "2cfc6efd06ae6fedde3ef743470dd55e",
+  "releaseDate": "2022/07/15"
+ },
+ {
+  "id": "ja_zeraora_vstar_vmax_high_class_deck",
+  "code": "SPZ",
+  "name": "Zeraora VSTAR & VMAX High-Class Deck",
+  "era": "Sword & Shield",
+  "total": 21,
+  "printedTotal": 20,
+  "logo": "9d4893a1dadaa95be1aa9fb8be9ba1c8",
+  "releaseDate": "2022/07/15"
+ },
+ {
+  "id": "ja_pokemon_go",
+  "code": "S10b",
+  "name": "Pokémon GO",
+  "era": "Sword & Shield",
+  "total": 101,
+  "printedTotal": 71,
+  "logo": "ed326db24537fe3aba9e6eb7e76ab056",
+  "releaseDate": "2022/06/17"
+ },
+ {
+  "id": "ja_dark_phantasma",
+  "code": "S10a",
+  "name": "Dark Phantasma",
+  "era": "Sword & Shield",
+  "total": 99,
+  "printedTotal": 71,
+  "logo": "aea851e84c8f4017a0581c2b6eeed184",
+  "releaseDate": "2022/05/13"
+ },
+ {
+  "id": "ja_space_juggler",
+  "code": "S10P",
+  "name": "Space Juggler",
+  "era": "Sword & Shield",
+  "total": 88,
+  "printedTotal": 67,
+  "logo": "086259c355c9114eeb27cd6b8117404a",
+  "releaseDate": "2022/04/08"
+ },
+ {
+  "id": "ja_time_gazer",
+  "code": "S10D",
+  "name": "Time Gazer",
+  "era": "Sword & Shield",
+  "total": 88,
+  "printedTotal": 67,
+  "logo": "b01ad63ea96f8e694e7e58413d8928cb",
+  "releaseDate": "2022/04/08"
+ },
+ {
+  "id": "ja_start_deck_100_corocoro_comic_version",
+  "code": "SN",
+  "name": "Start Deck 100 CoroCoro Comic Version",
+  "era": "Sword & Shield",
+  "total": 25,
+  "printedTotal": 24,
+  "logo": "36140fd4722e54db97596c74d1e78e76",
+  "releaseDate": "2022/03/01"
+ },
+ {
+  "id": "ja_battle_region",
+  "code": "S9a",
+  "name": "Battle Region",
+  "era": "Sword & Shield",
+  "total": 93,
+  "printedTotal": 67,
+  "logo": "0556d5804f0045154d25a9ec84877abb",
+  "releaseDate": "2022/02/25"
+ },
+ {
+  "id": "ja_darkrai_starter_set_vstar",
+  "code": "SLD",
+  "name": "Darkrai Starter Set VSTAR",
+  "era": "Sword & Shield",
+  "total": 20,
+  "printedTotal": 20,
+  "logo": "0d9ab9d388ba5d44d6a2137053ef0f35",
+  "releaseDate": "2022/02/25"
+ },
+ {
+  "id": "ja_lucario_starter_set_vstar",
+  "code": "SLL",
+  "name": "Lucario Starter Set VSTAR",
+  "era": "Sword & Shield",
+  "total": 21,
+  "printedTotal": 21,
+  "logo": "0439b73d5be5aba0ee645e8743bbc28f",
+  "releaseDate": "2022/02/25"
+ },
+ {
+  "id": "ja_star_birth",
+  "code": "S9",
+  "name": "Star Birth",
+  "era": "Sword & Shield",
+  "total": 127,
+  "printedTotal": 100,
+  "logo": "b0f8e2cc3df1d4b1279c3631dd902335",
+  "releaseDate": "2022/01/14"
+ },
+ {
+  "id": "ja_vstar_premium_trainer_box",
+  "code": "SK",
+  "name": "VSTAR Premium Trainer Box",
+  "era": "Sword & Shield",
+  "total": 30,
+  "printedTotal": 30,
+  "logo": "9bebd9e64c7e749a95ab9c1281ac7015",
+  "releaseDate": "2022/01/14"
+ },
+ {
+  "id": "ja_25th_anniversary_creatures_deck",
+  "code": null,
+  "name": "25th Anniversary Creatures Deck",
+  "era": "Sword & Shield",
+  "total": 30,
+  "printedTotal": 30,
+  "logo": "ac9c6227a3e0f34d5b58eb9e29a59af4",
+  "releaseDate": "2021/12/26"
+ },
+ {
+  "id": "ja_start_deck_100",
+  "code": "SI",
+  "name": "Start Deck 100",
+  "era": "Sword & Shield",
+  "total": 430,
+  "printedTotal": 414,
+  "logo": "bffa8249952fb74601a6a48a525fd41e",
+  "releaseDate": "2021/12/17"
+ },
+ {
+  "id": "ja_vmax_climax",
+  "code": "S8b",
+  "name": "VMAX Climax",
+  "era": "Sword & Shield",
+  "total": 293,
+  "printedTotal": 184,
+  "logo": "dcf061cbde07798c7a56ec4c7de6fcad",
+  "releaseDate": "2021/12/03"
+ },
+ {
+  "id": "ja_25th_anniversary_golden_box",
+  "code": "S8a-G",
+  "name": "25th Anniversary Golden Box",
+  "era": "Sword & Shield",
+  "total": 16,
+  "printedTotal": 15,
+  "logo": "84637975349c88c90f0e0807a5b899c2",
+  "releaseDate": "2021/12/01"
+ },
+ {
+  "id": "ja_zacian_zamazenta_vs_eternatus_special_deck_set",
+  "code": "SJ",
+  "name": "Zacian & Zamazenta vs Eternatus Special Deck Set",
+  "era": "Sword & Shield",
+  "total": 30,
+  "printedTotal": 28,
+  "logo": "d672fcc478beb0a053d71310150b2677",
+  "releaseDate": "2021/11/05"
+ },
+ {
+  "id": "ja_25th_anniversary_collection",
+  "code": "S8a",
+  "name": "25th Anniversary Collection",
+  "era": "Sword & Shield",
+  "total": 38,
+  "printedTotal": 28,
+  "logo": "7fe7cd72daa52f5d6ea2ea12f3b9c92e",
+  "releaseDate": "2021/10/22"
+ },
+ {
+  "id": "ja_promo_card_pack_25th_anniversary_edition",
+  "code": "S8a-P",
+  "name": "Promo Card Pack 25th Anniversary Edition",
+  "era": "Sword & Shield",
+  "total": 25,
+  "printedTotal": 25,
+  "logo": "98b7fe87e05a131102301ea912ce49eb",
+  "releaseDate": "2021/10/22"
+ },
+ {
+  "id": "ja_fusion_arts",
+  "code": "S8",
+  "name": "Fusion Arts",
+  "era": "Sword & Shield",
+  "total": 129,
+  "printedTotal": 100,
+  "logo": "4d761f2d98b593adf56ee1327d78c4c2",
+  "releaseDate": "2021/09/24"
+ },
+ {
+  "id": "ja_v_union_special_card_sets",
+  "code": "SP5",
+  "name": "V-UNION Special Card Sets",
+  "era": "Sword & Shield",
+  "total": 13,
+  "printedTotal": 13,
+  "logo": "edb735f8fc4d448f1e97a216061ebcbc",
+  "releaseDate": "2021/08/20"
+ },
+ {
+  "id": "ja_blue_sky_stream",
+  "code": "S7R",
+  "name": "Blue Sky Stream",
+  "era": "Sword & Shield",
+  "total": 90,
+  "printedTotal": 67,
+  "logo": "d0d271cb8d02232c1a5888b5c4425201",
+  "releaseDate": "2021/07/09"
+ },
+ {
+  "id": "ja_skyscraping_perfection",
+  "code": "S7D",
+  "name": "Skyscraping Perfection",
+  "era": "Sword & Shield",
+  "total": 90,
+  "printedTotal": 67,
+  "logo": "713f6d9d47f6d3ff5c30c64f2f55f685",
+  "releaseDate": "2021/07/09"
+ },
+ {
+  "id": "ja_sword_shield_family_pokemon_card_game",
+  "code": "SH",
+  "name": "Sword & Shield Family Pokémon Card Game",
+  "era": "Sword & Shield",
+  "total": 59,
+  "printedTotal": 53,
+  "logo": "acf17faec6e96a06f3fe04bd8c3e0d33",
+  "releaseDate": "2021/07/09"
+ },
+ {
+  "id": "ja_eevee_heroes",
+  "code": "S6a",
+  "name": "Eevee Heroes",
+  "era": "Sword & Shield",
+  "total": 101,
+  "printedTotal": 69,
+  "logo": "4c4bb5e6c3518aad0efedb3f7a637dbd",
+  "releaseDate": "2021/05/28"
+ },
+ {
+  "id": "ja_eevee_heroes_vmax_special_set",
+  "code": "SP4",
+  "name": "Eevee Heroes VMAX Special Set",
+  "era": "Sword & Shield",
+  "total": 8,
+  "printedTotal": 4,
+  "logo": "08bccd6368867a0f535596d6b3941424",
+  "releaseDate": "2021/05/28"
+ },
+ {
+  "id": "ja_gengar_vmax_high_class_deck",
+  "code": "SGG",
+  "name": "Gengar VMAX High-Class Deck",
+  "era": "Sword & Shield",
+  "total": 21,
+  "printedTotal": 19,
+  "logo": "8535d0b54f8783672c1f705369fd3032",
+  "releaseDate": "2021/05/28"
+ },
+ {
+  "id": "ja_inteleon_vmax_high_class_deck",
+  "code": "SGI",
+  "name": "Inteleon VMAX High-Class Deck",
+  "era": "Sword & Shield",
+  "total": 24,
+  "printedTotal": 22,
+  "logo": "c1ed4b84b509e5f68146991699f4d47b",
+  "releaseDate": "2021/05/28"
+ },
+ {
+  "id": "ja_jet_black_spirit",
+  "code": "S6K",
+  "name": "Jet-Black Spirit",
+  "era": "Sword & Shield",
+  "total": 95,
+  "printedTotal": 70,
+  "logo": "6dfa12f7e8ddda12c17b788cc4c5c652",
+  "releaseDate": "2021/04/23"
+ },
+ {
+  "id": "ja_silver_lance",
+  "code": "S6H",
+  "name": "Silver Lance",
+  "era": "Sword & Shield",
+  "total": 95,
+  "printedTotal": 70,
+  "logo": "351aad70f436d37c680fe1037127ea4c",
+  "releaseDate": "2021/04/23"
+ },
+ {
+  "id": "ja_silver_lance_jet_black_spirit_jumbo_pack_set",
+  "code": "SP3",
+  "name": "Silver Lance & Jet-Black Spirit Jumbo Pack Set",
+  "era": "Sword & Shield",
+  "total": 6,
+  "printedTotal": 6,
+  "logo": "06d78d3743725b86818087304ea6a46a",
+  "releaseDate": "2021/04/23"
+ },
+ {
+  "id": "ja_matchless_fighters",
+  "code": "S5a",
+  "name": "Matchless Fighters",
+  "era": "Sword & Shield",
+  "total": 96,
+  "printedTotal": 70,
+  "logo": "7308283497c446bb0507179a82aa96ce",
+  "releaseDate": "2021/03/19"
+ },
+ {
+  "id": "ja_rapid_strike_master",
+  "code": "S5R",
+  "name": "Rapid Strike Master",
+  "era": "Sword & Shield",
+  "total": 91,
+  "printedTotal": 70,
+  "logo": "f45ac0f072386fd9fabffe352c35c20b",
+  "releaseDate": "2021/01/22"
+ },
+ {
+  "id": "ja_single_strike_rapid_strike_premium_trainer_boxes",
+  "code": "SF",
+  "name": "Single Strike & Rapid Strike Premium Trainer Boxes",
+  "era": "Sword & Shield",
+  "total": 33,
+  "printedTotal": 33,
+  "logo": "320fb9c8acaccc35cbbd098ee81e1dc1",
+  "releaseDate": "2021/01/22"
+ },
+ {
+  "id": "ja_single_strike_master",
+  "code": "S5I",
+  "name": "Single Strike Master",
+  "era": "Sword & Shield",
+  "total": 91,
+  "printedTotal": 70,
+  "logo": "85e9faac00bb63b45fa7b2fbb7f8278d",
+  "releaseDate": "2021/01/22"
+ },
+ {
+  "id": "ja_blastoise_vmax_starter_set",
+  "code": "SEK",
+  "name": "Blastoise VMAX Starter Set",
+  "era": "Sword & Shield",
+  "total": 20,
+  "printedTotal": 20,
+  "logo": "c5e7536ad5ae66eeb46d35f36e7ac8ef",
+  "releaseDate": "2020/12/04"
+ },
+ {
+  "id": "ja_charizard_vmax_starter_set_december_2020",
+  "code": "SC2",
+  "name": "Charizard VMAX Starter Set (December 2020)",
+  "era": "Sword & Shield",
+  "total": 21,
+  "printedTotal": 21,
+  "logo": "481f544d0032b004730b6d12a8954cee",
+  "releaseDate": "2020/12/04"
+ },
+ {
+  "id": "ja_venusaur_starter_set_vmax",
+  "code": "SEF",
+  "name": "Venusaur Starter Set VMAX",
+  "era": "Sword & Shield",
+  "total": 21,
+  "printedTotal": 21,
+  "logo": "068e29bc4b0179b04ba7f49f894471c2",
+  "releaseDate": "2020/12/04"
+ },
+ {
+  "id": "ja_shiny_star_v",
+  "code": "S4a",
+  "name": "Shiny Star V",
+  "era": "Sword & Shield",
+  "total": 330,
+  "printedTotal": 190,
+  "logo": "702dafefca210d2bb5e533273434ec59",
+  "releaseDate": "2020/11/20"
+ },
+ {
+  "id": "ja_vmax_special_set",
+  "code": "SP2",
+  "name": "VMAX Special Set",
+  "era": "Sword & Shield",
+  "total": 8,
+  "printedTotal": 4,
+  "logo": "32a57dcfaa6180509c0d862292add87d",
+  "releaseDate": "2020/10/23"
+ },
+ {
+  "id": "ja_amazing_volt_tackle",
+  "code": "S4",
+  "name": "Amazing Volt Tackle",
+  "era": "Sword & Shield",
+  "total": 121,
+  "printedTotal": 100,
+  "logo": "01144bc0e8a80f2cc1795a1f154bcd6d",
+  "releaseDate": "2020/09/18"
+ },
+ {
+  "id": "ja_legendary_heartbeat",
+  "code": "S3a",
+  "name": "Legendary Heartbeat",
+  "era": "Sword & Shield",
+  "total": 94,
+  "printedTotal": 76,
+  "logo": "601eca36c1b0a44724b2b441a70ddc9e",
+  "releaseDate": "2020/07/10"
+ },
+ {
+  "id": "ja_v_starter_decks",
+  "code": "SD",
+  "name": "V Starter Decks",
+  "era": "Sword & Shield",
+  "total": 127,
+  "printedTotal": 127,
+  "logo": "bc7fc66d977f3e66cfe7cc65f414fa8a",
+  "releaseDate": "2020/07/10"
+ },
+ {
+  "id": "ja_infinity_zone",
+  "code": "S3",
+  "name": "Infinity Zone",
+  "era": "Sword & Shield",
+  "total": 119,
+  "printedTotal": 100,
+  "logo": "25058aeb1ffb5d997933a62eb9d042fb",
+  "releaseDate": "2020/06/05"
+ },
+ {
+  "id": "ja_explosive_flame_walker",
+  "code": "S2a",
+  "name": "Explosive Flame Walker",
+  "era": "Sword & Shield",
+  "total": 86,
+  "printedTotal": 70,
+  "logo": "8b3286409276352f021de11e63dba024",
+  "releaseDate": "2020/04/24"
+ },
+ {
+  "id": "ja_charizard_vmax_starter_set",
+  "code": "SC",
+  "name": "Charizard VMAX Starter Set",
+  "era": "Sword & Shield",
+  "total": 21,
+  "printedTotal": 21,
+  "logo": "5faa63f5fb7ab45763766c6331a67e39",
+  "releaseDate": "2020/03/27"
+ },
+ {
+  "id": "ja_grimmsnarl_vmax_starter_set",
+  "code": "SC",
+  "name": "Grimmsnarl VMAX Starter Set",
+  "era": "Sword & Shield",
+  "total": 20,
+  "printedTotal": 20,
+  "logo": "128d6cd2717651c248c64dfd3f0cd3c8",
+  "releaseDate": "2020/03/27"
+ },
+ {
+  "id": "ja_rebellion_crash",
+  "code": "S2",
+  "name": "Rebellion Crash",
+  "era": "Sword & Shield",
+  "total": 115,
+  "printedTotal": 96,
+  "logo": "4dcd4cb4a8bf03ef65b422c62497d1f3",
+  "releaseDate": "2020/03/06"
+ },
+ {
+  "id": "ja_vmax_rising",
+  "code": "S1a",
+  "name": "VMAX Rising",
+  "era": "Sword & Shield",
+  "total": 86,
+  "printedTotal": 70,
+  "logo": "180d79f6140a8a66dc5de3ee0c2f9cca",
+  "releaseDate": "2020/02/07"
+ },
+ {
+  "id": "ja_zacian_zamazenta_box",
+  "code": "SP1",
+  "name": "Zacian + Zamazenta Box",
+  "era": "Sword & Shield",
+  "total": 7,
+  "printedTotal": 7,
+  "logo": "3cfc7ef3e265bca9e33e7271f280155a",
+  "releaseDate": "2019/12/27"
+ },
+ {
+  "id": "ja_shield",
+  "code": "S1H",
+  "name": "Shield",
+  "era": "Sword & Shield",
+  "total": 75,
+  "printedTotal": 60,
+  "logo": "d3d63d0cfdea65bf71160bab8c311b9e",
+  "releaseDate": "2019/12/06"
+ },
+ {
+  "id": "ja_sword",
+  "code": "S1W",
+  "name": "Sword",
+  "era": "Sword & Shield",
+  "total": 75,
+  "printedTotal": 60,
+  "logo": "c9cebf799789de7f46d6aaa613194298",
+  "releaseDate": "2019/12/06"
+ },
+ {
+  "id": "ja_sword_shield_premium_trainer_box",
+  "code": "SB",
+  "name": "Sword & Shield Premium Trainer Box",
+  "era": "Sword & Shield",
+  "total": 24,
+  "printedTotal": 24,
+  "logo": "b86a9ef18725e42e2b8331bf65eff0d7",
+  "releaseDate": "2019/12/06"
+ },
+ {
+  "id": "ja_fighting_starter_set_v",
+  "code": "SA",
+  "name": "Fighting Starter Set V",
+  "era": "Sword & Shield",
+  "total": 24,
+  "printedTotal": 24,
+  "logo": "858ca8cdbd8262bcafb716557ff4f791",
+  "releaseDate": "2019/11/29"
+ },
+ {
+  "id": "ja_fire_starter_set_v",
+  "code": "SA",
+  "name": "Fire Starter Set V",
+  "era": "Sword & Shield",
+  "total": 23,
+  "printedTotal": 23,
+  "logo": "9bae20714206559e0e943f0358172153",
+  "releaseDate": "2019/11/29"
+ },
+ {
+  "id": "ja_grass_starter_set_v",
+  "code": "SA",
+  "name": "Grass Starter Set V",
+  "era": "Sword & Shield",
+  "total": 23,
+  "printedTotal": 23,
+  "logo": "d367095665edbec9b2f7ab0c96bd0c69",
+  "releaseDate": "2019/11/29"
+ },
+ {
+  "id": "ja_lightning_starter_set_v",
+  "code": "SA",
+  "name": "Lightning Starter Set V",
+  "era": "Sword & Shield",
+  "total": 24,
+  "printedTotal": 24,
+  "logo": "7e61c72d7e5e4bec6d19b071b4bb4d66",
+  "releaseDate": "2019/11/29"
+ },
+ {
+  "id": "ja_water_starter_set_v",
+  "code": "SA",
+  "name": "Water Starter Set V",
+  "era": "Sword & Shield",
+  "total": 23,
+  "printedTotal": 23,
+  "logo": "e9076669a0af1cfcc8b9c1a17c87d8fc",
+  "releaseDate": "2019/11/29"
+ },
+ {
+  "id": "ja_sword_shield_promos",
+  "code": "S-P",
+  "name": "Sword & Shield Promos",
+  "era": "Sword & Shield",
+  "total": 354,
+  "printedTotal": 354,
+  "logo": "e965f566b98332abde9dc904ba711278",
+  "releaseDate": "2019/11/01"
+ },
+ {
+  "id": "ja_extra_regulation_box",
+  "code": null,
+  "name": "Extra Regulation Box",
+  "era": "Sun & Moon",
+  "total": 57,
+  "printedTotal": 48,
+  "logo": "24fd7d7eb718975dc418897b7193c564",
+  "releaseDate": "2019/10/04"
+ },
+ {
+  "id": "ja_tag_all_stars",
+  "code": "SM12a",
+  "name": "Tag All Stars",
+  "era": "Sun & Moon",
+  "total": 235,
+  "printedTotal": 173,
+  "logo": "a75414611ec6ca3d21cb51a592b5e3a2",
+  "releaseDate": "2019/10/04"
+ },
+ {
+  "id": "ja_alter_genesis",
+  "code": "SM12",
+  "name": "Alter Genesis",
+  "era": "Sun & Moon",
+  "total": 117,
+  "printedTotal": 95,
+  "logo": "6f27c85a26fff6eeb42a60ba7cdc1756",
+  "releaseDate": "2019/09/06"
+ },
+ {
+  "id": "ja_dream_league",
+  "code": "SM11b",
+  "name": "Dream League",
+  "era": "Sun & Moon",
+  "total": 75,
+  "printedTotal": 49,
+  "logo": "5fe321174771931560a267d263233ad3",
+  "releaseDate": "2019/08/02"
+ },
+ {
+  "id": "ja_remix_bout",
+  "code": "SM11a",
+  "name": "Remix Bout",
+  "era": "Sun & Moon",
+  "total": 80,
+  "printedTotal": 64,
+  "logo": "90bd2453381aed81a4e66f077cdb4b31",
+  "releaseDate": "2019/07/05"
+ },
+ {
+  "id": "ja_miracle_twins",
+  "code": "SM11",
+  "name": "Miracle Twins",
+  "era": "Sun & Moon",
+  "total": 115,
+  "printedTotal": 94,
+  "logo": "b32a7f0e721ead6b2c49276b1f6b38c4",
+  "releaseDate": "2019/05/31"
+ },
+ {
+  "id": "ja_tag_team_gx_starter_sets",
+  "code": "SMM",
+  "name": "Tag Team GX Starter Sets",
+  "era": "Sun & Moon",
+  "total": 31,
+  "printedTotal": 31,
+  "logo": "f56cd75dc1060b718b815ed64e36aa80",
+  "releaseDate": "2019/05/31"
+ },
+ {
+  "id": "ja_great_detective_pikachu",
+  "code": "SMP2",
+  "name": "Great Detective Pikachu",
+  "era": "Sun & Moon",
+  "total": 25,
+  "printedTotal": 24,
+  "logo": "40f48d0793842e8bf6943c179049dc6a",
+  "releaseDate": "2019/04/26"
+ },
+ {
+  "id": "ja_sky_legend",
+  "code": "SM10b",
+  "name": "Sky Legend",
+  "era": "Sun & Moon",
+  "total": 69,
+  "printedTotal": 54,
+  "logo": "6d33d5519ce314816356b49899b5c823",
+  "releaseDate": "2019/04/26"
+ },
+ {
+  "id": "ja_gg_end",
+  "code": "SM10a",
+  "name": "GG End",
+  "era": "Sun & Moon",
+  "total": 69,
+  "printedTotal": 54,
+  "logo": "59d5d330cb0a280ebb3636ad17d1ee60",
+  "releaseDate": "2019/04/05"
+ },
+ {
+  "id": "ja_sun_moon_family_pokemon_card_game",
+  "code": "SML",
+  "name": "Sun & Moon Family Pokémon Card Game",
+  "era": "Sun & Moon",
+  "total": 57,
+  "printedTotal": 51,
+  "logo": "3eb2400f124b21fcd5729e3025991ca1",
+  "releaseDate": "2019/03/15"
+ },
+ {
+  "id": "ja_double_blaze",
+  "code": "SM10",
+  "name": "Double Blaze",
+  "era": "Sun & Moon",
+  "total": 116,
+  "printedTotal": 95,
+  "logo": "c67af13d58c659b38b933e70644308ff",
+  "releaseDate": "2019/03/01"
+ },
+ {
+  "id": "ja_tag_team_gx_deck_build_box",
+  "code": "SMN",
+  "name": "Tag Team GX Deck Build Box",
+  "era": "Sun & Moon",
+  "total": 29,
+  "printedTotal": 29,
+  "logo": "7b24c1e5b048df10a672e8b61b7a53a0",
+  "releaseDate": "2019/03/01"
+ },
+ {
+  "id": "ja_full_metal_wall",
+  "code": "SM9b",
+  "name": "Full Metal Wall",
+  "era": "Sun & Moon",
+  "total": 69,
+  "printedTotal": 54,
+  "logo": "22fc63b04dc2d74154b82aff4f3067d0",
+  "releaseDate": "2019/02/01"
+ },
+ {
+  "id": "ja_trainer_battle_decks",
+  "code": "SMK",
+  "name": "Trainer Battle Decks",
+  "era": "Sun & Moon",
+  "total": 31,
+  "printedTotal": 31,
+  "logo": "f55c1edc6e77a6166b492aa99154038b",
+  "releaseDate": "2019/01/25"
+ },
+ {
+  "id": "ja_night_unison",
+  "code": "SM9a",
+  "name": "Night Unison",
+  "era": "Sun & Moon",
+  "total": 70,
+  "printedTotal": 55,
+  "logo": "bf568f7507414928de7a1b79fe43a625",
+  "releaseDate": "2019/01/11"
+ },
+ {
+  "id": "ja_tag_bolt",
+  "code": "SM9",
+  "name": "Tag Bolt",
+  "era": "Sun & Moon",
+  "total": 118,
+  "printedTotal": 95,
+  "logo": "c80c16a7f6b11119231a43550b78cb05",
+  "releaseDate": "2018/12/07"
+ },
+ {
+  "id": "ja_tag_team_gx_premium_trainer_box",
+  "code": "SMJ",
+  "name": "Tag Team GX Premium Trainer Box",
+  "era": "Sun & Moon",
+  "total": 44,
+  "printedTotal": 35,
+  "logo": "ef50560e0d59e7d96fb35a2b14616e8d",
+  "releaseDate": "2018/12/07"
+ },
+ {
+  "id": "ja_flareon_gx_vaporeon_gx_jolteon_gx_starter_sets",
+  "code": "SMI",
+  "name": "Flareon-GX, Vaporeon-GX & Jolteon-GX Starter Sets",
+  "era": "Sun & Moon",
+  "total": 41,
+  "printedTotal": 38,
+  "logo": "4bc40bb2d83809f1de3af431f7c7e140",
+  "releaseDate": "2018/11/23"
+ },
+ {
+  "id": "ja_gx_ultra_shiny",
+  "code": "SM8b",
+  "name": "GX Ultra Shiny",
+  "era": "Sun & Moon",
+  "total": 250,
+  "printedTotal": 150,
+  "logo": "ed84b74aec4d40d20cc72b43880f40b5",
+  "releaseDate": "2018/11/02"
+ },
+ {
+  "id": "ja_dark_order",
+  "code": "SM8a",
+  "name": "Dark Order",
+  "era": "Sun & Moon",
+  "total": 65,
+  "printedTotal": 52,
+  "logo": "a31c7978100aca6a50b0ccff25690f2d",
+  "releaseDate": "2018/10/05"
+ },
+ {
+  "id": "ja_super_burst_impact",
+  "code": "SM8",
+  "name": "Super-Burst Impact",
+  "era": "Sun & Moon",
+  "total": 111,
+  "printedTotal": 95,
+  "logo": "7bf42f6c1ea0d1f953528d589cebd1fb",
+  "releaseDate": "2018/09/07"
+ },
+ {
+  "id": "ja_fairy_rise",
+  "code": "SM7b",
+  "name": "Fairy Rise",
+  "era": "Sun & Moon",
+  "total": 63,
+  "printedTotal": 50,
+  "logo": "41dafd16a49469f61be4ab6f59789b9d",
+  "releaseDate": "2018/08/03"
+ },
+ {
+  "id": "ja_gx_starter_decks",
+  "code": "SMH",
+  "name": "GX Starter Decks",
+  "era": "Sun & Moon",
+  "total": 140,
+  "printedTotal": 131,
+  "logo": "b4cf5a9b2337d0342f000e64aad4b3cd",
+  "releaseDate": "2018/07/13"
+ },
+ {
+  "id": "ja_thunderclap_spark",
+  "code": "SM7a",
+  "name": "Thunderclap Spark",
+  "era": "Sun & Moon",
+  "total": 73,
+  "printedTotal": 60,
+  "logo": "6aa587db94bf0ec7a9cc9723e126feb8",
+  "releaseDate": "2018/07/06"
+ },
+ {
+  "id": "ja_sky_splitting_charisma",
+  "code": "SM7",
+  "name": "Sky-Splitting Charisma",
+  "era": "Sun & Moon",
+  "total": 112,
+  "printedTotal": 96,
+  "logo": "fdf6ffdc65457b715ee6b2485d8458db",
+  "releaseDate": "2018/06/01"
+ },
+ {
+  "id": "ja_champion_road",
+  "code": "SM6b",
+  "name": "Champion Road",
+  "era": "Sun & Moon",
+  "total": 86,
+  "printedTotal": 66,
+  "logo": "68bcf64afc82cd1370355d41cc86918b",
+  "releaseDate": "2018/05/03"
+ },
+ {
+  "id": "ja_dragon_storm",
+  "code": "SM6a",
+  "name": "Dragon Storm",
+  "era": "Sun & Moon",
+  "total": 66,
+  "printedTotal": 53,
+  "logo": "01ce9f16ba91083cde2ecc4a7a032edf",
+  "releaseDate": "2018/04/06"
+ },
+ {
+  "id": "ja_forbidden_light",
+  "code": "SM6",
+  "name": "Forbidden Light",
+  "era": "Sun & Moon",
+  "total": 110,
+  "printedTotal": 94,
+  "logo": "fc6fc9fe51c1c9fd5646fffd198569e9",
+  "releaseDate": "2018/03/02"
+ },
+ {
+  "id": "ja_ultra_sun_ultra_moon_deck_build_boxes",
+  "code": "SMG",
+  "name": "Ultra Sun & Ultra Moon Deck Build Boxes",
+  "era": "Sun & Moon",
+  "total": 41,
+  "printedTotal": 41,
+  "logo": "f9d4720cefdb3f4c76bc9916f5958f2d",
+  "releaseDate": "2018/02/16"
+ },
+ {
+  "id": "ja_ultra_force",
+  "code": "SM5+",
+  "name": "Ultra Force",
+  "era": "Sun & Moon",
+  "total": 68,
+  "printedTotal": 50,
+  "logo": "cfcbc1608e1e2bff45ca607527e4e90e",
+  "releaseDate": "2018/01/19"
+ },
+ {
+  "id": "ja_ultra_moon",
+  "code": "SM5M",
+  "name": "Ultra Moon",
+  "era": "Sun & Moon",
+  "total": 78,
+  "printedTotal": 66,
+  "logo": "22bfd29ecc403fd1162a1906d29ebe51",
+  "releaseDate": "2017/12/08"
+ },
+ {
+  "id": "ja_ultra_sun",
+  "code": "SM5S",
+  "name": "Ultra Sun",
+  "era": "Sun & Moon",
+  "total": 78,
+  "printedTotal": 66,
+  "logo": "c74c276eb503a13fd54298a6f1da89c3",
+  "releaseDate": "2017/12/08"
+ },
+ {
+  "id": "ja_ultra_sun_ultra_moon_premium_trainer_box",
+  "code": "SMF",
+  "name": "Ultra Sun & Ultra Moon Premium Trainer Box",
+  "era": "Sun & Moon",
+  "total": 29,
+  "printedTotal": 20,
+  "logo": "ef09da2f290d2cd4b6bfcb924d79dbd6",
+  "releaseDate": "2017/12/08"
+ },
+ {
+  "id": "ja_solgaleo_gx_lunala_gx_legendary_starter_set",
+  "code": "SME",
+  "name": "Solgaleo-GX & Lunala-GX Legendary Starter Set",
+  "era": "Sun & Moon",
+  "total": 22,
+  "printedTotal": 21,
+  "logo": "0d9ad184b3b68174d1076e0d7a00e043",
+  "releaseDate": "2017/11/10"
+ },
+ {
+  "id": "ja_gx_battle_boost",
+  "code": "SM4+",
+  "name": "GX Battle Boost",
+  "era": "Sun & Moon",
+  "total": 125,
+  "printedTotal": 114,
+  "logo": "695b345c80e77e832b8408a65c7a09a7",
+  "releaseDate": "2017/10/20"
+ },
+ {
+  "id": "ja_awakened_heroes",
+  "code": "SM4S",
+  "name": "Awakened Heroes",
+  "era": "Sun & Moon",
+  "total": 62,
+  "printedTotal": 50,
+  "logo": "f20fc69355e4eb21c285e00b73b8732b",
+  "releaseDate": "2017/09/15"
+ },
+ {
+  "id": "ja_ultradimensional_beasts",
+  "code": "SM4A",
+  "name": "Ultradimensional Beasts",
+  "era": "Sun & Moon",
+  "total": 62,
+  "printedTotal": 50,
+  "logo": "04f155fe1bb2a7c3fbaeb70ce06154d1",
+  "releaseDate": "2017/09/15"
+ },
+ {
+  "id": "ja_shining_legends",
+  "code": "SM3+",
+  "name": "Shining Legends",
+  "era": "Sun & Moon",
+  "total": 82,
+  "printedTotal": 72,
+  "logo": "7e66d05d2ab5e78cbd65bcb3a49398f3",
+  "releaseDate": "2017/07/15"
+ },
+ {
+  "id": "ja_darkness_that_consumes_light",
+  "code": "SM3N",
+  "name": "Darkness that Consumes Light",
+  "era": "Sun & Moon",
+  "total": 64,
+  "printedTotal": 51,
+  "logo": "81e1a7b42b560bf9f2f2d0a06fc1e1a5",
+  "releaseDate": "2017/06/16"
+ },
+ {
+  "id": "ja_to_have_seen_the_battle_rainbow",
+  "code": "SM3H",
+  "name": "To Have Seen the Battle Rainbow",
+  "era": "Sun & Moon",
+  "total": 64,
+  "printedTotal": 51,
+  "logo": "27f36c5a6032e45fb0c29fd1e7a7edb3",
+  "releaseDate": "2017/06/16"
+ },
+ {
+  "id": "ja_ash_vs_team_rocket_battle_set",
+  "code": "SMD",
+  "name": "Ash vs Team Rocket Battle Set",
+  "era": "Sun & Moon",
+  "total": 30,
+  "printedTotal": 26,
+  "logo": "186611f395b0bf78dd639a9aa51e64b7",
+  "releaseDate": "2017/04/21"
+ },
+ {
+  "id": "ja_facing_a_new_trial",
+  "code": "SM2+",
+  "name": "Facing a New Trial",
+  "era": "Sun & Moon",
+  "total": 70,
+  "printedTotal": 49,
+  "logo": "5ef33b3307aa2f00ed57e20aca180fdd",
+  "releaseDate": "2017/04/21"
+ },
+ {
+  "id": "ja_the_best_of_xy",
+  "code": "XY",
+  "name": "The Best of XY",
+  "era": "Sun & Moon",
+  "total": 188,
+  "printedTotal": 171,
+  "logo": "ac715bcc7fd3a56584c8de4e31ad6350",
+  "releaseDate": "2017/04/21"
+ },
+ {
+  "id": "ja_alolan_moonlight",
+  "code": "SM2L",
+  "name": "Alolan Moonlight",
+  "era": "Sun & Moon",
+  "total": 62,
+  "printedTotal": 50,
+  "logo": "6c897735f911a87ac1956fa2c2169991",
+  "releaseDate": "2017/03/17"
+ },
+ {
+  "id": "ja_islands_await_you",
+  "code": "SM2K",
+  "name": "Islands Await You",
+  "era": "Sun & Moon",
+  "total": 62,
+  "printedTotal": 50,
+  "logo": "d54d0286cc150a0f72ff256c6b54572a",
+  "releaseDate": "2017/03/17"
+ },
+ {
+  "id": "ja_tapu_bulu_gx_enhanced_starter_set",
+  "code": "SMC",
+  "name": "Tapu Bulu-GX Enhanced Starter Set",
+  "era": "Sun & Moon",
+  "total": 21,
+  "printedTotal": 21,
+  "logo": "548826239fc5730453effafabb61a1a1",
+  "releaseDate": "2017/03/17"
+ },
+ {
+  "id": "ja_enhanced_expansion_pack_sun_moon",
+  "code": "SM1+",
+  "name": "Enhanced Expansion Pack Sun & Moon",
+  "era": "Sun & Moon",
+  "total": 73,
+  "printedTotal": 51,
+  "logo": "1384fbf63eb5956e6092af3fc0d817f0",
+  "releaseDate": "2017/01/27"
+ },
+ {
+  "id": "ja_rockruff_full_power_deck",
+  "code": "SMP1",
+  "name": "Rockruff Full Power Deck",
+  "era": "Sun & Moon",
+  "total": 13,
+  "printedTotal": 13,
+  "logo": "4ba01dc49c7ae5bd6c7e6c33b6af4671",
+  "releaseDate": "2016/12/15"
+ },
+ {
+  "id": "ja_collection_moon",
+  "code": "SM1M",
+  "name": "Collection Moon",
+  "era": "Sun & Moon",
+  "total": 73,
+  "printedTotal": 60,
+  "logo": "479b3d4e0a8e72d1df56f07e76aa3862",
+  "releaseDate": "2016/12/09"
+ },
+ {
+  "id": "ja_collection_sun",
+  "code": "SM1S",
+  "name": "Collection Sun",
+  "era": "Sun & Moon",
+  "total": 73,
+  "printedTotal": 60,
+  "logo": "73b517c441e0d0bd0ab00e918a0da75f",
+  "releaseDate": "2016/12/09"
+ },
+ {
+  "id": "ja_decidueye_gx_incineroar_gx_primarina_gx_starter_sets",
+  "code": "SMA",
+  "name": "Decidueye-GX, Incineroar-GX & Primarina-GX Starter Sets",
+  "era": "Sun & Moon",
+  "total": 68,
+  "printedTotal": 59,
+  "logo": "08b26db33b5a67b30846e5d7a4e7f0ed",
+  "releaseDate": "2016/12/09"
+ },
+ {
+  "id": "ja_premium_trainer_box",
+  "code": "SMB",
+  "name": "Premium Trainer Box",
+  "era": "Sun & Moon",
+  "total": 27,
+  "printedTotal": 18,
+  "logo": "77192d0dc5002ab434c28d9e2655feac",
+  "releaseDate": "2016/12/09"
+ },
+ {
+  "id": "ja_pikachu_s_new_friends",
+  "code": "SM0",
+  "name": "Pikachu's New Friends",
+  "era": "Sun & Moon",
+  "total": 4,
+  "printedTotal": 4,
+  "logo": "2836554a1e735036422126a834028e98",
+  "releaseDate": "2016/11/18"
+ },
+ {
+  "id": "ja_sun_moon_promos",
+  "code": "SM-P",
+  "name": "Sun & Moon Promos",
+  "era": "Sun & Moon",
+  "total": 449,
+  "printedTotal": 449,
+  "logo": "c551fe5d9ae6daee5b861caa999e64c3",
+  "releaseDate": "2016/11/01"
+ },
+ {
+  "id": "ja_expansion_pack_20th_anniversary",
+  "code": "CP6",
+  "name": "Expansion Pack 20th Anniversary",
+  "era": "XY",
+  "total": 103,
+  "printedTotal": 87,
+  "logo": "611b7571788d8c68dd6260ef05c34d45",
+  "releaseDate": "2016/09/16"
+ },
+ {
+  "id": "ja_mythical_legendary_dream_shine_collection",
+  "code": "CP5",
+  "name": "Mythical & Legendary Dream Shine Collection",
+  "era": "XY",
+  "total": 38,
+  "printedTotal": 36,
+  "logo": "b38f62b0e26c859a215f4ee00d163922",
+  "releaseDate": "2016/07/16"
+ },
+ {
+  "id": "ja_cruel_traitor",
+  "code": "XY11",
+  "name": "Cruel Traitor",
+  "era": "XY",
+  "total": 59,
+  "printedTotal": 54,
+  "logo": "b23366c1a13d7fedea06e49e0dae5a93",
+  "releaseDate": "2016/06/17"
+ },
+ {
+  "id": "ja_fever_burst_fighter",
+  "code": "XY11",
+  "name": "Fever Burst Fighter",
+  "era": "XY",
+  "total": 59,
+  "printedTotal": 54,
+  "logo": "d748223fd4298965b376c5e61daeff3b",
+  "releaseDate": "2016/06/17"
+ },
+ {
+  "id": "ja_premium_champion_pack_ex_m_break",
+  "code": "CP4",
+  "name": "Premium Champion Pack EX × M × BREAK",
+  "era": "XY",
+  "total": 140,
+  "printedTotal": 131,
+  "logo": "eb8abbc394af6a1b5864e4a204d7b257",
+  "releaseDate": "2016/04/16"
+ },
+ {
+  "id": "ja_awakening_psychic_king",
+  "code": "XY10",
+  "name": "Awakening Psychic King",
+  "era": "XY",
+  "total": 88,
+  "printedTotal": 78,
+  "logo": "dbfca5e6b7995d296d0717a425dfec31",
+  "releaseDate": "2016/03/18"
+ },
+ {
+  "id": "ja_m_audino_ex_mega_battle_deck",
+  "code": "XYH",
+  "name": "M Audino-EX Mega Battle Deck",
+  "era": "XY",
+  "total": 27,
+  "printedTotal": 26,
+  "logo": "8d20bd8b8a2e215c31d2385a5243e906",
+  "releaseDate": "2016/03/18"
+ },
+ {
+  "id": "ja_zygarde_ex_perfect_battle_deck",
+  "code": "XYG",
+  "name": "Zygarde-EX Perfect Battle Deck",
+  "era": "XY",
+  "total": 20,
+  "printedTotal": 19,
+  "logo": "b18070ec3cc71ee209485bb4937855f8",
+  "releaseDate": "2016/03/18"
+ },
+ {
+  "id": "ja_20th_anniversary_starter_pack",
+  "code": "20th",
+  "name": "20th Anniversary Starter Pack",
+  "era": "XY",
+  "total": 84,
+  "printedTotal": 72,
+  "logo": "8d341dc639f16a3c05ccaaa54807246f",
+  "releaseDate": "2016/02/27"
+ },
+ {
+  "id": "ja_pokekyun_collection",
+  "code": "CP3",
+  "name": "PokéKyun Collection",
+  "era": "XY",
+  "total": 32,
+  "printedTotal": 32,
+  "logo": "c78c96b090fa6ff635c43b070575b5c6",
+  "releaseDate": "2016/01/29"
+ },
+ {
+  "id": "ja_fire_lightning_battle_strength_set",
+  "code": null,
+  "name": "Fire/Lightning Battle Strength Set",
+  "era": "XY",
+  "total": 8,
+  "printedTotal": 8,
+  "logo": null,
+  "releaseDate": "2015/12/26"
+ },
+ {
+  "id": "ja_grass_fighting_battle_strength_set",
+  "code": null,
+  "name": "Grass/Fighting Battle Strength Set",
+  "era": "XY",
+  "total": 8,
+  "printedTotal": 8,
+  "logo": null,
+  "releaseDate": "2015/12/26"
+ },
+ {
+  "id": "ja_water_psychic_battle_strength_set",
+  "code": null,
+  "name": "Water/Psychic Battle Strength Set",
+  "era": "XY",
+  "total": 8,
+  "printedTotal": 8,
+  "logo": null,
+  "releaseDate": "2015/12/26"
+ },
+ {
+  "id": "ja_rage_of_the_broken_heavens",
+  "code": "XY9",
+  "name": "Rage of the Broken Heavens",
+  "era": "XY",
+  "total": 89,
+  "printedTotal": 80,
+  "logo": "5668f97cdd09552b026115834a35bc08",
+  "releaseDate": "2015/12/11"
+ },
+ {
+  "id": "ja_golduck_break_palkia_ex_combo_deck",
+  "code": "XYF",
+  "name": "Golduck BREAK + Palkia-EX Combo Deck",
+  "era": "XY",
+  "total": 17,
+  "printedTotal": 16,
+  "logo": "1397a129a5c2b0d37903f5839a893dea",
+  "releaseDate": "2015/10/09"
+ },
+ {
+  "id": "ja_blue_shock",
+  "code": "XY8",
+  "name": "Blue Shock",
+  "era": "XY",
+  "total": 65,
+  "printedTotal": 59,
+  "logo": "aa6dd5d03ba97b41a36ee2b97738f402",
+  "releaseDate": "2015/09/26"
+ },
+ {
+  "id": "ja_noivern_break_evolution_pack",
+  "code": "SNP",
+  "name": "Noivern BREAK Evolution Pack",
+  "era": "XY",
+  "total": 10,
+  "printedTotal": 10,
+  "logo": "8e616b7237d9f0d9f1c5f35177833468",
+  "releaseDate": "2015/09/26"
+ },
+ {
+  "id": "ja_raichu_break_evolution_pack",
+  "code": "SNP",
+  "name": "Raichu BREAK Evolution Pack",
+  "era": "XY",
+  "total": 10,
+  "printedTotal": 10,
+  "logo": "75a5948d7abd4c3c29d4cf41bba87388",
+  "releaseDate": "2015/09/26"
+ },
+ {
+  "id": "ja_red_flash",
+  "code": "XY8",
+  "name": "Red Flash",
+  "era": "XY",
+  "total": 65,
+  "printedTotal": 59,
+  "logo": "79e33c1a3d08b4834c1af76c38689a66",
+  "releaseDate": "2015/09/26"
+ },
+ {
+  "id": "ja_m_master_deck_build_box_power_style",
+  "code": "MMB",
+  "name": "M Master Deck Build Box Power Style",
+  "era": "XY",
+  "total": 49,
+  "printedTotal": 49,
+  "logo": "3d91b966ba10d71a8e5a11a11479a299",
+  "releaseDate": "2015/08/07"
+ },
+ {
+  "id": "ja_m_master_deck_build_box_speed_style",
+  "code": "MMB",
+  "name": "M Master Deck Build Box Speed Style",
+  "era": "XY",
+  "total": 49,
+  "printedTotal": 49,
+  "logo": "bcfba414a2a521a7fa5a88c96fc0462f",
+  "releaseDate": "2015/08/07"
+ },
+ {
+  "id": "ja_emboar_ex_vs_togekiss_ex_battle_starter_set",
+  "code": "XYE",
+  "name": "Emboar-EX vs Togekiss-EX Battle Starter Set",
+  "era": "XY",
+  "total": 26,
+  "printedTotal": 22,
+  "logo": "c41270767d63ceecfa3b4e06af93517f",
+  "releaseDate": "2015/07/18"
+ },
+ {
+  "id": "ja_legendary_shine_collection",
+  "code": "CP2",
+  "name": "Legendary Shine Collection",
+  "era": "XY",
+  "total": 27,
+  "printedTotal": 27,
+  "logo": "cb42a257d509e0e3a5eadc9abd20f145",
+  "releaseDate": "2015/07/18"
+ },
+ {
+  "id": "ja_bandit_ring",
+  "code": "XY7",
+  "name": "Bandit Ring",
+  "era": "XY",
+  "total": 97,
+  "printedTotal": 81,
+  "logo": "aee03910d604b8de9b8b906f45fff5eb",
+  "releaseDate": "2015/06/20"
+ },
+ {
+  "id": "ja_emerald_break",
+  "code": "XY6",
+  "name": "Emerald Break",
+  "era": "XY",
+  "total": 91,
+  "printedTotal": 78,
+  "logo": "a5c22669a0149984c3e40b3310965d86",
+  "releaseDate": "2015/03/14"
+ },
+ {
+  "id": "ja_m_rayquaza_ex_mega_battle_deck",
+  "code": "XYD",
+  "name": "M Rayquaza-EX Mega Battle Deck",
+  "era": "XY",
+  "total": 20,
+  "printedTotal": 18,
+  "logo": "2834f19968f81e1b3ef3665df8de29d4",
+  "releaseDate": "2015/03/14"
+ },
+ {
+  "id": "ja_magma_vs_aqua_double_crisis",
+  "code": "CP1",
+  "name": "Magma vs Aqua Double Crisis",
+  "era": "XY",
+  "total": 34,
+  "printedTotal": 34,
+  "logo": "03a97141a20fe71b993dad3169110e46",
+  "releaseDate": "2015/01/30"
+ },
+ {
+  "id": "ja_gaia_volcano",
+  "code": "XY5",
+  "name": "Gaia Volcano",
+  "era": "XY",
+  "total": 80,
+  "printedTotal": 70,
+  "logo": "3af501f30a2beb954f01a4e6d4cf5895",
+  "releaseDate": "2014/12/13"
+ },
+ {
+  "id": "ja_tidal_storm",
+  "code": "XY5",
+  "name": "Tidal Storm",
+  "era": "XY",
+  "total": 80,
+  "printedTotal": 70,
+  "logo": "a807a968250cd6d99de1887d1d1868ca",
+  "releaseDate": "2014/12/13"
+ },
+ {
+  "id": "ja_super_legend_set_xerneas_ex_yveltal_ex",
+  "code": "XYC",
+  "name": "Super Legend Set: Xerneas-EX & Yveltal-EX",
+  "era": "XY",
+  "total": 25,
+  "printedTotal": 23,
+  "logo": "04ff6bca83c9e2d5394558f563116734",
+  "releaseDate": "2014/11/14"
+ },
+ {
+  "id": "ja_dialga_ex_aegislash_ex_hyper_metal_chain_deck",
+  "code": "XYB",
+  "name": "Dialga-EX + Aegislash-EX Hyper Metal Chain Deck",
+  "era": "XY",
+  "total": 20,
+  "printedTotal": 18,
+  "logo": "4a585d26572e7b7dd0eba34a34479ba1",
+  "releaseDate": "2014/09/13"
+ },
+ {
+  "id": "ja_phantom_gate",
+  "code": "XY4",
+  "name": "Phantom Gate",
+  "era": "XY",
+  "total": 97,
+  "printedTotal": 88,
+  "logo": "882bb35fc90963e4aaab69e2d908a8d8",
+  "releaseDate": "2014/09/13"
+ },
+ {
+  "id": "ja_rising_fist",
+  "code": "XY3",
+  "name": "Rising Fist",
+  "era": "XY",
+  "total": 105,
+  "printedTotal": 96,
+  "logo": "378f2e327f0ed0ad0ada708b9a9af52e",
+  "releaseDate": "2014/06/14"
+ },
+ {
+  "id": "ja_m_charizard_ex_mega_battle_deck",
+  "code": "XYA",
+  "name": "M Charizard-EX Mega Battle Deck",
+  "era": "XY",
+  "total": 23,
+  "printedTotal": 21,
+  "logo": "ee0937602dcd4c31ed14d76f917cdb50",
+  "releaseDate": "2014/03/15"
+ },
+ {
+  "id": "ja_wild_blaze",
+  "code": "XY2",
+  "name": "Wild Blaze",
+  "era": "XY",
+  "total": 90,
+  "printedTotal": 80,
+  "logo": "43f7cbbc80d8473c6ea0a56b148a7455",
+  "releaseDate": "2014/03/15"
+ },
+ {
+  "id": "ja_xerneas_half_deck",
+  "code": "X30",
+  "name": "Xerneas Half Deck",
+  "era": "XY",
+  "total": 15,
+  "printedTotal": 14,
+  "logo": "379df4c64eed2ed448421384306e38be",
+  "releaseDate": "2014/01/31"
+ },
+ {
+  "id": "ja_yveltal_half_deck",
+  "code": "Y30",
+  "name": "Yveltal Half Deck",
+  "era": "XY",
+  "total": 15,
+  "printedTotal": 14,
+  "logo": "7c87bebd9bbe3cf20d4e863f352cff0e",
+  "releaseDate": "2014/01/31"
+ },
+ {
+  "id": "ja_collection_x",
+  "code": "XY1",
+  "name": "Collection X",
+  "era": "XY",
+  "total": 64,
+  "printedTotal": 60,
+  "logo": "5c5c3cbe609219cb48d78a8e6ac1760e",
+  "releaseDate": "2013/12/13"
+ },
+ {
+  "id": "ja_collection_y",
+  "code": "XY1",
+  "name": "Collection Y",
+  "era": "XY",
+  "total": 63,
+  "printedTotal": 60,
+  "logo": "c8e2274e38061bda0f9c59156b126804",
+  "releaseDate": "2013/12/13"
+ },
+ {
+  "id": "ja_xy_beginning_set",
+  "code": "HXY",
+  "name": "XY Beginning Set",
+  "era": "XY",
+  "total": 45,
+  "printedTotal": 39,
+  "logo": "74b3e730fd7bb45e2470a6c52c4a77e8",
+  "releaseDate": "2013/11/08"
+ },
+ {
+  "id": "ja_xy_promos",
+  "code": "XY-P",
+  "name": "XY Promos",
+  "era": "XY",
+  "total": 449,
+  "printedTotal": 449,
+  "logo": "041cf7f68c35bfb41ad54388afd11bf1",
+  "releaseDate": "2013/08/01"
+ },
+ {
+  "id": "ja_ex_battle_boost",
+  "code": "EBB",
+  "name": "EX Battle Boost",
+  "era": "Black & White",
+  "total": 99,
+  "printedTotal": 93,
+  "logo": "bf9f0468812512bf844615b42e07b1bd",
+  "releaseDate": "2013/07/13"
+ },
+ {
+  "id": "ja_mewtwo_vs_genesect_deck_kit_genesect",
+  "code": "MG",
+  "name": "Mewtwo vs Genesect Deck Kit (Genesect)",
+  "era": "Black & White",
+  "total": 17,
+  "printedTotal": 16,
+  "logo": "6de018b373f29b8cdcd01e6b6898123a",
+  "releaseDate": "2013/07/13"
+ },
+ {
+  "id": "ja_mewtwo_vs_genesect_deck_kit_mewtwo",
+  "code": "MG",
+  "name": "Mewtwo vs Genesect Deck Kit (Mewtwo)",
+  "era": "Black & White",
+  "total": 17,
+  "printedTotal": 16,
+  "logo": "026a960e8a158b176e456028d73cdd9c",
+  "releaseDate": "2013/07/13"
+ },
+ {
+  "id": "ja_blastoise_kyurem_ex_combo_deck",
+  "code": "K+K",
+  "name": "Blastoise + Kyurem-EX Combo Deck",
+  "era": "Black & White",
+  "total": 19,
+  "printedTotal": 18,
+  "logo": "fe58c5bbabc6c2277db296f99f98f023",
+  "releaseDate": "2013/03/15"
+ },
+ {
+  "id": "ja_megalo_cannon",
+  "code": "BW9",
+  "name": "Megalo Cannon",
+  "era": "Black & White",
+  "total": 86,
+  "printedTotal": 76,
+  "logo": "b41a8084f26807284650bbe0ecd11b8b",
+  "releaseDate": "2013/03/15"
+ },
+ {
+  "id": "ja_shiny_collection",
+  "code": "SC",
+  "name": "Shiny Collection",
+  "era": "Black & White",
+  "total": 25,
+  "printedTotal": 20,
+  "logo": "0324b7df679e26007f06f253399a098c",
+  "releaseDate": "2013/02/01"
+ },
+ {
+  "id": "ja_spiral_force",
+  "code": "BW8",
+  "name": "Spiral Force",
+  "era": "Black & White",
+  "total": 58,
+  "printedTotal": 51,
+  "logo": "ddbf5c4ec7cf09402bc02a494b20f0b8",
+  "releaseDate": "2012/12/14"
+ },
+ {
+  "id": "ja_thunder_knuckle",
+  "code": "BW8",
+  "name": "Thunder Knuckle",
+  "era": "Black & White",
+  "total": 58,
+  "printedTotal": 51,
+  "logo": "d4c2ae50e4e637c6e44fb543c586df74",
+  "releaseDate": "2012/12/14"
+ },
+ {
+  "id": "ja_everyone_s_exciting_battle",
+  "code": "WAK",
+  "name": "Everyone's Exciting Battle",
+  "era": "Black & White",
+  "total": 55,
+  "printedTotal": 47,
+  "logo": "0b4ceae70224239d87741ab7a0d8e85a",
+  "releaseDate": "2012/11/16"
+ },
+ {
+  "id": "ja_team_plasma_battle_gift_set",
+  "code": "PBG",
+  "name": "Team Plasma Battle Gift Set",
+  "era": "Black & White",
+  "total": 18,
+  "printedTotal": 16,
+  "logo": "4555208c98795e26159b9d8b28d72c61",
+  "releaseDate": "2012/11/16"
+ },
+ {
+  "id": "ja_black_kyurem_ex_battle_strength_deck",
+  "code": "BKB",
+  "name": "Black Kyurem-EX Battle Strength Deck",
+  "era": "Black & White",
+  "total": 20,
+  "printedTotal": 18,
+  "logo": "f35b89c8b52848097c0e622edf7a8618",
+  "releaseDate": "2012/10/19"
+ },
+ {
+  "id": "ja_white_kyurem_ex_battle_strength_deck",
+  "code": "BKW",
+  "name": "White Kyurem-EX Battle Strength Deck",
+  "era": "Black & White",
+  "total": 20,
+  "printedTotal": 18,
+  "logo": "a92903795e19649c3b23bb7c173686f4",
+  "releaseDate": "2012/10/19"
+ },
+ {
+  "id": "ja_master_deck_build_box_ex",
+  "code": "MDB",
+  "name": "Master Deck Build Box EX",
+  "era": "Black & White",
+  "total": 51,
+  "printedTotal": 46,
+  "logo": "c3e909721f29e18390b7e5f5fb05b358",
+  "releaseDate": "2012/09/14"
+ },
+ {
+  "id": "ja_plasma_gale",
+  "code": "BW7",
+  "name": "Plasma Gale",
+  "era": "Black & White",
+  "total": 79,
+  "printedTotal": 70,
+  "logo": "a9e3d9b91c8ddbebc4931d325dec807d",
+  "releaseDate": "2012/09/14"
+ },
+ {
+  "id": "ja_team_plasma_powered_half_deck",
+  "code": "PPD",
+  "name": "Team Plasma Powered Half Deck",
+  "era": "Black & White",
+  "total": 19,
+  "printedTotal": 17,
+  "logo": "8a8e38730a978917dbf17160283de469",
+  "releaseDate": "2012/09/14"
+ },
+ {
+  "id": "ja_cold_flare",
+  "code": "BW6",
+  "name": "Cold Flare",
+  "era": "Black & White",
+  "total": 65,
+  "printedTotal": 59,
+  "logo": "57884be6a330ecbf95c218fb5971ff89",
+  "releaseDate": "2012/07/13"
+ },
+ {
+  "id": "ja_freeze_bolt",
+  "code": "BW6",
+  "name": "Freeze Bolt",
+  "era": "Black & White",
+  "total": 65,
+  "printedTotal": 59,
+  "logo": "fa346fef4a2c645d03c262dc71f1b13c",
+  "releaseDate": "2012/07/13"
+ },
+ {
+  "id": "ja_keldeo_battle_strength_deck",
+  "code": "KLD",
+  "name": "Keldeo Battle Strength Deck",
+  "era": "Black & White",
+  "total": 18,
+  "printedTotal": 15,
+  "logo": "ce90c0f7f403870220a872747fc31d58",
+  "releaseDate": "2012/04/20"
+ },
+ {
+  "id": "ja_national_beginning_set",
+  "code": "HSZ",
+  "name": "National Beginning Set",
+  "era": "Black & White",
+  "total": 40,
+  "printedTotal": 34,
+  "logo": "d36648c1039fa8162aeb8d40bac9a6c2",
+  "releaseDate": "2012/04/20"
+ },
+ {
+  "id": "ja_dragon_blade",
+  "code": "BW5",
+  "name": "Dragon Blade",
+  "era": "Black & White",
+  "total": 55,
+  "printedTotal": 50,
+  "logo": "058c52487572026b896524e549303a0e",
+  "releaseDate": "2012/03/16"
+ },
+ {
+  "id": "ja_dragon_blast",
+  "code": "BW5",
+  "name": "Dragon Blast",
+  "era": "Black & White",
+  "total": 55,
+  "printedTotal": 50,
+  "logo": "21d71129fadebf9f015b50163cecfd61",
+  "releaseDate": "2012/03/16"
+ },
+ {
+  "id": "ja_garchomp_half_deck",
+  "code": "GBR",
+  "name": "Garchomp Half Deck",
+  "era": "Black & White",
+  "total": 18,
+  "printedTotal": 15,
+  "logo": "9d2d32eb2e288c53357fcd80a3b3e512",
+  "releaseDate": "2012/03/16"
+ },
+ {
+  "id": "ja_hydreigon_half_deck",
+  "code": "SZD",
+  "name": "Hydreigon Half Deck",
+  "era": "Black & White",
+  "total": 18,
+  "printedTotal": 15,
+  "logo": "5e441d469482b2b929115eed2f904f0d",
+  "releaseDate": "2012/03/16"
+ },
+ {
+  "id": "ja_dragon_selection",
+  "code": "DS",
+  "name": "Dragon Selection",
+  "era": "Black & White",
+  "total": 20,
+  "printedTotal": 20,
+  "logo": "c07a45ce8d07242413bb07f448d31e5b",
+  "releaseDate": "2012/01/27"
+ },
+ {
+  "id": "ja_dark_rush",
+  "code": "BW4",
+  "name": "Dark Rush",
+  "era": "Black & White",
+  "total": 76,
+  "printedTotal": 69,
+  "logo": "e5232e2f732a809bd3d65ae11aa31760",
+  "releaseDate": "2011/12/16"
+ },
+ {
+  "id": "ja_battle_gift_set_thundurus_vs_tornadus",
+  "code": "BGS",
+  "name": "Battle Gift Set: Thundurus vs Tornadus",
+  "era": "Black & White",
+  "total": 26,
+  "printedTotal": 20,
+  "logo": "93caea051a9ca62bdbe9de4d7d01d4d8",
+  "releaseDate": "2011/11/18"
+ },
+ {
+  "id": "ja_beginning_set_pikachu",
+  "code": "HSP",
+  "name": "Beginning Set Pikachu",
+  "era": "Black & White",
+  "total": 40,
+  "printedTotal": 34,
+  "logo": "a2ff701e80e87e231c136ef6f78dfe3e",
+  "releaseDate": "2011/11/18"
+ },
+ {
+  "id": "ja_reshiram_ex_battle_strength_deck",
+  "code": "BKR",
+  "name": "Reshiram-EX Battle Strength Deck",
+  "era": "Black & White",
+  "total": 20,
+  "printedTotal": 18,
+  "logo": "7c622e581206e19b07e3a33ce93c424e",
+  "releaseDate": "2011/10/21"
+ },
+ {
+  "id": "ja_zekrom_ex_battle_strength_deck",
+  "code": "BKZ",
+  "name": "Zekrom-EX Battle Strength Deck",
+  "era": "Black & White",
+  "total": 20,
+  "printedTotal": 18,
+  "logo": "e701caba66fa0d8f772cba50033ef632",
+  "releaseDate": "2011/10/21"
+ },
+ {
+  "id": "ja_hail_blizzard",
+  "code": "BW3",
+  "name": "Hail Blizzard",
+  "era": "Black & White",
+  "total": 57,
+  "printedTotal": 52,
+  "logo": "a8d9137fff7b546689b94c2511bee1f3",
+  "releaseDate": "2011/09/16"
+ },
+ {
+  "id": "ja_psycho_drive",
+  "code": "BW3",
+  "name": "Psycho Drive",
+  "era": "Black & White",
+  "total": 57,
+  "printedTotal": 52,
+  "logo": "218bdfe8e1409e561c87fb7b32bf72f2",
+  "releaseDate": "2011/09/16"
+ },
+ {
+  "id": "ja_beginning_set_black_white_2",
+  "code": "HS+",
+  "name": "Beginning Set +",
+  "era": "Black & White",
+  "total": 40,
+  "printedTotal": 34,
+  "logo": "1bff725592e911620cfcf5c490a78141",
+  "releaseDate": "2011/08/05"
+ },
+ {
+  "id": "ja_red_collection",
+  "code": "BW2",
+  "name": "Red Collection",
+  "era": "Black & White",
+  "total": 72,
+  "printedTotal": 66,
+  "logo": "0a415223375b2280beb3db4fe2fdf001",
+  "releaseDate": "2011/07/15"
+ },
+ {
+  "id": "ja_battle_theme_deck_victini",
+  "code": "BTV",
+  "name": "Battle Theme Deck: Victini",
+  "era": "Black & White",
+  "total": 24,
+  "printedTotal": 21,
+  "logo": "dfd8bbbf0e405717a1f36c5b6f91ed8a",
+  "releaseDate": "2011/06/17"
+ },
+ {
+  "id": "ja_cobalion_battle_strength_deck",
+  "code": "BK",
+  "name": "Cobalion Battle Strength Deck",
+  "era": "Black & White",
+  "total": 16,
+  "printedTotal": 14,
+  "logo": "d472dee9965247507d74b978d9c17d7d",
+  "releaseDate": "2011/03/18"
+ },
+ {
+  "id": "ja_terrakion_battle_strength_deck",
+  "code": "BK",
+  "name": "Terrakion Battle Strength Deck",
+  "era": "Black & White",
+  "total": 17,
+  "printedTotal": 14,
+  "logo": "5da649ea955224577ae36b339fbfcb89",
+  "releaseDate": "2011/03/18"
+ },
+ {
+  "id": "ja_virizion_battle_strength_deck",
+  "code": "BK",
+  "name": "Virizion Battle Strength Deck",
+  "era": "Black & White",
+  "total": 17,
+  "printedTotal": 14,
+  "logo": "ff3190043d5508790ce24539105b5852",
+  "releaseDate": "2011/03/18"
+ },
+ {
+  "id": "ja_black_collection",
+  "code": "BW1",
+  "name": "Black Collection",
+  "era": "Black & White",
+  "total": 56,
+  "printedTotal": 53,
+  "logo": "ccd84b7e3ede9701692b7eb694c30f88",
+  "releaseDate": "2010/12/17"
+ },
+ {
+  "id": "ja_white_collection",
+  "code": "BW1",
+  "name": "White Collection",
+  "era": "Black & White",
+  "total": 56,
+  "printedTotal": 53,
+  "logo": "7dc07205bdbb2521b2ad6c8abc2711d2",
+  "releaseDate": "2010/12/17"
+ },
+ {
+  "id": "ja_black_white_promos",
+  "code": "BW-P",
+  "name": "Black & White Promos",
+  "era": "Black & White",
+  "total": 284,
+  "printedTotal": 284,
+  "logo": "429549cebafd2cda4c2d3e159f71a7eb",
+  "releaseDate": "2010/12/01"
+ },
+ {
+  "id": "ja_beginning_set_black_white",
+  "code": "HS",
+  "name": "Beginning Set",
+  "era": "Black & White",
+  "total": 43,
+  "printedTotal": 37,
+  "logo": "1ad69c13378aa19f61774034b9c642ee",
+  "releaseDate": "2010/10/29"
+ },
+ {
+  "id": "ja_journey_partners",
+  "code": "CS1",
+  "name": "Journey Partners",
+  "era": "Black & White",
+  "total": 9,
+  "printedTotal": 9,
+  "logo": "b66728da1ff1e64ca096b7e769888b87",
+  "releaseDate": "2010/09/18"
+ },
+ {
+  "id": "ja_clash_at_the_summit",
+  "code": "L3",
+  "name": "Clash at the Summit",
+  "era": "LEGEND",
+  "total": 81,
+  "printedTotal": 80,
+  "logo": "d53c6bf7ba522a23fabdf6a58d05b304",
+  "releaseDate": "2010/07/08"
+ },
+ {
+  "id": "ja_pikachu_world_collection",
+  "code": "PW",
+  "name": "Pikachu World Collection",
+  "era": "LEGEND",
+  "total": 10,
+  "printedTotal": 10,
+  "logo": "1c3b6ac58da65eb4101f6a617a34fa0c",
+  "releaseDate": "2010/07/08"
+ },
+ {
+  "id": "ja_lost_link",
+  "code": "LL",
+  "name": "Lost Link",
+  "era": "LEGEND",
+  "total": 40,
+  "printedTotal": 40,
+  "logo": "07a65a227d05873afaee425b4fe7465b",
+  "releaseDate": "2010/04/16"
+ },
+ {
+  "id": "ja_reviving_legends",
+  "code": "L2",
+  "name": "Reviving Legends",
+  "era": "LEGEND",
+  "total": 81,
+  "printedTotal": 80,
+  "logo": "f4f589f459949b16545abac34f3fcc11",
+  "releaseDate": "2010/02/11"
+ },
+ {
+  "id": "ja_steelix_constructed_standard_deck",
+  "code": "L2",
+  "name": "Steelix Constructed Standard Deck",
+  "era": "LEGEND",
+  "total": 19,
+  "printedTotal": 19,
+  "logo": "bdb03b438be239469a9ed06e61c471a9",
+  "releaseDate": "2010/02/11"
+ },
+ {
+  "id": "ja_tyranitar_constructed_standard_deck",
+  "code": "L2",
+  "name": "Tyranitar Constructed Standard Deck",
+  "era": "LEGEND",
+  "total": 19,
+  "printedTotal": 19,
+  "logo": "f4cfcfeab1aa7c41f1a5664ee70a7f04",
+  "releaseDate": "2010/02/11"
+ },
+ {
+  "id": "ja_battle_starter_deck_blastoise",
+  "code": "B",
+  "name": "Battle Starter Deck (Blastoise)",
+  "era": "LEGEND",
+  "total": 10,
+  "printedTotal": 10,
+  "logo": "d3da0a3251b9e3cc79a085e3ec3c23d7",
+  "releaseDate": "2009/11/20"
+ },
+ {
+  "id": "ja_battle_starter_deck_magmortar",
+  "code": "B",
+  "name": "Battle Starter Deck (Magmortar)",
+  "era": "LEGEND",
+  "total": 9,
+  "printedTotal": 9,
+  "logo": "1db075d4b26850bb132c668bc5380986",
+  "releaseDate": "2009/11/20"
+ },
+ {
+  "id": "ja_battle_starter_deck_raichu",
+  "code": "B",
+  "name": "Battle Starter Deck (Raichu)",
+  "era": "LEGEND",
+  "total": 11,
+  "printedTotal": 11,
+  "logo": "91be5107a37a5646c1e579c3bdbce97b",
+  "releaseDate": "2009/11/20"
+ },
+ {
+  "id": "ja_battle_starter_deck_torterra",
+  "code": "B",
+  "name": "Battle Starter Deck (Torterra)",
+  "era": "LEGEND",
+  "total": 10,
+  "printedTotal": 10,
+  "logo": "cac6b87a809e59e917fe900e51c9bac9",
+  "releaseDate": "2009/11/20"
+ },
+ {
+  "id": "ja_leafeon_vs_metagross_expert_deck_leafeon",
+  "code": "E",
+  "name": "Leafeon vs Metagross Expert Deck (Leafeon)",
+  "era": "LEGEND",
+  "total": 15,
+  "printedTotal": 15,
+  "logo": "6e88d7020ebb0e36eb16eb7e4320d8a4",
+  "releaseDate": "2009/11/20"
+ },
+ {
+  "id": "ja_leafeon_vs_metagross_expert_deck_metagross",
+  "code": "E",
+  "name": "Leafeon vs Metagross Expert Deck (Metagross)",
+  "era": "LEGEND",
+  "total": 14,
+  "printedTotal": 14,
+  "logo": "a81e6433aaffe91e5cd38203990c3fd4",
+  "releaseDate": "2009/11/20"
+ },
+ {
+  "id": "ja_2009_energies",
+  "code": null,
+  "name": "2009 Energies",
+  "era": "LEGEND",
+  "total": 8,
+  "printedTotal": 8,
+  "logo": null,
+  "releaseDate": "2009/10/09"
+ },
+ {
+  "id": "ja_heartgold_collection",
+  "code": "L1",
+  "name": "HeartGold Collection",
+  "era": "LEGEND",
+  "total": 71,
+  "printedTotal": 70,
+  "logo": "bb3505d8d06957deef39111ac6d31ccd",
+  "releaseDate": "2009/10/09"
+ },
+ {
+  "id": "ja_soulsilver_collection",
+  "code": "L1",
+  "name": "SoulSilver Collection",
+  "era": "LEGEND",
+  "total": 71,
+  "printedTotal": 70,
+  "logo": "eee858568b299d7b557dfc74f7e7128f",
+  "releaseDate": "2009/10/09"
+ },
+ {
+  "id": "ja_legend_promos",
+  "code": "L-P",
+  "name": "LEGEND Promos",
+  "era": "LEGEND",
+  "total": 92,
+  "printedTotal": 92,
+  "logo": "46c61d9f6c7c7726cd29b343e3a9ca98",
+  "releaseDate": "2009/09/01"
+ },
+ {
+  "id": "ja_movie_commemoration_random_pack",
+  "code": null,
+  "name": "Movie Commemoration Random Pack",
+  "era": "Platinum",
+  "total": 30,
+  "printedTotal": 22,
+  "logo": null,
+  "releaseDate": "2009/07/18"
+ },
+ {
+  "id": "ja_melee_pokemon_scramble",
+  "code": null,
+  "name": "Melee! Pokémon Scramble",
+  "era": "Platinum",
+  "total": 19,
+  "printedTotal": 16,
+  "logo": "4198a68b62832fefe085de6ff88cd6f7",
+  "releaseDate": "2009/07/10"
+ },
+ {
+  "id": "ja_advent_of_arceus",
+  "code": "Pt4",
+  "name": "Advent of Arceus",
+  "era": "Platinum",
+  "total": 98,
+  "printedTotal": 90,
+  "logo": "d9499cde287bb3174250d3e8f7a10481",
+  "releaseDate": "2009/07/08"
+ },
+ {
+  "id": "ja_arceus_lv_x_deck_grass_fire",
+  "code": "Pt",
+  "name": "Arceus LV.X Deck: Grass & Fire",
+  "era": "Platinum",
+  "total": 17,
+  "printedTotal": 17,
+  "logo": "d713b43c60abdde77347d62b06bc518a",
+  "releaseDate": "2009/07/08"
+ },
+ {
+  "id": "ja_arceus_lv_x_deck_lightning_psychic",
+  "code": "Pt",
+  "name": "Arceus LV.X Deck: Lightning & Psychic",
+  "era": "Platinum",
+  "total": 17,
+  "printedTotal": 17,
+  "logo": "3c54fc4697885975b704ac67b7f975a8",
+  "releaseDate": "2009/07/08"
+ },
+ {
+  "id": "ja_mewtwo_lv_x_collection_pack",
+  "code": "PtM",
+  "name": "Mewtwo LV.X Collection Pack",
+  "era": "Platinum",
+  "total": 12,
+  "printedTotal": 12,
+  "logo": "ddf84cd55307eacc2bd18a0c124546a1",
+  "releaseDate": "2009/04/18"
+ },
+ {
+  "id": "ja_regigigas_lv_x_collection_pack",
+  "code": "PtR",
+  "name": "Regigigas LV.X Collection Pack",
+  "era": "Platinum",
+  "total": 12,
+  "printedTotal": 12,
+  "logo": "8cc6c8b6a14094342e9f17cd101653c9",
+  "releaseDate": "2009/04/18"
+ },
+ {
+  "id": "ja_shaymin_lv_x_collection_pack",
+  "code": "PtS",
+  "name": "Shaymin LV.X Collection Pack",
+  "era": "Platinum",
+  "total": 12,
+  "printedTotal": 12,
+  "logo": "ecb8249ab101849b08078b24ecd88705",
+  "releaseDate": "2009/04/18"
+ },
+ {
+  "id": "ja_beat_of_the_frontier",
+  "code": "Pt3",
+  "name": "Beat of the Frontier",
+  "era": "Platinum",
+  "total": 108,
+  "printedTotal": 100,
+  "logo": "af6b8ab3ec8abf09dfb2ccc5b47ed2d5",
+  "releaseDate": "2009/03/06"
+ },
+ {
+  "id": "ja_garchomp_vs_charizard_sp_deck_kit_charizard",
+  "code": null,
+  "name": "Garchomp vs Charizard SP Deck Kit (Charizard)",
+  "era": "Platinum",
+  "total": 16,
+  "printedTotal": 16,
+  "logo": "fe84d28d9fdcd2a6d19eda54bc917ae7",
+  "releaseDate": "2009/03/06"
+ },
+ {
+  "id": "ja_garchomp_vs_charizard_sp_deck_kit_garchomp",
+  "code": null,
+  "name": "Garchomp vs Charizard SP Deck Kit (Garchomp)",
+  "era": "Platinum",
+  "total": 16,
+  "printedTotal": 16,
+  "logo": "f9afdb3fe623541e2561a97cf16d02d9",
+  "releaseDate": "2009/03/06"
+ },
+ {
+  "id": "ja_bonds_to_the_end_of_time",
+  "code": "Pt2",
+  "name": "Bonds to the End of Time",
+  "era": "Platinum",
+  "total": 90,
+  "printedTotal": 90,
+  "logo": "8d360d96e2bd3e585ae16d4a21d678c7",
+  "releaseDate": "2008/12/26"
+ },
+ {
+  "id": "ja_infernape_vs_gallade_sp_deck_kit_gallade",
+  "code": "Pt",
+  "name": "Infernape vs Gallade SP Deck Kit (Gallade)",
+  "era": "Platinum",
+  "total": 18,
+  "printedTotal": 18,
+  "logo": "79017f23bcd21d1affff5a8843696377",
+  "releaseDate": "2008/12/26"
+ },
+ {
+  "id": "ja_infernape_vs_gallade_sp_deck_kit_infernape",
+  "code": "Pt",
+  "name": "Infernape vs Gallade SP Deck Kit (Infernape)",
+  "era": "Platinum",
+  "total": 18,
+  "printedTotal": 18,
+  "logo": "3c0377841f399ba94244684ed58a8374",
+  "releaseDate": "2008/12/26"
+ },
+ {
+  "id": "ja_dpt_gift_box_chimchar",
+  "code": "Pt",
+  "name": "DPt Gift Box (Chimchar)",
+  "era": "Platinum",
+  "total": 13,
+  "printedTotal": 13,
+  "logo": "fbeda1c0609dd69a5de0cb5868d35ed4",
+  "releaseDate": "2008/11/20"
+ },
+ {
+  "id": "ja_dpt_gift_box_pikachu",
+  "code": "Pt",
+  "name": "DPt Gift Box (Pikachu)",
+  "era": "Platinum",
+  "total": 15,
+  "printedTotal": 15,
+  "logo": "dfb0c57af26fe61da7b8d834343a184a",
+  "releaseDate": "2008/11/20"
+ },
+ {
+  "id": "ja_dpt_gift_box_piplup",
+  "code": "Pt",
+  "name": "DPt Gift Box (Piplup)",
+  "era": "Platinum",
+  "total": 15,
+  "printedTotal": 15,
+  "logo": "9982ce294ae0b39e54890432a21f2213",
+  "releaseDate": "2008/11/20"
+ },
+ {
+  "id": "ja_dpt_gift_box_turtwig",
+  "code": "Pt",
+  "name": "DPt Gift Box (Turtwig)",
+  "era": "Platinum",
+  "total": 14,
+  "printedTotal": 14,
+  "logo": "f650afb24ec08066c4af275d2dfde253",
+  "releaseDate": "2008/11/20"
+ },
+ {
+  "id": "ja_dpt_entry_pack_dialga",
+  "code": null,
+  "name": "DPt Entry Pack (Dialga)",
+  "era": "Platinum",
+  "total": 13,
+  "printedTotal": 13,
+  "logo": "59d26114fc8522e859b8208a3d292d81",
+  "releaseDate": "2008/10/10"
+ },
+ {
+  "id": "ja_dpt_entry_pack_giratina",
+  "code": null,
+  "name": "DPt Entry Pack (Giratina)",
+  "era": "Platinum",
+  "total": 13,
+  "printedTotal": 13,
+  "logo": "dfb0bc3bffd8493ce1679e6c99343f3a",
+  "releaseDate": "2008/10/10"
+ },
+ {
+  "id": "ja_dpt_entry_pack_palkia",
+  "code": null,
+  "name": "DPt Entry Pack (Palkia)",
+  "era": "Platinum",
+  "total": 13,
+  "printedTotal": 13,
+  "logo": "2f98a695f248f8f635faa1694f5b4bbf",
+  "releaseDate": "2008/10/10"
+ },
+ {
+  "id": "ja_galactic_s_conquest",
+  "code": "Pt1",
+  "name": "Galactic's Conquest",
+  "era": "Platinum",
+  "total": 96,
+  "printedTotal": 96,
+  "logo": "c556bb8659c6bec6e2ac8c87e56d2624",
+  "releaseDate": "2008/10/10"
+ },
+ {
+  "id": "ja_platinum_promos",
+  "code": "DPt-P",
+  "name": "Platinum Promos",
+  "era": "Platinum",
+  "total": 51,
+  "printedTotal": 51,
+  "logo": "734fd847ee536adf34195522774d3527",
+  "releaseDate": "2008/10/01"
+ },
+ {
+  "id": "ja_11th_movie_commemoration_set",
+  "code": null,
+  "name": "11th Movie Commemoration Set",
+  "era": "Diamond & Pearl",
+  "total": 9,
+  "printedTotal": 9,
+  "logo": null,
+  "releaseDate": "2008/07/19"
+ },
+ {
+  "id": "ja_giratina_vs_dialga_deck_kit_dialga",
+  "code": null,
+  "name": "Giratina vs Dialga Deck Kit (Dialga)",
+  "era": "Diamond & Pearl",
+  "total": 14,
+  "printedTotal": 14,
+  "logo": "5436c60ee9c6cc473b4176b277de5419",
+  "releaseDate": "2008/07/10"
+ },
+ {
+  "id": "ja_giratina_vs_dialga_deck_kit_giratina",
+  "code": null,
+  "name": "Giratina vs Dialga Deck Kit (Giratina)",
+  "era": "Diamond & Pearl",
+  "total": 14,
+  "printedTotal": 14,
+  "logo": "282eb123ec8258b0e67c23f59c6f6614",
+  "releaseDate": "2008/07/10"
+ },
+ {
+  "id": "ja_intense_fight_in_the_destroyed_sky",
+  "code": "DPs",
+  "name": "Intense Fight in the Destroyed Sky",
+  "era": "Diamond & Pearl",
+  "total": 92,
+  "printedTotal": 92,
+  "logo": "e20435f6084b043c5d65716d1f6e61e6",
+  "releaseDate": "2008/07/10"
+ },
+ {
+  "id": "ja_cry_from_the_mysterious",
+  "code": "DP5",
+  "name": "Cry from the Mysterious",
+  "era": "Diamond & Pearl",
+  "total": 65,
+  "printedTotal": 65,
+  "logo": "c4a14890ab07ffd438d48c46d1534b27",
+  "releaseDate": "2008/03/14"
+ },
+ {
+  "id": "ja_heatran_vs_regigigas_deck_kit",
+  "code": null,
+  "name": "Heatran vs Regigigas Deck Kit",
+  "era": "Diamond & Pearl",
+  "total": 24,
+  "printedTotal": 24,
+  "logo": "2cfdb415e18737ca003b87badfde69b3",
+  "releaseDate": "2008/03/14"
+ },
+ {
+  "id": "ja_temple_of_anger",
+  "code": "DP5",
+  "name": "Temple of Anger",
+  "era": "Diamond & Pearl",
+  "total": 65,
+  "printedTotal": 65,
+  "logo": "fddaef80354814b2efd3ae7883f7d951",
+  "releaseDate": "2008/03/14"
+ },
+ {
+  "id": "ja_entry_pack_08",
+  "code": null,
+  "name": "Entry Pack '08",
+  "era": "Diamond & Pearl",
+  "total": 42,
+  "printedTotal": 42,
+  "logo": null,
+  "releaseDate": "2007/11/30"
+ },
+ {
+  "id": "ja_dawn_dash",
+  "code": "DP4",
+  "name": "Dawn Dash",
+  "era": "Diamond & Pearl",
+  "total": 70,
+  "printedTotal": 70,
+  "logo": "6d5221134f0c5e26398336ec42d53f48",
+  "releaseDate": "2007/10/26"
+ },
+ {
+  "id": "ja_magmortar_vs_electivire_deck_kit",
+  "code": null,
+  "name": "Magmortar vs Electivire Deck Kit",
+  "era": "Diamond & Pearl",
+  "total": 26,
+  "printedTotal": 26,
+  "logo": "28cbcf8b3ae9e7ef25813cda28c56e39",
+  "releaseDate": "2007/10/26"
+ },
+ {
+  "id": "ja_moonlit_pursuit",
+  "code": "DP4",
+  "name": "Moonlit Pursuit",
+  "era": "Diamond & Pearl",
+  "total": 70,
+  "printedTotal": 70,
+  "logo": "34ebcc5a0d8cf6fffebb4f174cb53856",
+  "releaseDate": "2007/10/26"
+ },
+ {
+  "id": "ja_dialga_palkia_lv_x_constructed_standard_decks",
+  "code": null,
+  "name": "Dialga & Palkia LV.X Constructed Standard Decks",
+  "era": "Diamond & Pearl",
+  "total": 28,
+  "printedTotal": 28,
+  "logo": "28bf7ad4f2af2d72369d63b9a144e053",
+  "releaseDate": "2007/07/05"
+ },
+ {
+  "id": "ja_shining_darkness",
+  "code": "DP3",
+  "name": "Shining Darkness",
+  "era": "Diamond & Pearl",
+  "total": 120,
+  "printedTotal": 120,
+  "logo": "42829b5536510605b6df8b9be929a077",
+  "releaseDate": "2007/07/05"
+ },
+ {
+  "id": "ja_world_champions_pack",
+  "code": null,
+  "name": "World Champions Pack",
+  "era": "PCG Era",
+  "total": 108,
+  "printedTotal": 108,
+  "logo": null,
+  "releaseDate": "2007/07/05"
+ },
+ {
+  "id": "ja_ppp_promos",
+  "code": "PPP",
+  "name": "PPP Promos",
+  "era": "Diamond & Pearl",
+  "total": 7,
+  "printedTotal": 7,
+  "logo": null,
+  "releaseDate": "2007/05/01"
+ },
+ {
+  "id": "ja_bastiodon_the_defender_rampardos_the_attacker_constructed_half_decks",
+  "code": null,
+  "name": "Bastiodon the Defender & Rampardos the Attacker Constructed Half Decks",
+  "era": "Diamond & Pearl",
+  "total": 27,
+  "printedTotal": 27,
+  "logo": "ce86d1394abc0819099ee3e6f911e8ba",
+  "releaseDate": "2007/03/02"
+ },
+ {
+  "id": "ja_secret_of_the_lakes",
+  "code": "DP2",
+  "name": "Secret of the Lakes",
+  "era": "Diamond & Pearl",
+  "total": 123,
+  "printedTotal": 123,
+  "logo": "78aea399205327e4367652e1917ac61c",
+  "releaseDate": "2007/03/02"
+ },
+ {
+  "id": "ja_10th_movie_commemoration_set",
+  "code": null,
+  "name": "10th Movie Commemoration Set",
+  "era": "Diamond & Pearl",
+  "total": 11,
+  "printedTotal": 11,
+  "logo": null,
+  "releaseDate": "2007/01/14"
+ },
+ {
+  "id": "ja_diamond_pearl_promos",
+  "code": "DP-P",
+  "name": "Diamond & Pearl Promos",
+  "era": "Diamond & Pearl",
+  "total": 127,
+  "printedTotal": 127,
+  "logo": "cfefeb1fde345f423dc53c2bc1472aa2",
+  "releaseDate": "2006/12/01"
+ },
+ {
+  "id": "ja_space_time_creation",
+  "code": "DP1",
+  "name": "Space-Time Creation",
+  "era": "Diamond & Pearl",
+  "total": 122,
+  "printedTotal": 122,
+  "logo": "096faada498f7449ebcc305f91cf5ecd",
+  "releaseDate": "2006/11/30"
+ },
+ {
+  "id": "ja_entry_pack",
+  "code": null,
+  "name": "Entry Pack",
+  "era": "Diamond & Pearl",
+  "total": 32,
+  "printedTotal": 32,
+  "logo": "b84de896620986733457c360c0fb1400",
+  "releaseDate": "2006/10/27"
+ },
+ {
+  "id": "ja_movie_commemoration_vs_pack_sea_s_manaphy",
+  "code": null,
+  "name": "Movie Commemoration VS Pack: Sea's Manaphy",
+  "era": "PCG Era",
+  "total": 19,
+  "printedTotal": 19,
+  "logo": null,
+  "releaseDate": "2006/07/15"
+ },
+ {
+  "id": "ja_imprison_gardevoir_ex_constructed_standard_deck",
+  "code": null,
+  "name": "Imprison! Gardevoir ex Constructed Standard Deck",
+  "era": "PCG Era",
+  "total": 24,
+  "printedTotal": 24,
+  "logo": "6ee3e6d850eab0017dfec8e3f1e5fd97",
+  "releaseDate": "2006/06/29"
+ },
+ {
+  "id": "ja_offense_and_defense_of_the_furthest_ends",
+  "code": null,
+  "name": "Offense and Defense of the Furthest Ends",
+  "era": "PCG Era",
+  "total": 70,
+  "printedTotal": 68,
+  "logo": "3c17c3750ff5bd5b8da18bf0385bdfc1",
+  "releaseDate": "2006/06/29"
+ },
+ {
+  "id": "ja_shockwave_tyranitar_ex_constructed_standard_deck",
+  "code": null,
+  "name": "Shockwave! Tyranitar ex Constructed Standard Deck",
+  "era": "PCG Era",
+  "total": 24,
+  "printedTotal": 24,
+  "logo": "438f591498ae93816de602366d181487",
+  "releaseDate": "2006/06/29"
+ },
+ {
+  "id": "ja_miracle_crystal",
+  "code": null,
+  "name": "Miracle Crystal",
+  "era": "PCG Era",
+  "total": 77,
+  "printedTotal": 75,
+  "logo": "8da96792cdb9b966c93bf40d368ea286",
+  "releaseDate": "2006/03/10"
+ },
+ {
+  "id": "ja_earth_s_groudon_ex_constructed_starter_deck",
+  "code": null,
+  "name": "Earth's Groudon ex Constructed Starter Deck",
+  "era": "PCG Era",
+  "total": 16,
+  "printedTotal": 16,
+  "logo": "a8820bab34d9d647f1eb1ca1e7c8aaca",
+  "releaseDate": "2006/03/03"
+ },
+ {
+  "id": "ja_ocean_s_kyogre_ex_constructed_starter_deck",
+  "code": null,
+  "name": "Ocean's Kyogre ex Constructed Starter Deck",
+  "era": "PCG Era",
+  "total": 16,
+  "printedTotal": 16,
+  "logo": "829890a4efe61c5a557af0cf435630e0",
+  "releaseDate": "2006/03/03"
+ },
+ {
+  "id": "ja_holon_phantom",
+  "code": null,
+  "name": "Holon Phantom",
+  "era": "PCG Era",
+  "total": 60,
+  "printedTotal": 52,
+  "logo": "5e78853a300a94ee7c78bb87b93f2fed",
+  "releaseDate": "2006/01/27"
+ },
+ {
+  "id": "ja_mew_lucario_gift_box_crawdaunt",
+  "code": null,
+  "name": "Mew • Lucario Gift Box (Crawdaunt)",
+  "era": "PCG Era",
+  "total": 15,
+  "printedTotal": 15,
+  "logo": "7b56549cd2ec78ad272c6e1415e3675c",
+  "releaseDate": "2005/11/16"
+ },
+ {
+  "id": "ja_mew_lucario_gift_box_lucario",
+  "code": null,
+  "name": "Mew • Lucario Gift Box (Lucario)",
+  "era": "PCG Era",
+  "total": 15,
+  "printedTotal": 15,
+  "logo": "322a7c97effd535910f497942896e0f5",
+  "releaseDate": "2005/11/16"
+ },
+ {
+  "id": "ja_mew_lucario_gift_box_mew",
+  "code": null,
+  "name": "Mew • Lucario Gift Box (Mew)",
+  "era": "PCG Era",
+  "total": 15,
+  "printedTotal": 15,
+  "logo": "86c8e29fbf60fb055ebc09106c9408e0",
+  "releaseDate": "2005/11/16"
+ },
+ {
+  "id": "ja_mew_lucario_gift_box_mightyena",
+  "code": null,
+  "name": "Mew • Lucario Gift Box (Mightyena)",
+  "era": "PCG Era",
+  "total": 15,
+  "printedTotal": 15,
+  "logo": "db0eb2582efb797d0136e680e50f9f77",
+  "releaseDate": "2005/11/16"
+ },
+ {
+  "id": "ja_mew_lucario_gift_box_pokemon",
+  "code": null,
+  "name": "Mew • Lucario Gift Box (Pokémon ☆)",
+  "era": "PCG Era",
+  "total": 2,
+  "printedTotal": 2,
+  "logo": "946d79833a6579abf35f05528306115d",
+  "releaseDate": "2005/11/16"
+ },
+ {
+  "id": "ja_holon_research_tower",
+  "code": null,
+  "name": "Holon Research Tower",
+  "era": "PCG Era",
+  "total": 88,
+  "printedTotal": 86,
+  "logo": "4d1e201487a1913a07ca0464566de302",
+  "releaseDate": "2005/10/28"
+ },
+ {
+  "id": "ja_holon_research_tower_fire_quarter_deck",
+  "code": null,
+  "name": "Holon Research Tower Fire Quarter Deck",
+  "era": "PCG Era",
+  "total": 15,
+  "printedTotal": 15,
+  "logo": "2e0b148fb82e25a49420613fec8599d9",
+  "releaseDate": "2005/09/30"
+ },
+ {
+  "id": "ja_holon_research_tower_lightning_quarter_deck",
+  "code": null,
+  "name": "Holon Research Tower Lightning Quarter Deck",
+  "era": "PCG Era",
+  "total": 15,
+  "printedTotal": 15,
+  "logo": "755cc6fc58f4e228319834c1af53288f",
+  "releaseDate": "2005/09/30"
+ },
+ {
+  "id": "ja_holon_research_tower_water_quarter_deck",
+  "code": null,
+  "name": "Holon Research Tower Water Quarter Deck",
+  "era": "PCG Era",
+  "total": 15,
+  "printedTotal": 15,
+  "logo": "95bf4dbc695d4c4be303d9fe629466bd",
+  "releaseDate": "2005/09/30"
+ },
+ {
+  "id": "ja_movie_commemoration_vs_pack_aura_s_lucario",
+  "code": null,
+  "name": "Movie Commemoration VS Pack: Aura's Lucario",
+  "era": "PCG Era",
+  "total": 22,
+  "printedTotal": 20,
+  "logo": null,
+  "releaseDate": "2005/07/16"
+ },
+ {
+  "id": "ja_master_kit_bulbasaur",
+  "code": null,
+  "name": "Master Kit (Bulbasaur)",
+  "era": "PCG Era",
+  "total": 15,
+  "printedTotal": 15,
+  "logo": "7c2f83648a4a6adcbe4920677e731849",
+  "releaseDate": "2005/07/15"
+ },
+ {
+  "id": "ja_master_kit_side_deck",
+  "code": null,
+  "name": "Master Kit (Side Deck)",
+  "era": "PCG Era",
+  "total": 12,
+  "printedTotal": 12,
+  "logo": "0b39bd0f2688d55288dd653ab6804f1f",
+  "releaseDate": "2005/07/15"
+ },
+ {
+  "id": "ja_master_kit_torchic",
+  "code": null,
+  "name": "Master Kit (Torchic)",
+  "era": "PCG Era",
+  "total": 15,
+  "printedTotal": 15,
+  "logo": "5fa25ee70727ea89c61f87fc3e3b38f2",
+  "releaseDate": "2005/07/15"
+ },
+ {
+  "id": "ja_mirage_forest",
+  "code": null,
+  "name": "Mirage Forest",
+  "era": "PCG Era",
+  "total": 88,
+  "printedTotal": 86,
+  "logo": "c50f945b28a234141a5e7177f87f73fd",
+  "releaseDate": "2005/06/30"
+ },
+ {
+  "id": "ja_mirage_s_mew_constructed_starter_deck",
+  "code": null,
+  "name": "Mirage's Mew Constructed Starter Deck",
+  "era": "PCG Era",
+  "total": 16,
+  "printedTotal": 16,
+  "logo": "1d9e193a2a09c7cb3604ca6d3b8e4581",
+  "releaseDate": "2005/06/30"
+ },
+ {
+  "id": "ja_golden_sky_silvery_ocean",
+  "code": null,
+  "name": "Golden Sky, Silvery Ocean",
+  "era": "PCG Era",
+  "total": 108,
+  "printedTotal": 106,
+  "logo": "bf72bede83f4aeb823944456592d06f5",
+  "releaseDate": "2005/04/08"
+ },
+ {
+  "id": "ja_pokepark_blue",
+  "code": null,
+  "name": "PokéPark Blue",
+  "era": "PCG Era",
+  "total": 9,
+  "printedTotal": 9,
+  "logo": "41eab968c248506e68a0ae0761c88bf2",
+  "releaseDate": "2005/03/18"
+ },
+ {
+  "id": "ja_pokepark_forest",
+  "code": null,
+  "name": "PokéPark Forest",
+  "era": "PCG Era",
+  "total": 9,
+  "printedTotal": 9,
+  "logo": "dfb06b853128f4f3a1031cf0ceef1d96",
+  "releaseDate": "2005/03/18"
+ },
+ {
+  "id": "ja_feraligatr_constructed_starter_deck",
+  "code": null,
+  "name": "Feraligatr Constructed Starter Deck",
+  "era": "PCG Era",
+  "total": 16,
+  "printedTotal": 16,
+  "logo": "07bdff181b46d98a18f8dadf54aed365",
+  "releaseDate": "2005/03/05"
+ },
+ {
+  "id": "ja_meganium_constructed_starter_deck",
+  "code": null,
+  "name": "Meganium Constructed Starter Deck",
+  "era": "PCG Era",
+  "total": 16,
+  "printedTotal": 16,
+  "logo": "06222c81e09670d5e37e973acd837743",
+  "releaseDate": "2005/03/05"
+ },
+ {
+  "id": "ja_typhlosion_constructed_starter_deck",
+  "code": null,
+  "name": "Typhlosion Constructed Starter Deck",
+  "era": "PCG Era",
+  "total": 16,
+  "printedTotal": 16,
+  "logo": "3bf4d198cf61e3b5225e36672e89c5e7",
+  "releaseDate": "2005/03/05"
+ },
+ {
+  "id": "ja_fighting_quick_construction_pack",
+  "code": null,
+  "name": "Fighting Quick Construction Pack",
+  "era": "PCG Era",
+  "total": 15,
+  "printedTotal": 15,
+  "logo": "9f4731ebe90ed020313c9b87fcab6b2b",
+  "releaseDate": "2005/01/16"
+ },
+ {
+  "id": "ja_fire_quick_construction_pack",
+  "code": null,
+  "name": "Fire Quick Construction Pack",
+  "era": "PCG Era",
+  "total": 15,
+  "printedTotal": 15,
+  "logo": "ab87e49935cb858287eaf2dbfa205f6f",
+  "releaseDate": "2005/01/16"
+ },
+ {
+  "id": "ja_grass_quick_construction_pack",
+  "code": null,
+  "name": "Grass Quick Construction Pack",
+  "era": "PCG Era",
+  "total": 15,
+  "printedTotal": 15,
+  "logo": "5f68d20d85cc6a3bc15c916facb72dd6",
+  "releaseDate": "2005/01/16"
+ },
+ {
+  "id": "ja_lightning_quick_construction_pack",
+  "code": null,
+  "name": "Lightning Quick Construction Pack",
+  "era": "PCG Era",
+  "total": 15,
+  "printedTotal": 15,
+  "logo": "045b7800816de2e716c84c6297e5c0b2",
+  "releaseDate": "2005/01/16"
+ },
+ {
+  "id": "ja_psychic_quick_construction_pack",
+  "code": null,
+  "name": "Psychic Quick Construction Pack",
+  "era": "PCG Era",
+  "total": 15,
+  "printedTotal": 15,
+  "logo": "ab737c1c940aae22db64c8b47d3ec9fe",
+  "releaseDate": "2005/01/16"
+ },
+ {
+  "id": "ja_water_quick_construction_pack",
+  "code": null,
+  "name": "Water Quick Construction Pack",
+  "era": "PCG Era",
+  "total": 15,
+  "printedTotal": 15,
+  "logo": "7cec6e14d1ae1dcae350cad8f9cff2fe",
+  "releaseDate": "2005/01/16"
+ },
+ {
+  "id": "ja_emerald_gift_box_deoxys",
+  "code": null,
+  "name": "Emerald Gift Box (Deoxys)",
+  "era": "PCG Era",
+  "total": 19,
+  "printedTotal": 19,
+  "logo": "9965cacf289cb33180c82ea3da6880f3",
+  "releaseDate": "2004/11/19"
+ },
+ {
+  "id": "ja_emerald_gift_box_rayquaza",
+  "code": null,
+  "name": "Emerald Gift Box (Rayquaza)",
+  "era": "PCG Era",
+  "total": 19,
+  "printedTotal": 19,
+  "logo": "6a63913c13cd86e8792a0cb835729ce9",
+  "releaseDate": "2004/11/19"
+ },
+ {
+  "id": "ja_black_deck_kit",
+  "code": null,
+  "name": "Black Deck Kit",
+  "era": "PCG Era",
+  "total": 21,
+  "printedTotal": 20,
+  "logo": "0a31c884589628a7663f46f1f48493c7",
+  "releaseDate": "2004/10/15"
+ },
+ {
+  "id": "ja_rocket_gang_strikes_back",
+  "code": null,
+  "name": "Rocket Gang Strikes Back",
+  "era": "PCG Era",
+  "total": 87,
+  "printedTotal": 84,
+  "logo": "1658ac90905dcf42b49e801f1b6da2b3",
+  "releaseDate": "2004/10/15"
+ },
+ {
+  "id": "ja_silver_deck_kit",
+  "code": null,
+  "name": "Silver Deck Kit",
+  "era": "PCG Era",
+  "total": 21,
+  "printedTotal": 20,
+  "logo": "e67774a7a2e3d3cc9851f5763e121dd4",
+  "releaseDate": "2004/10/15"
+ },
+ {
+  "id": "ja_movie_commemoration_vs_pack_sky_splitting_deoxys",
+  "code": null,
+  "name": "Movie Commemoration VS Pack: Sky-Splitting Deoxys",
+  "era": "PCG Era",
+  "total": 21,
+  "printedTotal": 19,
+  "logo": null,
+  "releaseDate": "2004/07/17"
+ },
+ {
+  "id": "ja_clash_of_the_blue_sky",
+  "code": null,
+  "name": "Clash of the Blue Sky",
+  "era": "PCG Era",
+  "total": 84,
+  "printedTotal": 82,
+  "logo": "76a22d8283050babb644f56c409f38f4",
+  "releaseDate": "2004/07/01"
+ },
+ {
+  "id": "ja_deoxys_constructed_starter_deck",
+  "code": null,
+  "name": "Deoxys Constructed Starter Deck",
+  "era": "PCG Era",
+  "total": 16,
+  "printedTotal": 15,
+  "logo": "a342cdfa18849aff44d02eeed1f254aa",
+  "releaseDate": "2004/07/01"
+ },
+ {
+  "id": "ja_rayquaza_constructed_starter_deck",
+  "code": null,
+  "name": "Rayquaza Constructed Starter Deck",
+  "era": "PCG Era",
+  "total": 16,
+  "printedTotal": 15,
+  "logo": "0d246b7aef597403910a02ca7afdb59d",
+  "releaseDate": "2004/07/01"
+ },
+ {
+  "id": "ja_flight_of_legends",
+  "code": null,
+  "name": "Flight of Legends",
+  "era": "PCG Era",
+  "total": 84,
+  "printedTotal": 82,
+  "logo": "3118acaaffe1ee82a3f04e1a077e8bb1",
+  "releaseDate": "2004/04/09"
+ },
+ {
+  "id": "ja_venusaur_charizard_blastoise_random_constructed_starter_decks",
+  "code": null,
+  "name": "Venusaur, Charizard & Blastoise Random Constructed Starter Decks",
+  "era": "PCG Era",
+  "total": 52,
+  "printedTotal": 52,
+  "logo": "f1c184c2a4f678cabe4cceac920c2403",
+  "releaseDate": "2004/03/19"
+ },
+ {
+  "id": "ja_pcg_promos",
+  "code": "PCG-P",
+  "name": "PCG Promos",
+  "era": "PCG Era",
+  "total": 154,
+  "printedTotal": 154,
+  "logo": "65445b3eb56373074a7866e603e60558",
+  "releaseDate": "2004/02/01"
+ },
+ {
+  "id": "ja_metagross_constructed_starter_deck",
+  "code": null,
+  "name": "Metagross Constructed Starter Deck",
+  "era": "Advanced Generation",
+  "total": 20,
+  "printedTotal": 19,
+  "logo": "0e2a42f6f0868611260042050df7417c",
+  "releaseDate": "2004/01/16"
+ },
+ {
+  "id": "ja_undone_seal",
+  "code": null,
+  "name": "Undone Seal",
+  "era": "Advanced Generation",
+  "total": 85,
+  "printedTotal": 83,
+  "logo": "08396d782a1a0c83d41221e747923b32",
+  "releaseDate": "2004/01/16"
+ },
+ {
+  "id": "ja_gift_box_latias",
+  "code": null,
+  "name": "Gift Box (Latias)",
+  "era": "Advanced Generation",
+  "total": 19,
+  "printedTotal": 18,
+  "logo": "62a0945cc3060ddd9268d9f720598dde",
+  "releaseDate": "2003/11/28"
+ },
+ {
+  "id": "ja_gift_box_latios",
+  "code": null,
+  "name": "Gift Box (Latios)",
+  "era": "Advanced Generation",
+  "total": 19,
+  "printedTotal": 18,
+  "logo": "823407b90323665e3befda454eb04709",
+  "releaseDate": "2003/11/28"
+ },
+ {
+  "id": "ja_aqua_deck_kit",
+  "code": null,
+  "name": "Aqua Deck Kit",
+  "era": "Advanced Generation",
+  "total": 34,
+  "printedTotal": 33,
+  "logo": "f3e6a04cfe6e65bc4cd45e7a606f872a",
+  "releaseDate": "2003/10/24"
+ },
+ {
+  "id": "ja_magma_deck_kit",
+  "code": null,
+  "name": "Magma Deck Kit",
+  "era": "Advanced Generation",
+  "total": 34,
+  "printedTotal": 33,
+  "logo": "c195a6595c6aac421683a7b8929a5226",
+  "releaseDate": "2003/10/24"
+ },
+ {
+  "id": "ja_magma_vs_aqua_two_ambitions",
+  "code": null,
+  "name": "Magma vs Aqua Two Ambitions",
+  "era": "Advanced Generation",
+  "total": 88,
+  "printedTotal": 80,
+  "logo": "51bdb249598e11269ae8872c5a42b26a",
+  "releaseDate": "2003/10/24"
+ },
+ {
+  "id": "ja_movie_commemoration_vs_pack",
+  "code": null,
+  "name": "Movie Commemoration VS Pack",
+  "era": "Advanced Generation",
+  "total": 20,
+  "printedTotal": 19,
+  "logo": null,
+  "releaseDate": "2003/07/19"
+ },
+ {
+  "id": "ja_flygon_constructed_starter_deck",
+  "code": null,
+  "name": "Flygon Constructed Starter Deck",
+  "era": "Advanced Generation",
+  "total": 20,
+  "printedTotal": 19,
+  "logo": "4b225f07cda8f5af406722f80d66463e",
+  "releaseDate": "2003/06/25"
+ },
+ {
+  "id": "ja_rulers_of_the_heavens",
+  "code": null,
+  "name": "Rulers of the Heavens",
+  "era": "Advanced Generation",
+  "total": 56,
+  "printedTotal": 54,
+  "logo": "93ef2ad936cebc73f1043d157bccccce",
+  "releaseDate": "2003/06/25"
+ },
+ {
+  "id": "ja_salamence_constructed_starter_deck",
+  "code": null,
+  "name": "Salamence Constructed Starter Deck",
+  "era": "Advanced Generation",
+  "total": 20,
+  "printedTotal": 19,
+  "logo": "c632f955cbca5d67792ff98348676023",
+  "releaseDate": "2003/06/25"
+ },
+ {
+  "id": "ja_miracle_of_the_desert",
+  "code": null,
+  "name": "Miracle of the Desert",
+  "era": "Advanced Generation",
+  "total": 55,
+  "printedTotal": 53,
+  "logo": "49d808454555046f6ca9133445bd74a2",
+  "releaseDate": "2003/04/18"
+ },
+ {
+  "id": "ja_adv_expansion_pack",
+  "code": null,
+  "name": "ADV Expansion Pack",
+  "era": "Advanced Generation",
+  "total": 57,
+  "printedTotal": 55,
+  "logo": "dfaeee0ed0c586e97ed186874e5aafa0",
+  "releaseDate": "2003/01/31"
+ },
+ {
+  "id": "ja_mudkip_constructed_starter_deck",
+  "code": null,
+  "name": "Mudkip Constructed Starter Deck",
+  "era": "Advanced Generation",
+  "total": 20,
+  "printedTotal": 19,
+  "logo": "323cac9778137707f112e1de82105d1f",
+  "releaseDate": "2003/01/31"
+ },
+ {
+  "id": "ja_torchic_constructed_starter_deck",
+  "code": null,
+  "name": "Torchic Constructed Starter Deck",
+  "era": "Advanced Generation",
+  "total": 20,
+  "printedTotal": 19,
+  "logo": "0f6bb22320a4a650a30a7207cb5be156",
+  "releaseDate": "2003/01/31"
+ },
+ {
+  "id": "ja_treecko_constructed_starter_deck",
+  "code": null,
+  "name": "Treecko Constructed Starter Deck",
+  "era": "Advanced Generation",
+  "total": 20,
+  "printedTotal": 19,
+  "logo": "e964d0d8df21812c2add64cd17929e21",
+  "releaseDate": "2003/01/31"
+ },
+ {
+  "id": "ja_adv_promos",
+  "code": "ADV-P",
+  "name": "ADV Promos",
+  "era": "Advanced Generation",
+  "total": 63,
+  "printedTotal": 63,
+  "logo": "7919046301fcadc057c070eeef33d031",
+  "releaseDate": "2003/01/01"
+ },
+ {
+  "id": "ja_play_promos",
+  "code": "PLAY",
+  "name": "PLAY Promos",
+  "era": "Advanced Generation",
+  "total": 32,
+  "printedTotal": 32,
+  "logo": null,
+  "releaseDate": "2003/01/01"
+ },
+ {
+  "id": "ja_mysterious_mountains",
+  "code": null,
+  "name": "Mysterious Mountains",
+  "era": "e-Card Era",
+  "total": 91,
+  "printedTotal": 88,
+  "logo": "3745395a8317e4e6eae90c268cead29a",
+  "releaseDate": "2002/10/04"
+ },
+ {
+  "id": "ja_split_earth",
+  "code": null,
+  "name": "Split Earth",
+  "era": "e-Card Era",
+  "total": 91,
+  "printedTotal": 88,
+  "logo": "1c2af8ae3b151ac64a24d7d64251caf8",
+  "releaseDate": "2002/08/23"
+ },
+ {
+  "id": "ja_theater_limited_vs_pack",
+  "code": null,
+  "name": "Theater Limited VS Pack",
+  "era": "e-Card Era",
+  "total": 18,
+  "printedTotal": 18,
+  "logo": null,
+  "releaseDate": "2002/07/13"
+ },
+ {
+  "id": "ja_wind_from_the_sea",
+  "code": null,
+  "name": "Wind from the Sea",
+  "era": "e-Card Era",
+  "total": 90,
+  "printedTotal": 87,
+  "logo": "b6ae8db96dba4dc5f135107ac7482b9c",
+  "releaseDate": "2002/05/24"
+ },
+ {
+  "id": "ja_the_town_on_no_map",
+  "code": null,
+  "name": "The Town on No Map",
+  "era": "e-Card Era",
+  "total": 92,
+  "printedTotal": 92,
+  "logo": "0f1d5747cd99523dfa3f1e6dec5a0cd8",
+  "releaseDate": "2002/03/08"
+ },
+ {
+  "id": "ja_mcdonald_s_pokemon_e_minimum_pack",
+  "code": null,
+  "name": "McDonald's Pokémon-e Minimum Pack",
+  "era": "e-Card Era",
+  "total": 24,
+  "printedTotal": 18,
+  "logo": "e3c7601c3a4cd4e4dd67484fae373666",
+  "releaseDate": "2002/01/26"
+ },
+ {
+  "id": "ja_t_promos",
+  "code": null,
+  "name": "T Promos",
+  "era": "PCG Era",
+  "total": 24,
+  "printedTotal": 24,
+  "logo": null,
+  "releaseDate": "2002/01/01"
+ },
+ {
+  "id": "ja_expedition_expansion",
+  "code": null,
+  "name": "Expedition Expansion",
+  "era": "e-Card Era",
+  "total": 128,
+  "printedTotal": 128,
+  "logo": "38c37d2071126473abcaa2865a309fc2",
+  "releaseDate": "2001/12/01"
+ },
+ {
+  "id": "ja_pokemon_e_starter_deck",
+  "code": null,
+  "name": "Pokémon-e Starter Deck",
+  "era": "e-Card Era",
+  "total": 29,
+  "printedTotal": 29,
+  "logo": "8254f718aaad40c8895bd7bd982a89b2",
+  "releaseDate": "2001/12/01"
+ },
+ {
+  "id": "ja_pokemon_web",
+  "code": null,
+  "name": "Pokémon Web",
+  "era": "Web Era",
+  "total": 48,
+  "printedTotal": 48,
+  "logo": "918f3a5e9a0711c23fe5b29ac18c5f0b",
+  "releaseDate": "2001/10/20"
+ },
+ {
+  "id": "ja_tropical_mega_battle",
+  "code": null,
+  "name": "Tropical Mega Battle",
+  "era": "VS Era",
+  "total": 23,
+  "printedTotal": 23,
+  "logo": null,
+  "releaseDate": "2001/08/26"
+ },
+ {
+  "id": "ja_j_promos",
+  "code": null,
+  "name": "J Promos",
+  "era": "e-Card Era",
+  "total": 2,
+  "printedTotal": 2,
+  "logo": null,
+  "releaseDate": "2001/08/01"
+ },
+ {
+  "id": "ja_pokemon_vs",
+  "code": "VS",
+  "name": "Pokémon VS",
+  "era": "VS Era",
+  "total": 151,
+  "printedTotal": 141,
+  "logo": "14a539a814df4a9d99c1dea806c71588",
+  "releaseDate": "2001/07/19"
+ },
+ {
+  "id": "ja_leaders_pokemon_movie_limited_edition",
+  "code": null,
+  "name": "Leaders' Pokémon: Movie Limited Edition",
+  "era": "VS Era",
+  "total": 24,
+  "printedTotal": 24,
+  "logo": null,
+  "releaseDate": "2001/07/07"
+ },
+ {
+  "id": "ja_p_promos",
+  "code": null,
+  "name": "P Promos",
+  "era": "e-Card Era",
+  "total": 47,
+  "printedTotal": 47,
+  "logo": null,
+  "releaseDate": "2001/07/01"
+ },
+ {
+  "id": "ja_darkness_and_to_light_neo_destiny",
+  "code": null,
+  "name": "Darkness and to Light (Neo Destiny)",
+  "era": "Neo Era",
+  "total": 113,
+  "printedTotal": 113,
+  "logo": "88f8b4b81d1984b71228b1d5668bddee",
+  "releaseDate": "2001/04/26"
+ },
+ {
+  "id": "ja_intro_pack_neo_chikorita",
+  "code": null,
+  "name": "Intro Pack Neo (Chikorita)",
+  "era": "Neo Era",
+  "total": 40,
+  "printedTotal": 40,
+  "logo": "99de7ab9b29a199ab2ae740806669872",
+  "releaseDate": "2001/04/06"
+ },
+ {
+  "id": "ja_intro_pack_neo_totodile",
+  "code": null,
+  "name": "Intro Pack Neo (Totodile)",
+  "era": "Neo Era",
+  "total": 40,
+  "printedTotal": 40,
+  "logo": "30f599d1bc031fc595fdec4d36fb6e6e",
+  "releaseDate": "2001/04/06"
+ },
+ {
+  "id": "ja_awakening_legends_neo_revelation",
+  "code": null,
+  "name": "Awakening Legends (Neo Revelation)",
+  "era": "Neo Era",
+  "total": 57,
+  "printedTotal": 57,
+  "logo": "ad0f69fe1e8701c83b3c1233fdf393c3",
+  "releaseDate": "2000/11/23"
+ },
+ {
+  "id": "ja_neo_premium_file_3",
+  "code": null,
+  "name": "Neo Premium File 3",
+  "era": "Neo Era",
+  "total": 9,
+  "printedTotal": 9,
+  "logo": null,
+  "releaseDate": "2000/11/23"
+ },
+ {
+  "id": "ja_neo_premium_file_2",
+  "code": null,
+  "name": "Neo Premium File 2",
+  "era": "Neo Era",
+  "total": 9,
+  "printedTotal": 9,
+  "logo": null,
+  "releaseDate": "2000/08/05"
+ },
+ {
+  "id": "ja_crossing_the_ruins_neo_discovery",
+  "code": null,
+  "name": "Crossing the Ruins (Neo Discovery)",
+  "era": "Neo Era",
+  "total": 57,
+  "printedTotal": 57,
+  "logo": "7dca3488ce170e9e0b43bf1ce5083654",
+  "releaseDate": "2000/07/07"
+ },
+ {
+  "id": "ja_gold_silver_to_a_new_world_neo_genesis",
+  "code": null,
+  "name": "Gold Silver to a new World (Neo Genesis)",
+  "era": "Neo Era",
+  "total": 96,
+  "printedTotal": 96,
+  "logo": "ce6ef2d6772df8cff41bfe2bbd8603f8",
+  "releaseDate": "2000/02/04"
+ },
+ {
+  "id": "ja_neo_premium_file_1",
+  "code": null,
+  "name": "Neo Premium File 1",
+  "era": "Neo Era",
+  "total": 9,
+  "printedTotal": 9,
+  "logo": "d186362ddfd1dfb86a1d7c0f7488d804",
+  "releaseDate": "1999/12/10"
+ },
+ {
+  "id": "ja_intro_pack_bulbasaur",
+  "code": null,
+  "name": "Intro Pack (Bulbasaur)",
+  "era": "Original Era",
+  "total": 41,
+  "printedTotal": 41,
+  "logo": "45508768b07b471f756cfb7037b0a497",
+  "releaseDate": "1999/07/30"
+ },
+ {
+  "id": "ja_intro_pack_squirtle",
+  "code": null,
+  "name": "Intro Pack (Squirtle)",
+  "era": "Original Era",
+  "total": 41,
+  "printedTotal": 41,
+  "logo": "373fe5a6ac7601b6e32d8c362d11a8ba",
+  "releaseDate": "1999/07/30"
+ },
+ {
+  "id": "ja_southern_islands",
+  "code": null,
+  "name": "Southern Islands",
+  "era": "Neo Era",
+  "total": 18,
+  "printedTotal": 18,
+  "logo": "fa83386cfd917e201df9810a615e98fa",
+  "releaseDate": "1999/07/17"
+ },
+ {
+  "id": "ja_challenge_from_the_darkness_gym_challenge",
+  "code": null,
+  "name": "Challenge From The Darkness (Gym Challenge)",
+  "era": "Original Era",
+  "total": 98,
+  "printedTotal": 98,
+  "logo": "9a5c78582751b1924e5b9ff43d2dc8bb",
+  "releaseDate": "1999/06/25"
+ },
+ {
+  "id": "ja_how_i_became_a_pokemon_card",
+  "code": null,
+  "name": "How I Became a Pokémon Card",
+  "era": "Original Era",
+  "total": 6,
+  "printedTotal": 6,
+  "logo": null,
+  "releaseDate": "1999/05/22"
+ },
+ {
+  "id": "ja_cinnabar_city_gym_deck",
+  "code": null,
+  "name": "Gym Deck: Cinnabar City Gym (Blaine)",
+  "era": "Original Era",
+  "total": 25,
+  "printedTotal": 25,
+  "logo": "a9c5854d706f6f74ae9b5cfb40385bf3",
+  "releaseDate": "1999/02/26"
+ },
+ {
+  "id": "ja_saffron_city_gym_deck",
+  "code": null,
+  "name": "Gym Deck: Saffron City Gym (Sabrina)",
+  "era": "Original Era",
+  "total": 26,
+  "printedTotal": 26,
+  "logo": "3971c722e8fe8ffcc9e6669a736b8505",
+  "releaseDate": "1999/02/26"
+ },
+ {
+  "id": "ja_quick_starter_gift_set",
+  "code": null,
+  "name": "Quick Starter Gift Set",
+  "era": "Original Era",
+  "total": 58,
+  "printedTotal": 58,
+  "logo": "0870ee9ac4d41f74b883d172e11724b8",
+  "releaseDate": "1998/12/04"
+ },
+ {
+  "id": "ja_vending_sheet_3",
+  "code": null,
+  "name": "Vending Sheet 3 (Green)",
+  "era": "Original Era",
+  "total": 53,
+  "printedTotal": 53,
+  "logo": "b49038e22929fccf566583f916b53105",
+  "releaseDate": "1998/11/24"
+ },
+ {
+  "id": "ja_all_card_calendar_1998",
+  "code": null,
+  "name": "All Card Calendar 1998",
+  "era": "Original Era",
+  "total": 1,
+  "printedTotal": 1,
+  "logo": null,
+  "releaseDate": "1998/11/05"
+ },
+ {
+  "id": "ja_leader_s_stadium_gym_heroes",
+  "code": null,
+  "name": "Leader's Stadium (Gym Heroes)",
+  "era": "Original Era",
+  "total": 96,
+  "printedTotal": 96,
+  "logo": "4acf669322769c77eae2f65573f8e86d",
+  "releaseDate": "1998/10/24"
+ },
+ {
+  "id": "ja_celadon_city_gym_deck",
+  "code": null,
+  "name": "Gym Deck: Celadon City Gym (Erika)",
+  "era": "Original Era",
+  "total": 28,
+  "printedTotal": 28,
+  "logo": "7fd41e61f745a795ff83974ea71a8f8b",
+  "releaseDate": "1998/07/25"
+ },
+ {
+  "id": "ja_vermilion_city_gym_deck",
+  "code": null,
+  "name": "Gym Deck: Vermilion City Gym (Lt. Surge)",
+  "era": "Original Era",
+  "total": 25,
+  "printedTotal": 25,
+  "logo": "cdcbc7471032f74cf83f958338fce682",
+  "releaseDate": "1998/07/25"
+ },
+ {
+  "id": "ja_vending_sheet_2",
+  "code": null,
+  "name": "Vending Sheet 2 (Red)",
+  "era": "Original Era",
+  "total": 36,
+  "printedTotal": 36,
+  "logo": "d54753b03cf38ec682b199a10c5f2a00",
+  "releaseDate": "1998/06/17"
+ },
+ {
+  "id": "ja_cerulean_city_gym_deck",
+  "code": null,
+  "name": "Gym Deck: Cerulean City Gym (Misty)",
+  "era": "Original Era",
+  "total": 24,
+  "printedTotal": 24,
+  "logo": "48bd27c19742714d4f563b7d448f2950",
+  "releaseDate": "1998/04/26"
+ },
+ {
+  "id": "ja_pewter_city_gym_deck",
+  "code": null,
+  "name": "Gym Deck: Pewter City Gym (Brock)",
+  "era": "Original Era",
+  "total": 25,
+  "printedTotal": 25,
+  "logo": "90f4603170fc61c48569a56a27b3a3b4",
+  "releaseDate": "1998/04/26"
+ },
+ {
+  "id": "ja_vending_sheet_1",
+  "code": null,
+  "name": "Vending Sheet 1 (Blue)",
+  "era": "Original Era",
+  "total": 36,
+  "printedTotal": 36,
+  "logo": "6fe048adde964452961ef78020464e6c",
+  "releaseDate": "1998/03/23"
+ },
+ {
+  "id": "ja_vending_series_0_1997_world_hobby_fair",
+  "code": null,
+  "name": "Vending Series 0 (1997 World Hobby Fair)",
+  "era": "Original Era",
+  "total": 3,
+  "printedTotal": 3,
+  "logo": null,
+  "releaseDate": "1997/12/07"
+ },
+ {
+  "id": "ja_rocket_gang",
+  "code": null,
+  "name": "Rocket Gang",
+  "era": "Original Era",
+  "total": 65,
+  "printedTotal": 65,
+  "logo": "095820bbfce4719e2e97d2d05b56cdfb",
+  "releaseDate": "1997/11/21"
+ },
+ {
+  "id": "ja_mystery_of_the_fossils",
+  "code": null,
+  "name": "Mystery of the Fossils",
+  "era": "Original Era",
+  "total": 48,
+  "printedTotal": 48,
+  "logo": "c0b6b8a93ca9569ecff87d77a40ea728",
+  "releaseDate": "1997/06/20"
+ },
+ {
+  "id": "ja_pokemon_jungle",
+  "code": null,
+  "name": "Pokémon Jungle",
+  "era": "Original Era",
+  "total": 48,
+  "printedTotal": 48,
+  "logo": "35a27bf244f484bdec554feee8796cad",
+  "releaseDate": "1997/03/05"
+ },
+ {
+  "id": "ja_expansion_pack_base_set",
+  "code": null,
+  "name": "Expansion Pack (Base Set)",
+  "era": "Original Era",
+  "total": 102,
+  "printedTotal": 102,
+  "logo": "a0ca0f832d9cc27cbee8b4b0e8d2e540",
+  "releaseDate": "1996/10/20"
+ },
+ {
+  "id": "ja_corocoro_comics",
+  "code": null,
+  "name": "CoroCoro Comics",
+  "era": "Original Era",
+  "total": 41,
+  "printedTotal": 41,
+  "logo": null,
+  "releaseDate": "1996/10/15"
+ },
+ {
+  "id": "ja_miscellaneous_promos",
+  "code": "MP",
+  "name": "Miscellaneous Promos",
+  "era": "Original Era",
+  "total": 236,
+  "printedTotal": 236,
+  "logo": null,
+  "releaseDate": "1996/10/15"
+ }
+]

@@ -5,7 +5,7 @@
 
 const RAW = 'https://raw.githubusercontent.com/cardcorpus/pokemon-card-dataset/main/v1/';
 
-async function json(path, { optional } = {}) {
+export async function json(path, { optional } = {}) {
   for (let attempt = 0; ; attempt++) {
     const res = await fetch(RAW + path);
     if (res.ok) return res.json();
@@ -15,7 +15,7 @@ async function json(path, { optional } = {}) {
   }
 }
 
-async function pool(items, size, fn) {
+export async function pool(items, size, fn) {
   const out = [];
   let i = 0;
   await Promise.all(Array.from({ length: size }, async () => {
@@ -24,7 +24,7 @@ async function pool(items, size, fn) {
   return out;
 }
 
-const front = (x) => x?.picture?.front?.image ?? null;
+export const front = (x) => x?.picture?.front?.image ?? null;
 export const normName = (s) => s.replace(/\s*\[.*\]\s*$/, '').toLowerCase().normalize('NFD').replace(/[^a-z0-9]/g, '');
 
 /**

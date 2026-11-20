@@ -23,7 +23,7 @@ export function CardPlaceholder({ card }) {
 export const cardLabel = (card) => {
   if (card.number) return `#${card.number}`;
   if (card.marketPrice?.trend > 0) return formatEuro(card.marketPrice.trend);
-  if (card.extra === 'cn') return 'Prix inconnu';
+  if (card.extra === 'cn' || card.extra === 'ja') return 'Prix inconnu';
   return card.set?.label || '—';
 };
 
