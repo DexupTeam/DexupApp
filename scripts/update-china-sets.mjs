@@ -6,9 +6,10 @@
 //     → public/extra/cn/<setId>.json     cartes de chaque extension, avec leur prix tendance
 //
 // Cardmarket donne le nom (« Cubone [Cheering Bone | Hit Twice] » : Pokémon et attaques) et le
-// prix, mais ni numéro ni image. Lancé chaque semaine par .github/workflows/refresh-data.yml.
+// prix, mais ni numéro ni image : ceux-ci viennent de CardCorpus (scripts/cardcorpus.mjs). Lancé chaque semaine par .github/workflows/refresh-data.yml.
 import { mkdir, readdir, rm, writeFile } from 'node:fs/promises';
 import { download, loadCatalog, robustPrice } from './cardmarket.mjs';
+import { loadCardcorpus, matchCards } from './cardcorpus.mjs';
 
 const ROOT = new URL('../', import.meta.url);
 const SETS_OUT = new URL('src/data/chinaSets.json', ROOT);
@@ -21,10 +22,11 @@ const CODE_RE = /^((?:C[A-Za-z0-9.]*|\d+)C):\s*(.+)$/;
 // Type de produit en fin de nom, à retirer pour garder le nom de l'extension.
 const PRODUCT_WORDS = /\s+(?:Booster Box|Booster Bundle|Sleeved Booster|Booster|Display|Gift Box|Collection|Box|Deck|Coin Set|Starter Set|Tin)(?:\s*\(.*\))?$/i;
 
-const [sealed, singlesFile, { priceGuides, createdAt }] = await Promise.all([
+const [sealed, singlesFile, { priceGuides, createdAt }, corpus] = await Promise.all([
   loadCatalog(),
   download('productList/products_singles_6.json'),
   download('priceGuide/price_guide_6.json'),
+  loadCardcorpus(),
 ]);
 const guides = new Map(priceGuides.map((g) => [g.idProduct, g]));
 
@@ -54,10 +56,12 @@ await mkdir(CARDS_DIR, { recursive: true });
 for (const old of await readdir(CARDS_DIR)) await rm(new URL(old, CARDS_DIR));
 
 const sets = [];
+let imaged = 0;
 for (const [idExpansion, exp] of expansions) {
   const singles = cardsBySet.get(idExpansion) ?? [];
   if (!singles.length) continue;
   const id = `cn${idExpansion}`;
+  const pictures = matchCards(singles, exp.code, corpus);
   const cards = singles
     .map((p) => {
       const m = p.name.match(/^(.*?)\s*\[(.*)\]\s*$/);
@@ -67,10 +71,13 @@ for (const [idExpansion, exp] of expansions) {
         name: (m ? m[1] : p.name).trim(),
         detail: m ? m[2].trim() : null, // attaques ou variante, ce qui distingue deux cartes du même Pokémon
         idProduct: p.idProduct,
+        number: pictures.get(p.idProduct)?.number ?? null,
+        image: pictures.get(p.idProduct)?.image ?? null, // identifiant d'image CardCorpus
         price: price === null ? null : Math.round(price * 100) / 100,
       };
     })
     .sort((a, b) => a.name.localeCompare(b.name) || (a.detail ?? '').localeCompare(b.detail ?? '') || a.idProduct - b.idProduct);
+  imaged += cards.filter((c) => c.image).length;
   await writeFile(new URL(`${id}.json`, CARDS_DIR), JSON.stringify({ updated: createdAt.slice(0, 10), cards }));
   sets.push({
     id,
@@ -78,9 +85,10 @@ for (const [idExpansion, exp] of expansions) {
     name: exp.name,
     series: SERIES,
     total: cards.length,
+    logo: corpus.byCode.get(exp.code)?.logo ?? null,
     releaseDate: (exp.date && exp.date > '2000' ? exp.date : '2024-01-01').replace(/-/g, '/'),
   });
 }
 sets.sort((a, b) => b.releaseDate.localeCompare(a.releaseDate) || a.code.localeCompare(b.code));
 await writeFile(SETS_OUT, `${JSON.stringify(sets, null, 1)}\n`);
-console.log(`Extensions chinoises : ${sets.length}, ${sets.reduce((n, s) => n + s.total, 0)} cartes (Cardmarket, ${createdAt.slice(0, 10)}).`);
+console.log(`Extensions chinoises : ${sets.length}, ${sets.reduce((n, s) => n + s.total, 0)} cartes (Cardmarket, ${createdAt.slice(0, 10)}), ${imaged} avec image (CardCorpus).`);

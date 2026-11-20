@@ -5,7 +5,7 @@ import { useCollection } from '../store/collection';
 import { useLang } from '../utils/LanguageContext.jsx';
 import { getLocalizedSetName } from '../utils/setNames';
 import { loadSetCards, useSets } from '../lib/tcg';
-import { CHINA_SERIES } from '../lib/extraCards';
+import { CARDCORPUS_URL, CHINA_SERIES } from '../lib/extraCards';
 import { CardsView, OWNERSHIP_FILTERS, filterByOwnership } from '../components/cards';
 import { Empty, Loading, Page, Progress, Segmented, StarButton, TopBar, ViewToggle, pct, plural, usePersistedState } from '../components/ui';
 
@@ -61,7 +61,9 @@ export default function SetDetail() {
             {set && <p className="tiny dim" style={{ marginTop: 10 }}>{set.series} · {(set.code || set.id).toUpperCase()} · sortie le {set.releaseDate}</p>}
             {set?.series === CHINA_SERIES && (
               <p className="tiny dim" style={{ marginTop: 6 }}>
-                Cartes et prix d'après le catalogue Cardmarket, sans image ni numéro : les variantes d'une même carte sont listées séparément. Ajoute ta photo depuis la fiche d'une carte possédée.
+                Cartes et prix d'après le catalogue Cardmarket, les variantes d'une même carte listées séparément. Images et numéros :{' '}
+                <a href={CARDCORPUS_URL} target="_blank" rel="noreferrer" style={{ textDecoration: 'underline' }}>CardCorpus</a> (CC BY 4.0).
+                Une carte sans image ? Ajoute ta photo depuis sa fiche.
               </p>
             )}
           </div>
