@@ -142,18 +142,22 @@ async function dexCardId(cardId) {
 }
 
 /**
- * Nom français officiel d'une carte (TCGdex, qui publie les cartes en français), ou null si
- * TCGdex ne la connaît pas en français. Gardé un mois : il ne change pas.
+ * Noms d'un set chez TCGdex : { numéro → [nom anglais, nom français] }, une requête par langue et
+ * par set, gardée un mois. Le nom anglais sert à vérifier que le numéro désigne bien la même carte
+ * (sets renumérotés chez TCGdex). Vide si TCGdex ne connaît pas le set.
  */
-export async function frenchCardName(cardId) {
-  if (isExtraCard(cardId)) return null;
-  const id = await dexCardId(cardId).catch(() => null);
-  if (!id) return null;
-  const card = await cachedJson(`dex:fr:${id}`, (data) => (data ? INDEX_MAX_AGE : RETRY_AGE), async () => {
-    const fr = await getJson(`https://api.tcgdex.net/v2/fr/cards/${id}`).catch(() => null);
-    return fr?.name ? { name: fr.name } : null;
-  }).catch(() => null);
-  return card?.name ?? null;
+export function frenchSetNames(setId) {
+  const maxAge = (t) => (t && Object.keys(t).length ? INDEX_MAX_AGE : RETRY_AGE);
+  return cachedJson(`dex:frnames:${setId}`, maxAge, async () => {
+    const dexSetId = await resolveDexSetId(setId);
+    if (!dexSetId) return {};
+    const [en, fr] = await Promise.all([
+      getJson(`${DEX}/sets/${dexSetId}`),
+      getJson(`https://api.tcgdex.net/v2/fr/sets/${dexSetId}`),
+    ]);
+    const frById = Object.fromEntries((fr?.cards || []).map((c) => [c.id, c.name]));
+    return Object.fromEntries((en?.cards || []).filter((c) => frById[c.id]).map((c) => [numberKey(c.localId), [c.name, frById[c.id]]]));
+  });
 }
 
 // ─── Prix : un seul enregistrement local { identifiant de carte → prix } ─────

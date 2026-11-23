@@ -4,12 +4,13 @@ import { useCollection } from '../store/collection';
 import { getGradingInfo } from '../utils/storage';
 import { formatEuro } from '../lib/tcg';
 import { cardImage } from '../lib/photos';
+import { CardName, useCardName } from '../lib/cardNames';
 
 /** Carte sans image (extension chinoise, carte perso sans photo) : son nom sur un dos de carte. */
 export function CardPlaceholder({ card }) {
   return (
     <span className="card-ph">
-      <b className="clamp2">{card.name}</b>
+      <b className="clamp2"><CardName card={card} /></b>
       {card.detail && <span className="clamp2">{card.detail}</span>}
       {card.set?.code && <i>{card.set.code}</i>}
     </span>
@@ -71,10 +72,11 @@ function ToggleButton({ card, isOwned, onToggle, onRemove, inline }) {
 
 function CardTile({ card, caption, onRemove, dim, value }) {
   const { image, isOwned, isFav, grading, open, quickToggle } = useCardState(card);
+  const { name } = useCardName(card);
   const [loaded, setLoaded] = useState(false);
   return (
     <div className={`ctile${isOwned || !dim ? '' : ' is-missing'}`}>
-      <button className={`ctile-img${loaded || !image ? ' is-loaded' : ''}`} onClick={open} aria-label={`${card.name} — voir la fiche`}>
+      <button className={`ctile-img${loaded || !image ? ' is-loaded' : ''}`} onClick={open} aria-label={`${name} — voir la fiche`}>
         {image
           ? <img src={image} alt="" loading="lazy" onLoad={() => setLoaded(true)} onError={() => setLoaded(true)} />
           : <CardPlaceholder card={card} />}
@@ -85,7 +87,7 @@ function CardTile({ card, caption, onRemove, dim, value }) {
       <div className="ctile-cap">
         {caption === 'name' ? (
           <>
-            <b className="clamp1">{card.name}</b>
+            <b className="clamp1">{name}</b>
             <span className="clamp1">{value !== undefined ? priceLabel(value) : card.set?.label || card.set?.name}</span>
           </>
         ) : (
@@ -98,6 +100,7 @@ function CardTile({ card, caption, onRemove, dim, value }) {
 
 function CardRow({ card, caption, onRemove, dim, value }) {
   const { image, isOwned, isFav, grading, open, quickToggle } = useCardState(card);
+  const { name } = useCardName(card);
   const setName = card.set?.label || card.set?.name;
   const meta = caption === 'name'
     ? `${cardLabel(card)}${setName ? ` · ${setName}` : ''}`
@@ -113,9 +116,9 @@ function CardRow({ card, caption, onRemove, dim, value }) {
           className="card-thumb" src={image} alt="" loading="lazy"
           style={isOwned || !dim ? undefined : { filter: 'grayscale(1)', opacity: 0.5 }}
         />
-      ) : <span className="card-thumb card-ph card-ph-sm"><b className="clamp2">{card.name}</b></span>}
+      ) : <span className="card-thumb card-ph card-ph-sm"><b className="clamp2">{name}</b></span>}
       <div className="grow">
-        <b className="clamp1">{card.name}</b>
+        <b className="clamp1">{name}</b>
         <p className="small muted clamp1">{meta}</p>
         <div className="row" style={{ gap: 6, marginTop: 4 }}>
           {grading && <span className="tag tag-gold"><Trophy size={11} /> {grading.company} {grading.grade}</span>}

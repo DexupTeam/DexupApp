@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { CardName } from '../lib/cardNames';
 import { useNavigate } from 'react-router-dom';
 import { Camera, CloudUpload, Eye, ImagePlus, LogOut, Pencil, Sparkles, Trash2, Users } from 'lucide-react';
 import { useCollection } from '../store/collection';
@@ -282,7 +283,7 @@ function ShowcasePicker({ current, onClose }) {
                   {n >= 0 && <span className="pick-check">{n + 1}</span>}
                 </span>
                 <span className="ctile-cap">
-                  <b className="clamp1">{card.name}</b>
+                  <b className="clamp1"><CardName card={card} /></b>
                   <span className="clamp1">{sort === 'value' ? (values?.[card.id] != null ? formatEuro(values[card.id]) : 'Non évaluée') : card.set?.label || card.set?.name}</span>
                 </span>
               </button>

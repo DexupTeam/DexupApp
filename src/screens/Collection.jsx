@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
+import { CardName } from '../lib/cardNames';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { ArrowDownUp, ChevronDown, Layers, Plus, Trophy } from 'lucide-react';
 import { useCollection } from '../store/collection';
@@ -209,7 +210,7 @@ export function Graded() {
                       <Tappable key={card.id} onClick={() => openCard(card)}>
                         <img className="card-thumb" src={cardImage(card, cardPhotos) ?? undefined} alt="" loading="lazy" />
                         <div className="grow">
-                          <b className="clamp1">{card.name}</b>
+                          <b className="clamp1"><CardName card={card} /></b>
                           <p className="small muted clamp1">#{card.number} · {card.set?.name}</p>
                         </div>
                         <span className="tag tag-gold" style={{ height: 34, padding: '0 12px', fontSize: 15, fontFamily: 'var(--display)' }}>{grade}</span>

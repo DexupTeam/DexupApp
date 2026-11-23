@@ -9,6 +9,7 @@ import { formatEuro, setLogoUrl, useSets } from '../lib/tcg';
 import { cardImage } from '../lib/photos';
 import { isTeam } from '../data/team';
 import { CardPlaceholder } from './cards';
+import { CardName } from '../lib/cardNames';
 import Logo from './Logo';
 import { Empty, Loading, Sheet, Tappable, plural } from './ui';
 import { getFollowers, listProfilesByIds } from '../lib/community';
@@ -223,7 +224,7 @@ export function Showcase({ cards, empty, max = SHOWCASE_MAX }) {
         return (
           <button key={card.id} className="showcase-card" onClick={() => openCard(card)} aria-label={`${card.name} — voir la fiche`}>
             <span className="showcase-img">{image ? <img src={image} alt="" loading="lazy" /> : <CardPlaceholder card={card} />}</span>
-            <b className="clamp1">{card.name}</b>
+            <b className="clamp1"><CardName card={card} /></b>
             {card.set?.name && <span className="tiny muted clamp1">{card.set.name}</span>}
           </button>
         );
