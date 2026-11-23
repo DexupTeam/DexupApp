@@ -141,6 +141,21 @@ async function dexCardId(cardId) {
   return renumbering?.ids ? renumbering.ids[cardId] ?? null : byNumber;
 }
 
+/**
+ * Nom français officiel d'une carte (TCGdex, qui publie les cartes en français), ou null si
+ * TCGdex ne la connaît pas en français. Gardé un mois : il ne change pas.
+ */
+export async function frenchCardName(cardId) {
+  if (isExtraCard(cardId)) return null;
+  const id = await dexCardId(cardId).catch(() => null);
+  if (!id) return null;
+  const card = await cachedJson(`dex:fr:${id}`, (data) => (data ? INDEX_MAX_AGE : RETRY_AGE), async () => {
+    const fr = await getJson(`https://api.tcgdex.net/v2/fr/cards/${id}`).catch(() => null);
+    return fr?.name ? { name: fr.name } : null;
+  }).catch(() => null);
+  return card?.name ?? null;
+}
+
 // ─── Prix : un seul enregistrement local { identifiant de carte → prix } ─────
 let store = null;
 let storePromise = null;

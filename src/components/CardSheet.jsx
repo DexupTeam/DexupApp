@@ -5,6 +5,7 @@ import { getCached, setCached } from '../utils/cache';
 import { getGradingInfo } from '../utils/storage';
 import { formatEuro, loadFullCard, openUrl } from '../lib/tcg';
 import { getPrice } from '../lib/prices';
+import { useCardName } from '../lib/cardNames';
 import { cardImage, photoFromFile } from '../lib/photos';
 import { CardPlaceholder } from './cards';
 import { Confirm, Sheet, plural } from './ui';
@@ -261,6 +262,8 @@ function CardSheetInner({ card }) {
   }, [card.id]);
 
   const c = full || card;
+  // Nom en français si c'est la langue choisie ; le nom anglais reste en petit (recherches, Cardmarket).
+  const { name: displayName, original: englishName } = useCardName(c);
   const isOwned = !!owned[card.id];
   const isFav = !!favCards[card.id];
   const grading = getGradingInfo(owned[card.id]);
@@ -300,7 +303,7 @@ function CardSheetInner({ card }) {
   return (
     <>
       <Sheet
-        title={c.name} onClose={closeCard} tall
+        title={displayName} onClose={closeCard} tall
         footer={
           <>
             <button className={`btn grow ${isOwned ? 'btn-owned' : 'btn-violet'}`} onClick={onOwnedClick} aria-pressed={isOwned}>
@@ -323,7 +326,7 @@ function CardSheetInner({ card }) {
         }
       >
         {image
-          ? <img className="cs-image" src={image} alt={c.name} />
+          ? <img className="cs-image" src={image} alt={displayName} />
           : <span className="cs-ph"><CardPlaceholder card={c} /></span>}
 
         {(isOwned || isCustom) && (
@@ -337,6 +340,7 @@ function CardSheetInner({ card }) {
         )}
         {photoError && <p className="small" style={{ textAlign: 'center', color: 'var(--danger)' }}>{photoError}</p>}
 
+        {englishName && <p className="tiny dim" style={{ textAlign: 'center', marginBottom: 2 }}>{englishName} en anglais</p>}
         {c.set && (
           <p className="small muted" style={{ textAlign: 'center' }}>
             {isCustom ? (c.set.label || 'Carte perso') : <>{c.set.name}{c.set.series ? ` · ${c.set.series}` : ''}</>}
