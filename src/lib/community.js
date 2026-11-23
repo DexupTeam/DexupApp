@@ -222,6 +222,15 @@ export async function getFollowerCount(targetId) {
   return count ?? 0;
 }
 
+/** Identifiants des comptes qui suivent `targetId`, les plus récents d'abord. */
+export async function getFollowers(targetId) {
+  if (isDemo()) return demoFollows().filter((f) => f.followee === targetId).map((f) => f.follower).reverse();
+  const { data, error } = await supabase.from(FOLLOWS).select('follower').eq('followee', targetId)
+    .order('created_at', { ascending: false }).limit(500);
+  check(error);
+  return (data || []).map((r) => r.follower);
+}
+
 /** Profils publics des comptes donnés (les abonnements), les plus récemment actifs d'abord. */
 export async function listProfilesByIds(ids) {
   if (!ids.length) return [];

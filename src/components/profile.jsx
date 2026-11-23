@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BadgeCheck, Check, Share2, UserCheck, UserPlus } from 'lucide-react';
+import { BadgeCheck, Check, ChevronRight, Share2, UserCheck, UserPlus, Users, WifiOff } from 'lucide-react';
 import { useCollection } from '../store/collection';
 import { useProfile } from '../store/profile';
 import { useLang } from '../utils/LanguageContext.jsx';
@@ -10,7 +10,8 @@ import { cardImage } from '../lib/photos';
 import { isTeam } from '../data/team';
 import { CardPlaceholder } from './cards';
 import Logo from './Logo';
-import { plural } from './ui';
+import { Empty, Loading, Sheet, Tappable, plural } from './ui';
+import { getFollowers, listProfilesByIds } from '../lib/community';
 
 /** Photo de profil, ou initiale sur fond neutre. */
 export function Avatar({ profile, size = 44 }) {
@@ -81,7 +82,11 @@ export function FollowButton({ profile, onChange }) {
   const on = following.has(profile.userId);
   const click = async () => {
     setError(false);
-    try { onChange?.(await toggleFollow(profile.userId)); } catch (_) { setError(true); }
+    // Pas `onChange?.(await toggleFollow(…))` : sans onChange, l'argument ne serait jamais évalué.
+    try {
+      const follow = await toggleFollow(profile.userId);
+      onChange?.(follow);
+    } catch (_) { setError(true); }
   };
   return (
     <button
@@ -112,11 +117,67 @@ function FavoriteSet({ setId }) {
   );
 }
 
+/** Les abonnés d'un collectionneur : ceux qui ont un profil public, puis le nombre des autres. */
+function FollowersSheet({ profile, total, onClose }) {
+  const navigate = useNavigate();
+  const { userId } = useProfile();
+  const [state, setState] = useState({ loading: true, list: [], error: false });
+
+  useEffect(() => {
+    let alive = true;
+    getFollowers(profile.userId)
+      .then((ids) => listProfilesByIds(ids).then((list) => {
+        // Dans l'ordre des abonnements, les plus récents d'abord.
+        const rank = new Map(ids.map((id, i) => [id, i]));
+        return list.sort((a, b) => rank.get(a.userId) - rank.get(b.userId));
+      }))
+      .then((list) => alive && setState({ loading: false, list, error: false }))
+      .catch(() => alive && setState({ loading: false, list: [], error: true }));
+    return () => { alive = false; };
+  }, [profile.userId]);
+
+  const { loading, list, error } = state;
+  const hidden = Math.max(0, (total ?? 0) - list.length);
+  const open = (p) => { onClose(); navigate(p.userId === userId ? '/profile' : `/community/${p.username}`); };
+  return (
+    <Sheet title={total != null ? plural(total, 'abonné') : 'Abonnés'} onClose={onClose} tall>
+      {loading && <Loading />}
+      {error && <Empty icon={WifiOff} title="Liste indisponible" text="Vérifie ta connexion internet puis réessaie." />}
+      {!loading && !error && !list.length && !hidden && (
+        <Empty icon={Users} title="Aucun abonné pour l'instant" text={`Personne ne suit encore ${profile.displayName}.`} />
+      )}
+      <div className="stack" style={{ gap: 8 }}>
+        {list.map((p) => (
+          <Tappable key={p.userId} onClick={() => open(p)}>
+            <Avatar profile={p} size={42} />
+            <div className="grow" style={{ minWidth: 0 }}>
+              <b className="row" style={{ gap: 5, minWidth: 0 }}>
+                <span className="clamp1">{p.displayName}</span>
+                <TeamBadge profile={p} compact />
+                {p.userId === userId && <span className="tiny muted" style={{ flexShrink: 0 }}>· toi</span>}
+              </b>
+              <p className="small muted clamp1">@{p.username}</p>
+            </div>
+            {/* Suivre depuis la liste sans ouvrir le profil. */}
+            <span onClick={(e) => e.stopPropagation()} onKeyDown={(e) => e.stopPropagation()}><FollowButton profile={p} /></span>
+          </Tappable>
+        ))}
+      </div>
+      {!loading && !error && hidden > 0 && (
+        <p className="tiny dim" style={{ textAlign: 'center', marginTop: 14 }}>
+          {list.length ? 'Et ' : ''}{plural(hidden, 'abonné')} au profil privé ou sans profil
+        </p>
+      )}
+    </Sheet>
+  );
+}
+
 /**
  * Bannière, photo, nom, pseudo, bio et statistiques. `action` : bouton à droite du nom (partage),
  * `children` : boutons sous les statistiques.
  */
 export function ProfileHeader({ profile, action, followers, children }) {
+  const [showFollowers, setShowFollowers] = useState(false);
   return (
     <div className="profile-head">
       <div className="profile-banner">{profile.banner && <img src={profile.banner} alt="" />}</div>
@@ -134,12 +195,17 @@ export function ProfileHeader({ profile, action, followers, children }) {
       {profile.bio && <p className="profile-bio">{profile.bio}</p>}
       {/* Statistiques à gauche, set préféré à droite sur la même ligne (en dessous si la place manque). */}
       <div className="row" style={{ gap: 6, flexWrap: 'wrap' }}>
-        {followers != null && <span className="tag">{plural(followers, 'abonné')}</span>}
+        {followers != null && (
+          <button className="tag tag-btn" onClick={() => setShowFollowers(true)} aria-label={`Voir les ${plural(followers, 'abonné')}`}>
+            {plural(followers, 'abonné')} <ChevronRight size={11} />
+          </button>
+        )}
         {profileStats(profile).map((s) => <span key={s} className="tag">{s}</span>)}
         {!profile.isPublic && <span className="tag tag-gold">Profil privé</span>}
         {profile.settings?.favoriteSet && <FavoriteSet setId={profile.settings.favoriteSet} />}
       </div>
       {children && <div className="row" style={{ gap: 8, marginTop: 14, flexWrap: 'wrap' }}>{children}</div>}
+      {showFollowers && <FollowersSheet profile={profile} total={followers} onClose={() => setShowFollowers(false)} />}
     </div>
   );
 }

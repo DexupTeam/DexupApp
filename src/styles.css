@@ -507,3 +507,6 @@ button.list-row:active, .list-row.tap:active { transform: scale(0.99); }
 .auth-link { align-self: center; padding: 4px 0; }
 .auth-link::after { content: none; }
 .auth-forgot { align-self: flex-end; margin-top: -8px; }
+/* Nombre d'abonnés : ouvre leur liste */
+.tag-btn { border: 0; cursor: pointer; gap: 2px; padding-right: 5px; }
+.tag-btn:hover { color: var(--ink); background: var(--line); }
