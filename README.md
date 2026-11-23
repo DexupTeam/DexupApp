@@ -43,7 +43,7 @@
 - **Reconnaissance par l'image**, dans le navigateur, sans serveur, avec les modèles du [scanner CardCorpus](https://github.com/cardcorpus/pokemon-card-scanner) (Apache 2.0 ; matcher sous licence DINOv3, voir `third_party/cardcorpus`) :
   1. la carte est trouvée dans toute l'image par un détecteur de coins (QuadDet) — pas de cadre à viser, carte penchée, décentrée ou à l'envers acceptée ;
   2. elle est redressée, puis réduite à son empreinte par un modèle DINOv3 affiné (23,5 Mo, poids en 8 bits), avec une tête qui dit si la carte est à l'endroit ;
-  3. l'empreinte est comparée à 102 000 images de cartes **anglaises, japonaises et chinoises** ; chacune est reliée à sa fiche Dexup (pokemontcg.io, extensions `ja_…` et `cn…`) ;
+  3. l'empreinte est comparée à 122 000 images de cartes **anglaises, françaises, japonaises et chinoises** ; chacune est reliée à sa fiche Dexup (pokemontcg.io, extensions `ja_…` et `cn…` ; une carte française à sa version anglaise) ;
   4. quand plusieurs rééditions d'une illustration sont proches, le **numéro de collection** est lu (petit réseau CRNN) pour choisir la bonne ; une correspondance nette ouvre la fiche, sinon les cartes possibles sont proposées
   - Cartes françaises : même illustration et même numéro que l'anglaise, elles sont reconnues comme leur version anglaise
 - **Scan automatique** : la reconnaissance se déclenche dès que l'image est nette, immobile et bien éclairée (conseils « Ne bouge plus », « Plus de lumière », « Trop de reflets »), puis attend que la carte change
