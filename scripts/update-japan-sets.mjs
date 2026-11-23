@@ -10,7 +10,7 @@
 // Lancé chaque semaine par .github/workflows/refresh-data.yml.
 import { mkdir, readdir, rm, writeFile } from 'node:fs/promises';
 import { download, robustPrice } from './cardmarket.mjs';
-import { front, json, pool } from './cardcorpus.mjs';
+import { catalogSets, englishName, front, json, pool, shortNumber } from './cardcorpus.mjs';
 
 const ROOT = new URL('../', import.meta.url);
 const SETS_OUT = new URL('src/data/japanSets.json', ROOT);
@@ -21,12 +21,11 @@ const CARDS_DIR = new URL('public/extra/ja/', ROOT);
 const setKey = (id) => `ja_${id.replace(/^japanese\//, '').replace(/-/g, '_')}`;
 const cardKey = (num) => num.replace(/[-\s/]/g, '_');
 
-const [{ sets }, { priceGuides, createdAt }] = await Promise.all([
-  json('sets.json'),
+const [ja, { priceGuides, createdAt }] = await Promise.all([
+  catalogSets('japanese'),
   download('priceGuide/price_guide_6.json'),
 ]);
 const guides = new Map(priceGuides.map((g) => [g.idProduct, g]));
-const ja = sets.filter((s) => s.catalog === 'japanese');
 
 const loaded = await pool(ja, 8, async (meta) => {
   const [set, market] = await Promise.all([json(`sets/${meta.id}.json`), json(`marketplaces/${meta.id}.json`, { optional: true })]);
@@ -53,8 +52,8 @@ for (const { meta, set, market } of loaded) {
     if (price !== null) priced++;
     return {
       id: `${id}-${cardKey(c.id)}`,
-      name: c.name,
-      number: c.number?.numerator ?? c.id,
+      name: englishName(c),
+      number: shortNumber(c.number) ?? c.id,
       rarity: c.rarity ?? null,
       image,
       idProduct,
@@ -65,8 +64,8 @@ for (const { meta, set, market } of loaded) {
   out.push({
     id,
     code: meta.code ?? null,
-    name: meta.name,
-    era: meta.era?.name ?? null,
+    name: englishName(meta),
+    era: englishName(meta.era) || null,
     total: cards.length,
     printedTotal: set.printedTotal ?? cards.length,
     logo: meta.logo ?? null,

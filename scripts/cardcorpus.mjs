@@ -25,6 +25,19 @@ export async function pool(items, size, fn) {
 }
 
 export const front = (x) => x?.picture?.front?.image ?? null;
+/** Nom anglais (CardCorpus donne le nom imprimé, en japonais ou en chinois, et l'anglais à part). */
+// Sans nom anglais, le nom imprimé ; « ナッシー[Exeggutor] » (japonais suivi de l'anglais) donne Exeggutor.
+export const englishName = (x) => {
+  const name = x?.englishName ?? x?.name ?? '';
+  const bracket = /\[([^\]]+)\]$/.exec(name)?.[1];
+  return bracket && /[\u3040-\u30ff\u4e00-\u9fff]/.test(name) ? bracket : name;
+};
+/** Numéro court (« 006 ») ; `numerator` avant novembre 2026. */
+export const shortNumber = (n) => n?.short ?? n?.numerator ?? null;
+/** Extensions d'un catalogue (« japanese », « zh-hans », « english »…). */
+export async function catalogSets(catalog) {
+  return (await json(`sets/${catalog}.json`)).sets;
+}
 export const normName = (s) => s.replace(/\s*\[.*\]\s*$/, '').toLowerCase().normalize('NFD').replace(/[^a-z0-9]/g, '');
 
 /**
@@ -33,8 +46,7 @@ export const normName = (s) => s.replace(/\s*\[.*\]\s*$/, '').toLowerCase().norm
  *   sets      : code (« CBB3C ») → { logo, cards: [{ number, name, image }] }
  */
 export async function loadCardcorpus() {
-  const { sets } = await json('sets.json');
-  const zh = sets.filter((s) => s.catalog === 'zh-hans');
+  const zh = await catalogSets('zh-hans');
   const loaded = await pool(zh, 8, async (meta) => {
     const [set, market] = await Promise.all([json(`sets/${meta.id}.json`), json(`marketplaces/${meta.id}.json`, { optional: true })]);
     return { meta, set, market };
@@ -47,13 +59,13 @@ export async function loadCardcorpus() {
     const entry = byCode.get(meta.code) ?? { logo: meta.logo ?? null, cards: [] };
     for (const c of set.cards) {
       const image = front(c) ?? front(c.variants?.[0]);
-      if (image) entry.cards.push({ number: c.number?.numerator ?? c.id, name: c.name, image, set: meta.id });
+      if (image) entry.cards.push({ number: shortNumber(c.number) ?? c.id, name: englishName(c), image, set: meta.id });
     }
     if (meta.code) byCode.set(meta.code, entry);
     for (const [num, e] of Object.entries(market?.cards ?? {})) {
       const card = cards.get(num);
       if (!card) continue;
-      const base = { number: card.number?.numerator ?? num, set: meta.id, name: card.name };
+      const base = { number: shortNumber(card.number) ?? num, set: meta.id, name: englishName(card) };
       for (const [variantId, v] of Object.entries(e.variants ?? {})) {
         const variant = card.variants?.find((x) => x.id === variantId);
         const image = front(variant) ?? front(card);
