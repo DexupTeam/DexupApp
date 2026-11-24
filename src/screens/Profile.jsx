@@ -14,6 +14,7 @@ import { useWallet } from '../lib/prices';
 import { useCardMatcher } from '../lib/cardSearch';
 import { getLocalizedSetName } from '../utils/setNames';
 import { Avatar, ProfileHeader, SHOWCASE_MAX, ShareButton, Showcase } from '../components/profile';
+import Sortable from '../components/Sortable';
 import { CardPlaceholder } from '../components/cards';
 import { Confirm, Empty, Loading, Page, SearchField, Segmented, Sheet, TopBar } from '../components/ui';
 
@@ -236,6 +237,7 @@ function ShowcasePicker({ current, onClose }) {
     return [...sorted].sort((a, b) => position(a.id) - position(b.id));
   }, [cards, matches, sort, values, rank, picked, lang]);
 
+  const pickedCard = (id) => (cards || []).find((c) => c.id === id) ?? current.find((c) => c.id === id);
   const toggle = (id) => setPicked((p) => (p.includes(id) ? p.filter((x) => x !== id) : p.length < SHOWCASE_MAX ? [...p, id] : p));
 
   const submit = async () => {
@@ -263,10 +265,29 @@ function ShowcasePicker({ current, onClose }) {
     >
       <div className="stack" style={{ gap: 12 }}>
         <div className="row" style={{ justifyContent: 'space-between', alignItems: 'flex-start', gap: 12 }}>
-          <p className="small muted">Jusqu'à {SHOWCASE_MAX} cartes, dans l'ordre où tu les touches. Sans vitrine, ton profil montre tes favoris.</p>
+          <p className="small muted">Jusqu'à {SHOWCASE_MAX} cartes. Glisse-les ci-dessous pour changer leur ordre. Sans vitrine, ton profil montre tes favoris.</p>
           {picked.length > 0 && <button className="link" style={{ flexShrink: 0 }} onClick={() => setPicked([])}>Tout désélectionner</button>}
         </div>
         {error && <p className="small" style={{ color: 'var(--danger)' }}>{error}</p>}
+        {picked.length > 1 && (
+          <div>
+            <p className="label">Ordre de la vitrine</p>
+            <Sortable
+              ids={picked} onChange={setPicked}
+              label={(id) => pickedCard(id)?.name ?? id}
+              render={(id) => {
+                const card = pickedCard(id);
+                const image = card && (card.images?.small || cardImage(card, cardPhotos));
+                return (
+                  <span className="order-card">
+                    {image ? <img src={image} alt="" draggable={false} /> : card && <CardPlaceholder card={card} />}
+                    <span className="pick-check">{picked.indexOf(id) + 1}</span>
+                  </span>
+                );
+              }}
+            />
+          </div>
+        )}
         <SearchField value={query} onChange={setQuery} placeholder="Nom (français ou anglais), numéro, extension" />
         <Segmented options={PICKER_SORTS} value={sort} onChange={setSort} />
         {sort === 'value' && wallet?.pending > 0 && <p className="tiny dim">Actualisation des prix… {wallet.pending} restante{wallet.pending > 1 ? 's' : ''}</p>}

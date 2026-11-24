@@ -511,6 +511,17 @@ button.list-row:active, .list-row.tap:active { transform: scale(0.99); }
 .profile-id > .grow { padding-bottom: 6px; margin-top: 46px; }
 .profile-id .avatar { border: 3px solid var(--bg, #f5f5f5); box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12); }
 .profile-bio { font-size: 14px; line-height: 1.45; color: var(--ink-2); margin-bottom: 10px; white-space: pre-line; }
+/* Grille réordonnable (Sortable) : ordre de la vitrine */
+.sortable { position: relative; display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+@media (min-width: 700px) { .sortable { grid-template-columns: repeat(9, 1fr); } }
+.sortable-item { position: relative; touch-action: none; user-select: none; -webkit-user-select: none; cursor: grab; border-radius: 6px; }
+.sortable-item:focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; }
+.sortable-item.is-placeholder { opacity: 0.25; }
+.sortable-ghost { position: fixed; left: 0; top: 0; z-index: 1000; pointer-events: none; cursor: grabbing; }
+.sortable-ghost > * { transform: scale(1.08) rotate(-2deg); box-shadow: 0 14px 30px rgba(0, 0, 0, 0.28); border-radius: 6px; }
+.order-card { position: relative; display: block; aspect-ratio: 63 / 88; border-radius: 6px; overflow: hidden; background: var(--panel); }
+.order-card img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; -webkit-user-drag: none; }
+.order-card .pick-check { pointer-events: none; top: 3px; right: 3px; width: 18px; height: 18px; font-size: 10px; }
 .showcase { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px 10px; }
 /* Grand écran : autant de cartes par ligne que la largeur le permet (≈ 150 px chacune). */
 @media (min-width: 700px) { .showcase { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 16px 14px; } }
