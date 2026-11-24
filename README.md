@@ -2,6 +2,8 @@
 
 > Application web progressive (PWA) pour suivre sa collection de cartes Pokémon — React + Vite + Supabase.
 
+En ligne : [dexup.netlify.app](https://dexup.netlify.app) · Organisation : [DexupTeam](https://github.com/DexupTeam) · Site de présentation : [Dexup-Website](https://github.com/DexupTeam/Dexup-Website)
+
 ---
 
 ## Fonctionnalités
