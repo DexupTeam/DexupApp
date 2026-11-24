@@ -160,7 +160,7 @@ export default function Binder() {
           options={[{ value: 'lists', label: 'Listes' }, { value: 'favs', label: 'Favoris' }]}
         />
       </div>
-      {tab === 'lists' ? <ListsTab /> : <FavoritesTab />}
+      <div key={tab} className="view-swap">{tab === 'lists' ? <ListsTab /> : <FavoritesTab />}</div>
     </Page>
   );
 }

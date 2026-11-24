@@ -141,15 +141,15 @@ export function CardsView({ cards, mode = 'grid', caption = 'name', onRemove, di
   const valueOf = (c) => (values ? values[c.id] ?? null : undefined);
   if (mode === 'list') {
     return (
-      <div className="stack">
+      <div className="view-swap" key="list"><div className="stack">
         {cards.map((c) => <CardRow key={c.id} card={c} caption={caption} onRemove={onRemove} dim={dimMissing} value={valueOf(c)} />)}
-      </div>
+      </div></div>
     );
   }
   return (
-    <div className="card-grid">
+    <div className="view-swap" key="grid"><div className="card-grid">
       {cards.map((c) => <CardTile key={c.id} card={c} caption={caption} onRemove={onRemove} dim={dimMissing} value={valueOf(c)} />)}
-    </div>
+    </div></div>
   );
 }
 

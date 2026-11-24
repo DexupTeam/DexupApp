@@ -86,6 +86,7 @@ export default function Sets() {
         />
       )}
 
+      <div key={mode} className="view-swap">
       {mode === 'list' ? (
         <div className="stack">
           {shown.map((s) => {
@@ -128,6 +129,7 @@ export default function Sets() {
           })}
         </div>
       )}
+      </div>
     </Page>
   );
 }

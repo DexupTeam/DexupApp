@@ -134,7 +134,8 @@ export function Pills({ options, value, onChange }) {
 
 export function Segmented({ options, value, onChange }) {
   return (
-    <div className="seg" role="tablist">
+    <div className="seg" role="tablist" style={{ '--n': options.length, '--i': Math.max(0, options.findIndex((o) => o.value === value)) }}>
+      {options.some((o) => o.value === value) && <span className="seg-thumb" aria-hidden="true" />}
       {options.map((o) => (
         <button
           key={o.value} type="button"
@@ -160,11 +161,11 @@ export function ViewToggle({ mode, onChange }) {
   const next = mode === 'grid' ? 'list' : 'grid';
   return (
     <button
-      className="icon-btn"
+      className="icon-btn view-toggle"
       onClick={() => onChange(next)}
       aria-label={next === 'grid' ? 'Afficher en grille' : 'Afficher en liste'}
     >
-      {mode === 'grid' ? <Rows3 size={20} /> : <LayoutGrid size={20} />}
+      {mode === 'grid' ? <Rows3 key="rows" size={20} /> : <LayoutGrid key="grid" size={20} />}
     </button>
   );
 }
