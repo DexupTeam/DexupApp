@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { SearchX, WifiOff } from 'lucide-react';
+import { SearchX, WifiOff } from '../components/icons';
 import { useCollection } from '../store/collection';
 import { useLang } from '../utils/LanguageContext.jsx';
 import { filterSets, getLocalizedSetName, resolveSetQuery } from '../utils/setNames';

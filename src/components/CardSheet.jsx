@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Camera, Check, ChevronDown, ExternalLink, Languages, ListPlus, Plus, Star, Trophy } from 'lucide-react';
+import { Camera, Check, ChevronDown, ExternalLink, Languages, ListPlus, Plus, Star, Trophy } from './icons';
 import { useCollection } from '../store/collection';
 import { getCached, setCached } from '../utils/cache';
 import { getGradingInfo } from '../utils/storage';

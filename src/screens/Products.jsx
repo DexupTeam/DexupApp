@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Check, ExternalLink, Plus, SearchX } from 'lucide-react';
+import { Check, ExternalLink, Plus, SearchX } from '../components/icons';
 import { useCollection } from '../store/collection';
 import { PRODUCTS, PRODUCT_TYPES } from '../data/products';
 import priceData from '../data/productPrices.json';

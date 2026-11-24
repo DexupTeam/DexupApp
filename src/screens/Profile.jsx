@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { CardName } from '../lib/cardNames';
 import { useNavigate } from 'react-router-dom';
-import { Camera, CloudUpload, Eye, ImagePlus, LogOut, Pencil, Sparkles, Trash2, Users } from 'lucide-react';
+import { Camera, CloudUpload, Eye, ImagePlus, LogOut, Pencil, Sparkles, Trash2, Users } from '../components/icons';
 import { useCollection } from '../store/collection';
 import { useProfile } from '../store/profile';
 import { useLang, LANGUAGES } from '../utils/LanguageContext.jsx';

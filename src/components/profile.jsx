@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BadgeCheck, Check, ChevronRight, Share2, UserCheck, UserPlus, Users, WifiOff } from 'lucide-react';
+import { BadgeCheck, Check, ChevronRight, Share2, UserCheck, UserPlus, Users, WifiOff } from './icons';
 import { useCollection } from '../store/collection';
 import { useProfile } from '../store/profile';
 import { useLang } from '../utils/LanguageContext.jsx';

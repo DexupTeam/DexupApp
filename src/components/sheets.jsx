@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BookOpen, Boxes, ChevronRight, ExternalLink, Gift, Layers, MapPin, Newspaper, Package, WifiOff } from 'lucide-react';
+import { BookOpen, Boxes, ChevronRight, ExternalLink, Gift, Layers, MapPin, Newspaper, Package, WifiOff } from './icons';
 import { useCollection } from '../store/collection';
 import { formatEuro, isGraded, ownedCountBySet, openUrl, setLogoUrl, useSets } from '../lib/tcg';
 import { findSetInText } from '../utils/setNames';

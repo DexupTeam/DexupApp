@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Camera } from 'lucide-react';
+import { Camera } from './icons';
 import { useCollection } from '../store/collection';
 import { newCustomCard } from '../lib/extraCards';
 import { photoFromFile } from '../lib/photos';

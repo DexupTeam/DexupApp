@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ChevronRight, Ellipsis, Layers, Pencil, Plus, Star, Trash2, Trophy } from 'lucide-react';
+import { ChevronRight, Ellipsis, Layers, Pencil, Plus, Star, Trash2, Trophy } from '../components/icons';
 import { useCollection } from '../store/collection';
 import { PRODUCTS } from '../data/products';
 import { isGraded } from '../lib/tcg';

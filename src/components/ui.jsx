@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { ChevronLeft, LayoutGrid, Rows3, Search, Star, X } from 'lucide-react';
+import { ChevronLeft, LayoutGrid, Rows3, Search, Star, X } from './icons';
 
 export function usePersistedState(key, initial) {
   const [value, setValue] = useState(() => {

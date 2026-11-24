@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { HashRouter, Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
-import { BookMarked, Home as HomeIcon, LayoutGrid, ScanLine, Search as SearchIcon, Users } from 'lucide-react';
+import { BookMarked, Home as HomeIcon, LayoutGrid, ScanLine, Search as SearchIcon, Users } from './components/icons';
 import { LanguageProvider } from './utils/LanguageContext.jsx';
 import { syncLocalOwner } from './utils/persist';
 import { recoveryLink, supabase } from './utils/supabase';
@@ -47,7 +47,7 @@ function TabBar() {
             onClick={() => navigate(path)}
           >
             {/* Barre du bas (téléphone) : icônes seules ; le nom reste lu par les lecteurs d'écran. */}
-            <Icon size={primary ? 26 : 23} strokeWidth={active ? 2.4 : 1.9} />
+            <Icon size={primary ? 28 : 26} />
           </button>
         );
       })}

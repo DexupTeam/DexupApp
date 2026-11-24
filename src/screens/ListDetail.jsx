@@ -1,6 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Ellipsis, MinusCircle, Pencil, Trash2 } from 'lucide-react';
+import { Ellipsis, MinusCircle, Pencil, Trash2 } from '../components/icons';
 import { useCollection } from '../store/collection';
 import { CardsView, OWNERSHIP_FILTERS, filterByOwnership } from '../components/cards';
 import { PokeBall } from '../components/PokeBall';

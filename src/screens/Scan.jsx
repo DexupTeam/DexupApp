@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CameraOff, ImageUp, Keyboard, Layers, ScanLine, SwitchCamera, X } from 'lucide-react';
+import { CameraOff, ImageUp, Keyboard, Layers, ScanLine, SwitchCamera, X } from '../components/icons';
 import { useCollection } from '../store/collection';
 import { loadFullCard, loadSetCards, searchCards, setIdOf } from '../lib/tcg';
 import { isExtraCard } from '../lib/extraCards';

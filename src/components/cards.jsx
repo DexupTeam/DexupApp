@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Check, Minus, Plus, Star, Trophy } from 'lucide-react';
+import { Check, Minus, Plus, Star, Trophy } from './icons';
 import { useCollection } from '../store/collection';
 import { getGradingInfo } from '../utils/storage';
 import { formatEuro } from '../lib/tcg';

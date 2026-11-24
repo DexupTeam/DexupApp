@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Search as SearchIcon, SearchX, WifiOff } from 'lucide-react';
+import { Search as SearchIcon, SearchX, WifiOff } from '../components/icons';
 import { getFrToEnMap, resolveSearchTerm } from '../utils/pokemonNames';
 import { searchCards } from '../lib/tcg';
 import { CardsView } from '../components/cards';

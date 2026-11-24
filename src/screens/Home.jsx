@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowUpRight, CalendarDays, Layers, Newspaper, ShoppingBag } from 'lucide-react';
+import { ArrowUpRight, CalendarDays, Layers, Newspaper, ShoppingBag } from '../components/icons';
 import { useCollection } from '../store/collection';
 import { useLang } from '../utils/LanguageContext.jsx';
 import { getLocalizedSetName } from '../utils/setNames';
@@ -89,19 +89,19 @@ export default function Home() {
 
       <div className="tiles" style={{ marginTop: 12 }}>
         <button className="tile tile-white" onClick={() => navigate('/binder/collection')}>
-          <Layers size={24} />
+          <Layers size={28} />
           <div><b>Mes cartes</b><span>{plural(total, 'carte')}</span></div>
         </button>
         <button className="tile tile-sky" onClick={() => setSheet('news')}>
-          <Newspaper size={24} />
+          <Newspaper size={28} />
           <div><b>Actualités</b><span>Le TCG en direct</span></div>
         </button>
         <button className="tile tile-peach" onClick={() => setSheet('events')}>
-          <CalendarDays size={24} />
+          <CalendarDays size={28} />
           <div><b>Agenda</b><span>Salons et sorties</span></div>
         </button>
         <button className="tile tile-mint" onClick={() => navigate('/products')}>
-          <ShoppingBag size={24} />
+          <ShoppingBag size={28} />
           <div><b>Produits</b><span>Boosters, ETB, displays</span></div>
         </button>
       </div>

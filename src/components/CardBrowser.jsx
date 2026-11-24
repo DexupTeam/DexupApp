@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { SearchX } from 'lucide-react';
+import { SearchX } from './icons';
 import { useCollection } from '../store/collection';
 import { useLang } from '../utils/LanguageContext.jsx';
 import { getLocalizedSetName } from '../utils/setNames';

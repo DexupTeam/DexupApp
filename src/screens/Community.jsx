@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Heart, Layers, ListChecks, Lock, SearchX, Users, WifiOff } from 'lucide-react';
+import { Heart, Layers, ListChecks, Lock, SearchX, Users, WifiOff } from '../components/icons';
 import { useCollection } from '../store/collection';
 import { useProfile } from '../store/profile';
 import { loadCardsByIds } from '../lib/tcg';
