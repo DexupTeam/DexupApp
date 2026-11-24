@@ -4,7 +4,9 @@ import { useCollection } from '../store/collection';
 import { getCached, setCached } from '../utils/cache';
 import { getGradingInfo } from '../utils/storage';
 import { formatEuro, loadFullCard, openUrl } from '../lib/tcg';
-import { getPrice } from '../lib/prices';
+import { getPrice, priceValue } from '../lib/prices';
+import { useCardHistory } from '../lib/priceHistory';
+import PriceChart from './PriceChart';
 import { useCardName } from '../lib/cardNames';
 import { cardImage, photoFromFile } from '../lib/photos';
 import { CardPlaceholder } from './cards';
@@ -55,6 +57,12 @@ const TYPE_COLORS = {
 };
 
 const money = (v, unit) => `${Number(v).toFixed(2)} ${unit}`;
+
+// Courbe du prix tendance Cardmarket de la carte (toutes langues confondues).
+function CardPriceChart({ price }) {
+  const points = useCardHistory(price, priceValue(price));
+  return <PriceChart points={points} title="Évolution du prix" />;
+}
 
 function PriceBlock({ title, unit, rows }) {
   const shown = rows.filter(([, v]) => v > 0); // 0 = pas de cotation pour cette ligne
@@ -390,6 +398,7 @@ function CardSheetInner({ card }) {
           ) : (
             <p className="small dim" style={{ textAlign: 'center' }}>Prix non disponible pour cette carte.</p>
           )}
+          {price && <CardPriceChart price={price} />}
 
           <button className="btn btn-ghost btn-block" onClick={() => openUrl(linkFor(language))}>
             {language?.cm && price?.idProduct

@@ -7,6 +7,8 @@ import priceData from '../data/productPrices.json';
 import productImages from '../data/productImages.json';
 import { formatEuro, openUrl, setLogoUrl } from '../lib/tcg';
 import { Empty, Page, Pills, SearchField, Sheet, StarButton, Tappable, TopBar } from '../components/ui';
+import PriceChart from '../components/PriceChart';
+import { useProductHistory } from '../lib/priceHistory';
 
 // Prix tendance Cardmarket du produit scellé, ou null s'il n'y est pas référencé.
 const priceOf = (product) => priceData.prices[product.id] ?? null;
@@ -63,6 +65,7 @@ export function ProductSheet({ product, onClose }) {
   const contents = product.contents || {};
   const name = product.nameFr || product.name;
   const price = priceOf(product);
+  const history = useProductHistory(priceData.ids?.[product.id], price);
   const cardmarket = `https://www.cardmarket.com/fr/Pokemon/Products/Search?searchString=${encodeURIComponent(name)}`;
 
   return (
@@ -95,6 +98,8 @@ export function ProductSheet({ product, onClose }) {
           </div>
           <b style={{ fontFamily: 'var(--display)', fontSize: price === null ? 18 : 28, color: 'var(--violet-ink)', whiteSpace: 'nowrap' }}>{price === null ? 'Indisponible' : formatEuro(price)}</b>
         </div>
+
+        {price !== null && <PriceChart points={history} title="Évolution du prix" />}
 
         <div className="card card-pad">
           {product.setName && <div className="kv"><span>Extension</span><b>{product.setName}</b></div>}

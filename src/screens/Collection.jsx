@@ -9,6 +9,7 @@ import { formatEuro, isGraded, loadCardsByIds, setIdOf, setLogoUrl, sortCards, u
 import { useWallet } from '../lib/prices';
 import { CardsView } from '../components/cards';
 import CustomCardSheet from '../components/CustomCardSheet';
+import { WalletChart } from '../components/sheets';
 import { CUSTOM_SET_ID } from '../lib/extraCards';
 import { cardImage } from '../lib/photos';
 import { Empty, Loading, Page, Segmented, Tappable, TopBar, ViewToggle, plural, usePersistedState } from '../components/ui';
@@ -137,6 +138,9 @@ export function Collection() {
                 : (newestFirst ? 'Plus récentes d\'abord' : 'Plus anciennes d\'abord')}
             </button>
           </div>
+          {sort === 'value' && wallet && wallet.value > 0 && (
+            <div style={{ marginBottom: 14 }}><WalletChart owned={owned} wallet={wallet} /></div>
+          )}
           {sort === 'value' && (values
             ? <CardsView cards={byValue} mode={mode} caption="name" values={values} />
             : <Loading label="Calcul des valeurs…" />)}

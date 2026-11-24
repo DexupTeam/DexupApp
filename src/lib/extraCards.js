@@ -72,7 +72,7 @@ export function loadRegionCards(setId) {
         set: { id: setId, name: set?.name ?? setId, series: set?.series, code: set?.code, releaseDate: set?.releaseDate },
         images: c.image ? { small: cardcorpusImage(c.image, 480), large: cardcorpusImage(c.image, 960) } : {},
         ...(c.idProduct ? { cardmarket: { url: cardmarketProductUrl(c.idProduct) } } : {}),
-        marketPrice: c.price == null ? null : { trend: c.price, updated },
+        marketPrice: c.price == null ? null : { trend: c.price, updated, idProduct: c.idProduct },
         extra: region,
       }));
       // Dans l'ordre des numéros, les cartes sans numéro (pas encore chez CardCorpus) à la fin.

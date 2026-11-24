@@ -9,8 +9,16 @@ import { loadReleases, isUpcoming, formatReleaseDate, RELEASES_SOURCE } from '..
 import { loadEvents, isPast, formatEventDate, eventTagClass } from '../lib/events';
 import { Empty, Loading, Segmented, Sheet, plural } from './ui';
 import { PokeBallPicker } from './PokeBall';
+import PriceChart from './PriceChart';
+import { useWalletHistory } from '../lib/priceHistory';
 
 // ─── Statistiques (totaux, grading, répartition par set) ─────────────────────
+// Courbe de la valeur de la collection, une fois les prix actualisés.
+export function WalletChart({ owned, wallet }) {
+  const points = useWalletHistory(owned, wallet.pending > 0 ? null : wallet.value);
+  return <PriceChart points={wallet.pending > 0 ? null : points} title="Évolution de la valeur" />;
+}
+
 export function StatsSheet({ onClose, setNames = {}, wallet }) {
   const { owned } = useCollection();
   const navigate = useNavigate();
@@ -64,6 +72,8 @@ export function StatsSheet({ onClose, setNames = {}, wallet }) {
             <div className="kv"><span>Cartes gradées</span><b>{stats.graded}</b></div>
             <div className="kv"><span>Cartes non gradées</span><b>{stats.total - stats.graded}</b></div>
           </div>
+
+          {wallet && wallet.value > 0 && <WalletChart owned={owned} wallet={wallet} />}
 
           {stats.graded > 0 && (
             <>

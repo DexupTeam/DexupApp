@@ -16,6 +16,7 @@ async function main() {
   const guides = new Map(priceGuides.map((g) => [g.idProduct, g]));
 
   const prices = {};
+  const ids = {};    // produit → idProduct Cardmarket (historique des prix)
   const missing = [];
   for (const product of PRODUCTS) {
     const found = candidates(product, catalog)
@@ -25,11 +26,12 @@ async function main() {
       .sort((a, b) => isStandard(b, product) - isStandard(a, product) || a.price - b.price);
     if (!found.length) { missing.push(product.id); continue; }
     prices[product.id] = Math.round(found[0].price * 100) / 100;
+    ids[product.id] = found[0].idProduct;
     if (REPORT) console.log(`${product.id.padEnd(26)} ${String(prices[product.id]).padStart(9)} €  ← ${found[0].name}${found.length > 1 ? ` (+${found.length - 1})` : ''}`);
   }
 
   if (Object.keys(prices).length < PRODUCTS.length / 2) throw new Error('trop peu de correspondances, relevé suspect');
-  await writeFile(OUT, `${JSON.stringify({ updated: createdAt.slice(0, 10), prices }, null, 1)}\n`);
+  await writeFile(OUT, `${JSON.stringify({ updated: createdAt.slice(0, 10), prices, ids }, null, 1)}\n`);
   console.log(`Prix produits : ${Object.keys(prices).length} / ${PRODUCTS.length} relevés (Cardmarket, ${createdAt.slice(0, 10)}).`);
   if (REPORT && missing.length) console.log(`Sans prix : ${missing.join(', ')}`);
 }

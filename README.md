@@ -260,6 +260,8 @@ L'API Pokémon TCG ne fournit plus de prix exploitables (rien pour les sets sort
 
 **Produits scellés** : prix tendance issus du relevé public de Cardmarket, régénérés à chaque build par `scripts/update-product-prices.mjs` (`npm run prices` pour voir le détail des correspondances). Un produit absent du catalogue Cardmarket s'affiche « Prix indisponible ».
 
+**Courbes de prix** (fiche carte, fiche produit, valeur de la collection dans « Statistiques » et « Ma collection » triée par valeur) : aucune source gratuite ne publie l'historique Cardmarket, Dexup le constitue. Chaque jour, `.github/workflows/price-history.yml` relève le prix de tous les produits Pokémon de Cardmarket (`scripts/update-price-history.mjs`) dans la table Supabase `price_months` (`docs/supabase-price-history.sql`, secrets `SUPABASE_URL` et `SUPABASE_SERVICE_ROLE_KEY`). Seuls les changements d'au moins 2 % sont gardés. En attendant que l'historique se remplisse, la courbe d'une carte commence par ses moyennes Cardmarket sur 30 et 7 jours (en pointillés) ; les produits scellés n'en ont pas. La courbe de la collection additionne, jour par jour, le prix des cartes possédées aujourd'hui (une valeur saisie reste fixe).
+
 **Photos des produits** : `scripts/update-product-images.mjs` associe chaque produit à sa photo du catalogue public tcgcsv.com (TCGplayer) ; sans photo, le logo de l'extension est affiché.
 
 ### Mises à jour automatiques
@@ -274,6 +276,7 @@ L'API Pokémon TCG ne fournit plus de prix exploitables (rien pour les sets sort
 | Produits des nouvelles extensions (booster, display, ETB) | Cardmarket | chaque lundi (workflow) |
 | Prix et photos des produits | Cardmarket, tcgcsv.com | chaque lundi (workflow) et à chaque build pour les prix |
 | Extensions chinoises (cartes et prix) | catalogue Cardmarket | chaque lundi (workflow) |
+| Historique des prix (courbes) | relevé Cardmarket → Supabase | chaque jour (workflow « Price history ») |
 | Index du scanner (empreinte de chaque carte) | index CardCorpus (Hugging Face) | à la main, `scripts/scanner/build_index.py`, quand CardCorpus le met à jour |
 | Conventions | `src/lib/events.js` | **à la main** : aucune source publique fiable |
 
@@ -312,7 +315,6 @@ Le déploiement se fait par Netlify à chaque push sur `main` (commande `npm run
 
 - [ ] Rappels pour les conventions à venir
 - [ ] Prix à jour pour les produits scellés (aujourd'hui saisis à la main)
-- [ ] Historique de prix par carte
 - [ ] Noms et visuels français des cartes
 
 ---

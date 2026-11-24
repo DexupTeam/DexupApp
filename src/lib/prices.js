@@ -268,3 +268,6 @@ export function useWallet(owned) {
   }, [owned]);
   return wallet;
 }
+
+// Pour les courbes de prix (priceHistory.js) : prix connus des cartes et valeur saisie par le propriétaire.
+export { loadStore as loadPriceStore, manualValue };

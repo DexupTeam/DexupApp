@@ -398,6 +398,25 @@ button.list-row:active, .list-row.tap:active { transform: scale(0.99); }
 
 .kv { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 11px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
 .kv:last-child { border-bottom: none; }
+
+/* Courbe de prix (PriceChart) */
+.chart { --chart-line: var(--ink); }
+.chart-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+.chart-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--ink-3); }
+.chart-value { font-family: var(--display); font-size: 28px; font-weight: 700; line-height: 1.15; margin-top: 4px; font-variant-numeric: tabular-nums; }
+.chart-delta { display: inline-flex; flex-direction: column; align-items: flex-end; font-family: var(--mono); font-size: 13px; font-weight: 600; padding: 6px 9px; border-radius: var(--r-sm); white-space: nowrap; }
+.chart-delta small { font-size: 11px; font-weight: 500; opacity: 0.85; }
+.chart-delta.is-up { color: var(--mint-ink); background: var(--mint); }
+.chart-delta.is-down { color: var(--danger); background: var(--danger-soft); }
+.chart-delta.is-flat { color: var(--ink-2); background: var(--surface-2); }
+.chart-plot { margin: 12px -4px 0; touch-action: pan-y; user-select: none; -webkit-user-select: none; }
+.chart-plot svg { display: block; overflow: visible; cursor: crosshair; }
+.chart-grid { stroke: var(--line); stroke-width: 1; stroke-dasharray: 2 3; }
+.chart-axis { font-family: var(--mono); font-size: 10px; fill: var(--ink-3); }
+.chart-line { fill: none; stroke: var(--chart-line); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+.chart-line.is-est { stroke-dasharray: 4 4; opacity: 0.55; }
+.chart-cursor { stroke: var(--ink-3); stroke-width: 1; }
+.chart-dot { fill: var(--surface); stroke: var(--chart-line); stroke-width: 2.5; }
 .kv > span:first-child { color: var(--ink-2); }
 .kv > b { font-family: var(--mono); font-weight: 500; font-size: 13px; text-align: right; white-space: nowrap; }
 .menu-item { display: flex; align-items: center; gap: 12px; width: 100%; padding: 15px 2px; font-family: var(--mono); font-size: 12px; text-transform: uppercase; letter-spacing: 0.04em; text-align: left; border-bottom: 1px solid var(--line); }
