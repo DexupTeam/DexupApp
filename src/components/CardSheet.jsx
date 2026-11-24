@@ -69,7 +69,7 @@ function PriceBlock({ title, unit, rows }) {
   if (!shown.length) return null;
   return (
     <div className="card card-pad">
-      <p className="tiny dim" style={{ fontWeight: 700, textTransform: 'uppercase', letterSpacing: 0.6 }}>{title}</p>
+      <p className="dot-label" style={{ color: 'var(--ink-2)' }}>{title}</p>
       {shown.map(([label, v], i) => (
         <div className="kv" key={label}>
           <span>{label}</span>

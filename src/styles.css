@@ -226,7 +226,9 @@ b { font-weight: 600; }
   background: var(--surface); border: 1px solid var(--line); outline: none; font-size: 16px;
 }
 .input:focus { border-color: var(--ink); }
-.label { display: block; font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-2); margin-bottom: 8px; }
+.label { display: block; font-family: var(--dot); font-weight: 800; font-size: 13px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-2); margin-bottom: 8px; }
+/* Sous-titres dans la typo du logo (Doto, en points) */
+.dot-label { font-family: var(--dot) !important; font-weight: 800 !important; font-size: 13px; text-transform: uppercase; letter-spacing: 0.04em; }
 
 /* ───────── Pills / segmented ───────── */
 .pills { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; margin: 0 -16px; padding: 2px 16px; }
@@ -285,7 +287,7 @@ button.list-row:active, .list-row.tap:active { transform: scale(0.99); }
   position: relative; overflow: hidden; padding: 22px; border-radius: var(--r);
   background: var(--panel); color: var(--ink); display: block; width: 100%; text-align: left;
 }
-.hero > p:first-of-type { font-family: var(--mono); font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 400 !important; }
+.hero > p:first-of-type { font-family: var(--dot); font-size: 15px; text-transform: uppercase; letter-spacing: 0.04em; font-weight: 800 !important; }
 .hero > p:first-of-type::before { content: ''; display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: var(--signal); margin-right: 8px; }
 .hero-num { font-family: var(--dot); font-weight: 800; font-size: 76px; line-height: 1; letter-spacing: -1px; margin-top: 18px; }
 .hero-num + p { font-family: var(--display); font-weight: 300; font-size: 22px; }
@@ -299,7 +301,7 @@ button.list-row:active, .list-row.tap:active { transform: scale(0.99); }
 .tile:active { transform: scale(0.98); }
 .tile svg { color: var(--ink) !important; stroke-width: 1.5; }
 .tile b { font-family: var(--display); font-size: 20px; font-weight: 400; display: block; line-height: 1.15; }
-.tile span { display: block; margin-top: 4px; line-height: 1.35; font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.03em; color: var(--ink-2); }
+.tile span { display: block; margin-top: 4px; line-height: 1.35; font-family: var(--dot); font-weight: 800; font-size: 12.5px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-2); }
 @media (min-width: 700px) { .tiles { grid-template-columns: repeat(4, 1fr); } }
 
 .hscroll { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; margin: 0 -16px; padding: 2px 16px 12px; }
@@ -402,7 +404,7 @@ button.list-row:active, .list-row.tap:active { transform: scale(0.99); }
 /* Courbe de prix (PriceChart) */
 .chart { --chart-line: var(--ink); }
 .chart-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
-.chart-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.6px; color: var(--ink-3); }
+.chart-title { font-family: var(--dot); font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-2); }
 .chart-value { font-family: var(--display); font-size: 28px; font-weight: 700; line-height: 1.15; margin-top: 4px; font-variant-numeric: tabular-nums; }
 .chart-delta { display: inline-flex; flex-direction: column; align-items: flex-end; font-family: var(--mono); font-size: 13px; font-weight: 600; padding: 6px 9px; border-radius: var(--r-sm); white-space: nowrap; }
 .chart-delta small { font-size: 11px; font-weight: 500; opacity: 0.85; }

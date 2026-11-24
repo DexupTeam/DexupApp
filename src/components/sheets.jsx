@@ -176,7 +176,7 @@ function ReleasesList() {
 
   const day = (r) => (
     <div className="card card-pad" key={r.date}>
-      <p className="tiny" style={{ fontFamily: 'var(--mono)', textTransform: 'uppercase', letterSpacing: 0.6, color: 'var(--violet-ink)', marginBottom: 6 }}>
+      <p className="dot-label" style={{ color: 'var(--violet-ink)', marginBottom: 6 }}>
         {formatReleaseDate(r.date)}
       </p>
       {r.items.map((item, i) => (
@@ -289,7 +289,7 @@ function EventsList() {
 
       {next && (
         <div className="card-pad" style={{ background: 'var(--ink)', color: '#fff', borderRadius: 'var(--r)' }}>
-          <p className="tiny" style={{ opacity: 0.85, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 0.6 }}>Prochain salon</p>
+          <p className="dot-label" style={{ opacity: 0.85 }}>Prochain salon</p>
           <p className="h2" style={{ margin: '4px 0' }}>{next.name}</p>
           <p className="small" style={{ opacity: 0.9 }}>
             {formatEventDate(next.date)}{next.dateEnd && next.dateEnd !== next.date ? ` → ${formatEventDate(next.dateEnd)}` : ''} · {next.city}
