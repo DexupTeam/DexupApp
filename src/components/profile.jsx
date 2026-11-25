@@ -222,7 +222,7 @@ export function Showcase({ cards, empty, max = SHOWCASE_MAX }) {
         // Une photo perso est publiée avec la carte : elle prime sur l'image officielle.
         const image = card.images?.small || cardImage(card, cardPhotos);
         return (
-          <button key={card.id} className="showcase-card" onClick={() => openCard(card)} aria-label={`${card.name} — voir la fiche`}>
+          <button key={card.id} className="showcase-card" onClick={() => openCard(card, cards.slice(0, max))} aria-label={`${card.name} — voir la fiche`}>
             <span className="showcase-img">{image ? <img src={image} alt="" loading="lazy" /> : <CardPlaceholder card={card} />}</span>
             <b className="clamp1"><CardName card={card} /></b>
             {card.set?.name && <span className="tiny muted clamp1">{card.set.name}</span>}

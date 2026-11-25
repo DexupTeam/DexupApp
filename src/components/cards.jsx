@@ -31,7 +31,7 @@ export const cardLabel = (card) => {
 // `value` : undefined = prix non affiché, null = carte non évaluée.
 const priceLabel = (value) => (value == null ? 'Non évaluée' : formatEuro(value));
 
-function useCardState(card) {
+function useCardState(card, list) {
   const { owned, favCards, cardPhotos, toggleOwned, openCard } = useCollection();
   const grading = getGradingInfo(owned[card.id]);
   return {
@@ -39,9 +39,9 @@ function useCardState(card) {
     isOwned: !!owned[card.id],
     isFav: !!favCards[card.id],
     grading,
-    open: () => openCard(card),
+    open: () => openCard(card, list),
     // Retirer une carte efface son grade, sa langue et son prix saisi : on passe par la fiche pour confirmer.
-    quickToggle: () => (grading || owned[card.id]?.lang || owned[card.id]?.price ? openCard(card) : toggleOwned(card.id)),
+    quickToggle: () => (grading || owned[card.id]?.lang || owned[card.id]?.price ? openCard(card, list) : toggleOwned(card.id)),
   };
 }
 
@@ -70,8 +70,8 @@ function ToggleButton({ card, isOwned, onToggle, onRemove, inline }) {
   );
 }
 
-function CardTile({ card, caption, onRemove, dim, value }) {
-  const { image, isOwned, isFav, grading, open, quickToggle } = useCardState(card);
+function CardTile({ card, caption, onRemove, dim, value, list }) {
+  const { image, isOwned, isFav, grading, open, quickToggle } = useCardState(card, list);
   const { name } = useCardName(card);
   const [loaded, setLoaded] = useState(false);
   return (
@@ -98,8 +98,8 @@ function CardTile({ card, caption, onRemove, dim, value }) {
   );
 }
 
-function CardRow({ card, caption, onRemove, dim, value }) {
-  const { image, isOwned, isFav, grading, open, quickToggle } = useCardState(card);
+function CardRow({ card, caption, onRemove, dim, value, list }) {
+  const { image, isOwned, isFav, grading, open, quickToggle } = useCardState(card, list);
   const { name } = useCardName(card);
   const setName = card.set?.label || card.set?.name;
   const meta = caption === 'name'
@@ -137,18 +137,20 @@ function CardRow({ card, caption, onRemove, dim, value }) {
  * `onRemove` remplace le bouton d'ajout par un bouton de retrait (édition d'une liste).
  * `values` ({ identifiant → valeur en € }) affiche la valeur de chaque carte.
  */
-export function CardsView({ cards, mode = 'grid', caption = 'name', onRemove, dimMissing = true, values }) {
+// `navList` : cartes parcourues avec les flèches de la fiche (par défaut celles de la vue ; une vue
+// découpée en groupes passe la liste complète pour passer d'un groupe à l'autre).
+export function CardsView({ cards, mode = 'grid', caption = 'name', onRemove, dimMissing = true, values, navList = cards }) {
   const valueOf = (c) => (values ? values[c.id] ?? null : undefined);
   if (mode === 'list') {
     return (
       <div className="view-swap" key="list"><div className="stack">
-        {cards.map((c) => <CardRow key={c.id} card={c} caption={caption} onRemove={onRemove} dim={dimMissing} value={valueOf(c)} />)}
+        {cards.map((c) => <CardRow key={c.id} card={c} caption={caption} onRemove={onRemove} dim={dimMissing} value={valueOf(c)} list={navList} />)}
       </div></div>
     );
   }
   return (
     <div className="view-swap" key="grid"><div className="card-grid">
-      {cards.map((c) => <CardTile key={c.id} card={c} caption={caption} onRemove={onRemove} dim={dimMissing} value={valueOf(c)} />)}
+      {cards.map((c) => <CardTile key={c.id} card={c} caption={caption} onRemove={onRemove} dim={dimMissing} value={valueOf(c)} list={navList} />)}
     </div></div>
   );
 }

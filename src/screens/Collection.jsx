@@ -98,6 +98,7 @@ export function Collection() {
         || (newestFirst ? b.date.localeCompare(a.date) : a.date.localeCompare(b.date)));
   }, [map, sets, lang, newestFirst]);
 
+  const allInOrder = useMemo(() => groups.flatMap((g) => g.cards), [groups]);
   const total = Object.keys(owned).length;
 
   return (
@@ -151,7 +152,7 @@ export function Collection() {
                 <span className="h2 clamp1">{g.name}</span>
                 <span className="tag">{g.cards.length}</span>
               </button>
-              <CardsView cards={g.cards} mode={mode} caption="number" />
+              <CardsView cards={g.cards} mode={mode} caption="number" navList={allInOrder} />
             </section>
           ))}
         </>
@@ -211,7 +212,7 @@ export function Graded() {
                 {open && (
                   <div className="stack">
                     {items.map(({ card, grade }) => (
-                      <Tappable key={card.id} onClick={() => openCard(card)}>
+                      <Tappable key={card.id} onClick={() => openCard(card, items.map((i) => i.card))}>
                         <img className="card-thumb" src={cardImage(card, cardPhotos) ?? undefined} alt="" loading="lazy" />
                         <div className="grow">
                           <b className="clamp1"><CardName card={card} /></b>

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Camera, Check, ChevronDown, ExternalLink, Languages, ListPlus, Plus, Star, Trophy } from './icons';
+import { Camera, Check, ChevronDown, ChevronLeft, ChevronRight, ExternalLink, Languages, ListPlus, Plus, Star, Trophy } from './icons';
 import { useCollection } from '../store/collection';
 import { getCached, setCached } from '../utils/cache';
 import { getGradingInfo } from '../utils/storage';
@@ -241,9 +241,42 @@ export function ListPickerSheet({ card, onClose }) {
   );
 }
 
-function CardSheetInner({ card }) {
+// Flèches, clavier (← →) et glissement du doigt sur l'image : carte précédente / suivante de la vue.
+function useCardNav(card, list, stepCard, blocked) {
+  const index = list ? list.findIndex((c) => c.id === card.id) : -1;
+  const prev = index > 0 ? list[index - 1] : null;
+  const next = index >= 0 && index < list.length - 1 ? list[index + 1] : null;
+  const go = (dir) => { const to = dir < 0 ? prev : next; if (to) stepCard(to, dir); };
+
+  useEffect(() => {
+    if (index < 0) return undefined;
+    const onKey = (e) => {
+      if (blocked || e.defaultPrevented || e.altKey || e.metaKey || e.ctrlKey) return;
+      if (/^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement?.tagName)) return;
+      if (e.key === 'ArrowLeft') go(-1);
+      if (e.key === 'ArrowRight') go(1);
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  });
+
+  const start = useRef(null);
+  const swipe = {
+    onPointerDown: (e) => { start.current = { x: e.clientX, y: e.clientY }; },
+    onPointerUp: (e) => {
+      const s = start.current;
+      start.current = null;
+      if (!s) return;
+      const dx = e.clientX - s.x;
+      if (Math.abs(dx) > 50 && Math.abs(dx) > 1.5 * Math.abs(e.clientY - s.y)) go(dx < 0 ? 1 : -1);
+    },
+  };
+  return { index, total: list?.length ?? 0, prev, next, go, swipe };
+}
+
+function CardSheetInner({ card, list, dir }) {
   const {
-    owned, favCards, lists, cardPhotos, closeCard, toggleOwned, toggleFavCard, setGrading, setCardPhoto, deleteCustomCard,
+    owned, favCards, lists, cardPhotos, closeCard, toggleOwned, toggleFavCard, setGrading, setCardPhoto, deleteCustomCard, stepCard,
   } = useCollection();
   const photoInput = useRef(null);
   const [photoError, setPhotoError] = useState(null);
@@ -294,6 +327,8 @@ function CardSheetInner({ card }) {
   const image = cardImage(c, cardPhotos, 'large');
 
   // Une carte perso n'existe que dans la collection : la retirer, c'est la supprimer.
+  const nav = useCardNav(card, list, stepCard, picker || confirmRemove);
+
   const onOwnedClick = () => (isCustom || hasDetails ? setConfirmRemove(true) : toggleOwned(card.id));
 
   const onPhoto = async (e) => {
@@ -311,7 +346,7 @@ function CardSheetInner({ card }) {
   return (
     <>
       <Sheet
-        title={displayName} onClose={closeCard} tall
+        title={displayName} onClose={closeCard} tall instant={dir !== 0}
         footer={
           <>
             <button className={`btn grow ${isOwned ? 'btn-owned' : 'btn-violet'}`} onClick={onOwnedClick} aria-pressed={isOwned}>
@@ -333,9 +368,22 @@ function CardSheetInner({ card }) {
           </>
         }
       >
-        {image
-          ? <img className="cs-image" src={image} alt={displayName} />
-          : <span className="cs-ph"><CardPlaceholder card={c} /></span>}
+        <div className={`cs-stage${dir ? ` is-from-${dir > 0 ? 'next' : 'prev'}` : ''}`} {...nav.swipe}>
+          {nav.index >= 0 && (
+            <button className="cs-nav is-prev" onClick={() => nav.go(-1)} disabled={!nav.prev} aria-label={nav.prev ? `Carte précédente : ${nav.prev.name}` : 'Pas de carte précédente'}>
+              <ChevronLeft size={22} />
+            </button>
+          )}
+          {image
+            ? <img className="cs-image" src={image} alt={displayName} draggable={false} />
+            : <span className="cs-ph"><CardPlaceholder card={c} /></span>}
+          {nav.index >= 0 && (
+            <button className="cs-nav is-next" onClick={() => nav.go(1)} disabled={!nav.next} aria-label={nav.next ? `Carte suivante : ${nav.next.name}` : 'Pas de carte suivante'}>
+              <ChevronRight size={22} />
+            </button>
+          )}
+        </div>
+        {nav.index >= 0 && <p className="cs-count" aria-live="polite">{nav.index + 1} / {nav.total}</p>}
 
         {(isOwned || isCustom) && (
           <div className="row" style={{ justifyContent: 'center', gap: 8, marginBottom: 12 }}>
@@ -433,7 +481,7 @@ function CardSheetInner({ card }) {
 }
 
 export default function CardSheet() {
-  const { activeCard } = useCollection();
+  const { activeCard, cardNav } = useCollection();
   if (!activeCard) return null;
-  return <CardSheetInner key={activeCard.id} card={activeCard} />;
+  return <CardSheetInner key={activeCard.id} card={activeCard} list={cardNav.list} dir={cardNav.dir} />;
 }

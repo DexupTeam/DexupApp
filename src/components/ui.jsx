@@ -18,7 +18,8 @@ export const plural = (n, word) => `${n} ${word}${n > 1 ? 's' : ''}`;
 
 const SHEET_EXIT_MS = 170;
 
-export function Sheet({ title, onClose: onClosed, children, footer, tall, dialog, level = 0 }) {
+// `instant` : déjà ouverte à l'écran (passage d'une carte à l'autre) — pas d'animation d'entrée.
+export function Sheet({ title, onClose: onClosed, children, footer, tall, dialog, level = 0, instant }) {
   const [closing, setClosing] = useState(false);
   const closed = useRef(onClosed);
   closed.current = onClosed;
@@ -39,7 +40,7 @@ export function Sheet({ title, onClose: onClosed, children, footer, tall, dialog
 
   return createPortal(
     <div
-      className={`sheet-backdrop${dialog ? ' dialog-backdrop' : ''}${closing ? ' is-closing' : ''}`}
+      className={`sheet-backdrop${dialog ? ' dialog-backdrop' : ''}${closing ? ' is-closing' : ''}${instant ? ' is-instant' : ''}`}
       style={{ zIndex: 900 + level * 10 }}
       onClick={onClose}
     >

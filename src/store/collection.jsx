@@ -24,6 +24,9 @@ const flip = (id, value) => (map) => {
 export function CollectionProvider({ children }) {
   const [data, setData] = useState(EMPTY);
   const [activeCard, setActiveCard] = useState(null);
+  // Cartes affichées par la vue qui a ouvert la fiche (dans son ordre) : flèches précédente / suivante.
+  // dir : 0 = ouverture, -1 / 1 = on vient de la carte suivante / précédente (animation de la fiche).
+  const [cardNav, setCardNav] = useState({ list: null, dir: 0 });
   const queue = useRef(Promise.resolve());
 
   const reload = useCallback(async () => {
@@ -49,8 +52,9 @@ export function CollectionProvider({ children }) {
 
   const actions = useMemo(() => ({
     reload,
-    openCard: setActiveCard,
-    closeCard: () => setActiveCard(null),
+    openCard: (card, list) => { setActiveCard(card); setCardNav({ list: list?.length > 1 ? list : null, dir: 0 }); },
+    stepCard: (card, dir) => { setActiveCard(card); setCardNav((n) => ({ ...n, dir })); },
+    closeCard: () => { setActiveCard(null); setCardNav({ list: null, dir: 0 }); },
     toggleOwned: (cardId) => write('owned', () => toggleCard(cardId), flip(cardId, true)),
     setGrading: (cardId, grading) => write('owned', () => setCardGrading(cardId, grading)),
     toggleFavCard: (card) => write('favCards', () => toggleFavoriteCard(card), flip(card.id, card)),
@@ -93,6 +97,6 @@ export function CollectionProvider({ children }) {
     setCardPhoto: (cardId, photo) => write('cardPhotos', () => setCardPhoto(cardId, photo)),
   }), [reload, write]);
 
-  const value = useMemo(() => ({ ...data, activeCard, ...actions }), [data, activeCard, actions]);
+  const value = useMemo(() => ({ ...data, activeCard, cardNav, ...actions }), [data, activeCard, cardNav, actions]);
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }
