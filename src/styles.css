@@ -320,7 +320,43 @@ button.list-row:active, .list-row.tap:active { transform: scale(0.99); }
 
 .tiles { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .tile { display: flex; flex-direction: column; align-items: flex-start; justify-content: space-between; gap: 22px; padding: 16px; border-radius: var(--r); text-align: left; min-height: 116px; background: var(--panel); color: var(--ink); transition: transform 0.08s; }
+@media (max-width: 899px) { .tile-wide { grid-column: 1 / -1; min-height: 96px; } }
 .tile:active { transform: scale(0.98); }
+
+/* Page Finance */
+.fin-hero { padding: 6px 0 18px; }
+.fin-kicker { font-family: var(--dot); font-weight: 800; font-size: 14px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-2); }
+.fin-total { font-family: var(--dot); font-weight: 800; font-size: clamp(44px, 11vw, 72px); line-height: 1.05; margin: 6px 0 6px; letter-spacing: -0.01em; }
+.fin-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+@media (min-width: 700px) { .fin-stats { grid-template-columns: repeat(4, 1fr); } }
+.fin-stat { display: flex; flex-direction: column; gap: 4px; padding: 14px 16px; border-radius: var(--r); background: var(--surface); border: 1px solid var(--line); }
+.fin-stat-label { font-family: var(--dot); font-weight: 800; font-size: 12.5px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-2); }
+.fin-stat-value { font-family: var(--display); font-weight: 400; font-size: 22px; line-height: 1.15; }
+.fin-list { overflow: hidden; }
+.fin-card { display: flex; align-items: center; gap: 12px; width: 100%; padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--line); }
+.fin-card:last-child { border-bottom: none; }
+.fin-card-text { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.fin-card-text > * { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fin-card:hover { background: var(--surface-2); }
+.fin-ph { display: block; position: relative; overflow: hidden; }
+.fin-rank { width: 22px; flex-shrink: 0; font-family: var(--dot); font-weight: 800; font-size: 16px; color: var(--ink-3); text-align: center; }
+.fin-card-value { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; flex-shrink: 0; font-family: var(--mono); font-size: 13px; }
+.fin-card-value .is-up { color: var(--mint-ink); }
+.fin-card-value .is-down { color: var(--danger); }
+.fin-moves { display: grid; gap: 18px; }
+@media (min-width: 900px) { .fin-moves { grid-template-columns: 1fr 1fr; } }
+.fin-hbars { display: grid; gap: 14px; }
+.fin-hbar-head { display: flex; justify-content: space-between; gap: 12px; font-size: 14px; }
+.fin-hbar-head b { font-family: var(--mono); font-size: 13px; font-weight: 500; flex-shrink: 0; }
+.fin-hbar-track { height: 10px; margin: 6px 0 4px; border-radius: 4px; background: var(--surface-2); overflow: hidden; }
+.fin-hbar-track i { display: block; height: 100%; border-radius: 4px; background: var(--signal); transition: width 0.6s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.fin-histo { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; height: 190px; }
+.fin-col { display: flex; flex-direction: column; align-items: stretch; gap: 6px; min-width: 0; cursor: default; }
+.fin-col-count { font-family: var(--mono); font-size: 12px; text-align: center; color: var(--ink-2); }
+.fin-col-track { flex: 1; display: flex; align-items: flex-end; border-bottom: 1px solid var(--line); }
+.fin-col-track i { display: block; width: 100%; border-radius: 4px 4px 0 0; background: var(--signal); opacity: 0.85; transition: opacity 0.15s, height 0.6s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.fin-col.is-hover .fin-col-track i { opacity: 1; }
+.fin-col-label { font-family: var(--mono); font-size: 10.5px; text-align: center; color: var(--ink-3); white-space: nowrap; }
 .tile svg { color: var(--ink) !important; stroke-width: 1.5; }
 .tile b { font-family: var(--display); font-size: 20px; font-weight: 400; display: block; line-height: 1.15; }
 .tile span { display: block; margin-top: 4px; line-height: 1.35; font-family: var(--dot); font-weight: 800; font-size: 12.5px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-2); }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { HashRouter, Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
-import { BookMarked, Home as HomeIcon, LayoutGrid, ScanLine, Search as SearchIcon, Users } from './components/icons';
+import { BookMarked, Home as HomeIcon, LayoutGrid, ScanLine, Search as SearchIcon, Users, ChartLine } from './components/icons';
 import { LanguageProvider } from './utils/LanguageContext.jsx';
 import { syncLocalOwner } from './utils/persist';
 import { recoveryLink, supabase } from './utils/supabase';
@@ -19,6 +19,7 @@ import Binder from './screens/Binder';
 import ListDetail from './screens/ListDetail';
 import { Collection, Graded } from './screens/Collection';
 import Products from './screens/Products';
+import Finance from './screens/Finance';
 import Profile from './screens/Profile';
 import Community, { PublicProfile } from './screens/Community';
 
@@ -28,6 +29,8 @@ const TABS = [
   { path: '/scan', label: 'Scanner', Icon: ScanLine, match: (p) => p.startsWith('/scan'), primary: true },
   { path: '/search', label: 'Recherche', Icon: SearchIcon, match: (p) => p.startsWith('/search') },
   { path: '/binder', label: 'Classeur', Icon: BookMarked, match: (p) => p.startsWith('/binder') },
+  // Barre latérale seulement : sur téléphone, Finance s'ouvre depuis l'accueil (tuile) ou les statistiques.
+  { path: '/finance', label: 'Finance', Icon: ChartLine, match: (p) => p.startsWith('/finance'), sideOnly: true },
   { path: '/community', label: 'Communauté', Icon: Users, match: (p) => p.startsWith('/community') || p.startsWith('/profile') },
 ];
 
@@ -36,7 +39,7 @@ function TabBar() {
   const { pathname } = useLocation();
   return (
     <nav className="tabbar" aria-label="Navigation principale">
-      {TABS.map(({ path, label, Icon, match, primary }) => {
+      {TABS.filter((t) => !t.sideOnly).map(({ path, label, Icon, match, primary }) => {
         const active = match(pathname);
         return (
           <button
@@ -108,6 +111,7 @@ function Shell({ session }) {
           <Route path="/binder/graded" element={<Graded />} />
           <Route path="/binder/list/:listId" element={<ListDetail />} />
           <Route path="/products" element={<Products />} />
+          <Route path="/finance" element={<Finance />} />
           <Route path="/profile" element={<Profile email={session.user?.email} />} />
           <Route path="/community" element={<Community />} />
           <Route path="/community/:username" element={<PublicProfile />} />

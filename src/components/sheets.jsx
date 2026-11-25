@@ -50,8 +50,8 @@ export function StatsSheet({ onClose, setNames = {}, wallet }) {
             {wallet && (
               <button
                 className="kv tap" style={{ width: '100%', textAlign: 'left' }}
-                aria-label="Valeur de la collection : voir mes cartes triées par valeur"
-                onClick={() => navigate('/binder/collection?sort=value')}
+                aria-label="Valeur de la collection : ouvrir la page Finance"
+                onClick={() => navigate('/finance')}
               >
                 <span>
                   Valeur de la collection
