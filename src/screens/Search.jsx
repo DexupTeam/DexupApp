@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Search as SearchIcon, SearchX, WifiOff } from '../components/icons';
+import { Clock, Search as SearchIcon, SearchX, WifiOff, X } from '../components/icons';
 import { getFrToEnMap, resolveSearchTerm } from '../utils/pokemonNames';
 import { searchCards } from '../lib/tcg';
 import { CardsView } from '../components/cards';
+import { addRecentSearch, clearRecentSearches, getRecentSearches, removeRecentSearch } from '../utils/storage';
 import { Empty, Loading, Page, Pills, SearchField, TopBar, plural } from '../components/ui';
 
 const RARITIES = [
@@ -26,8 +27,19 @@ export default function Search() {
   const [result, setResult] = useState(IDLE);
   const [loadingMore, setLoadingMore] = useState(false);
   const requestId = useRef(0);
+  const [recent, setRecent] = useState([]);
 
-  useEffect(() => { getFrToEnMap(); }, []);
+  useEffect(() => { getFrToEnMap(); getRecentSearches().then(setRecent); }, []);
+
+  // Une recherche qui a donné des résultats entre dans l'historique quand on cesse de taper
+  // (ou tout de suite avec Entrée) : pas de « sal », « sala »… à chaque lettre.
+  const remember = (q) => { if (q.trim()) addRecentSearch(q).then(setRecent); };
+  const found = result.status === 'done' && result.cards.length > 0;
+  useEffect(() => {
+    if (!found || !query.trim()) return undefined;
+    const timer = setTimeout(() => remember(query), 1500);
+    return () => clearTimeout(timer);
+  }, [found, query]);
 
   useEffect(() => {
     const q = query.trim();
@@ -68,11 +80,34 @@ export default function Search() {
       <TopBar title="Recherche" />
 
       <div className="stack" style={{ gap: 12, marginBottom: 16 }}>
-        <SearchField value={query} onChange={setQuery} placeholder="Nom du Pokémon (français ou anglais)" />
+        <SearchField
+          value={query} onChange={setQuery} placeholder="Nom du Pokémon (français ou anglais)"
+          onSubmit={() => found && remember(query)}
+        />
         <Pills options={RARITIES} value={rarity} onChange={setRarity} />
       </div>
 
-      {status === 'idle' && (
+      {status === 'idle' && recent.length > 0 && (
+        <section className="recent" aria-label="Recherches récentes">
+          <div className="row" style={{ justifyContent: 'space-between', marginBottom: 6 }}>
+            <p className="label" style={{ margin: 0 }}>Recherches récentes</p>
+            <button className="link" onClick={() => clearRecentSearches().then(setRecent)}>Tout effacer</button>
+          </div>
+          <div className="card">
+            {recent.map((r) => (
+              <div key={r.q} className="recent-row">
+                <button className="recent-go" onClick={() => setQuery(r.q)}>
+                  <Clock size={18} /><span className="clamp1">{r.q}</span>
+                </button>
+                <button className="recent-del" aria-label={`Retirer « ${r.q} » des recherches récentes`} onClick={() => removeRecentSearch(r.q).then(setRecent)}>
+                  <X size={16} />
+                </button>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+      {status === 'idle' && !recent.length && (
         <Empty
           icon={SearchIcon} title="Trouve n'importe quelle carte"
           text="Tape un nom — « Salamèche » fonctionne aussi bien que « Charmander » — ou choisis une rareté."

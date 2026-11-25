@@ -169,3 +169,43 @@ export async function setCardPhoto(cardId, photo) {
   await writeStore(CARD_PHOTOS_KEY, photos);
   return photos;
 }
+
+// ─── Recherches récentes ─────────────────────────────────────────────────────
+// [{ q, at }], la plus récente d'abord ; synchronisées avec le compte comme le reste du classeur.
+const RECENT_SEARCHES_KEY = 'recent_searches';
+const RECENT_MAX = 8;
+const fold = (s) => s.trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+
+export async function getRecentSearches() {
+  const data = await readStore(RECENT_SEARCHES_KEY);
+  return Array.isArray(data) ? data : [];
+}
+
+/** Ajoute une recherche en tête. Remplace la même (accents et majuscules ignorés) et, si elle vient
+ *  d'être tapée, son début (« sala » puis « salamèche »). */
+export async function addRecentSearch(q) {
+  const term = q.trim();
+  if (!term) return getRecentSearches();
+  const now = Date.now();
+  const key = fold(term);
+  const next = [
+    { q: term, at: now },
+    ...(await getRecentSearches()).filter((r) => {
+      const k = fold(r.q);
+      return k !== key && !(key.startsWith(k) && now - r.at < 2 * 60 * 1000);
+    }),
+  ].slice(0, RECENT_MAX);
+  await writeStore(RECENT_SEARCHES_KEY, next);
+  return next;
+}
+
+export async function removeRecentSearch(q) {
+  const next = (await getRecentSearches()).filter((r) => r.q !== q);
+  await writeStore(RECENT_SEARCHES_KEY, next);
+  return next;
+}
+
+export async function clearRecentSearches() {
+  await writeStore(RECENT_SEARCHES_KEY, []);
+  return [];
+}

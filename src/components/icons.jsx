@@ -138,6 +138,16 @@ const GRIDS = {
     ....x....
     ...x.....
     .........`,
+  Clock: `
+    ..xxxxx..
+    .x.....x.
+    x...x...x
+    x...x...x
+    x...xxx.x
+    x.......x
+    x.......x
+    .x.....x.
+    ..xxxxx..`,
   CloudUpload: `
     ..xxx....
     .x...xx..
@@ -607,6 +617,7 @@ export const Check = dotIcon('Check');
 export const ChevronDown = dotIcon('ChevronDown');
 export const ChevronLeft = dotIcon('ChevronLeft');
 export const ChevronRight = dotIcon('ChevronRight');
+export const Clock = dotIcon('Clock');
 export const CloudUpload = dotIcon('CloudUpload');
 export const Ellipsis = dotIcon('Ellipsis');
 export const ExternalLink = dotIcon('ExternalLink');
