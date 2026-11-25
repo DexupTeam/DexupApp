@@ -62,7 +62,7 @@ export default defineConfig({
     netlifyFunctionsDevPlugin(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.ico', 'logo.svg', 'apple-touch-icon.png'],
+      includeAssets: ['favicon.ico', 'logo.svg', 'logo-violet.svg', 'logo-white.svg', 'apple-touch-icon.png'],
       manifest: {
         name: 'Dexup',
         short_name: 'Dexup',
