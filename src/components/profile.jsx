@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BadgeCheck, Check, ChevronRight, Share2, UserCheck, UserPlus, Users, WifiOff } from './icons';
+import { BadgeCheck, Check, ChevronRight, Share2, UserCheck, UserPlus, Users, WifiOff, Instagram, XSocial } from './icons';
+import { SOCIALS } from '../lib/socials';
 import { useCollection } from '../store/collection';
 import { useProfile } from '../store/profile';
 import { useLang } from '../utils/LanguageContext.jsx';
@@ -177,6 +178,26 @@ function FollowersSheet({ profile, total, onClose }) {
  * Bannière, photo, nom, pseudo, bio et statistiques. `action` : bouton à droite du nom (partage),
  * `children` : boutons sous les statistiques.
  */
+const SOCIAL_ICONS = { x: XSocial, instagram: Instagram };
+
+// Liens X / Instagram du profil (pseudos rangés dans settings), ouverts dans un nouvel onglet.
+function SocialLinks({ settings }) {
+  const links = SOCIALS.filter((s) => settings?.[s.key] && s.re.test(settings[s.key]));
+  if (!links.length) return null;
+  return (
+    <div className="row profile-socials" style={{ gap: 8, flexWrap: 'wrap' }}>
+      {links.map((s) => {
+        const Icon = SOCIAL_ICONS[s.key];
+        return (
+          <a key={s.key} className="social-link" href={s.url(settings[s.key])} target="_blank" rel="noopener noreferrer" aria-label={`${s.label} : @${settings[s.key]}`}>
+            <Icon size={16} /> @{settings[s.key]}
+          </a>
+        );
+      })}
+    </div>
+  );
+}
+
 export function ProfileHeader({ profile, action, followers, children }) {
   const [showFollowers, setShowFollowers] = useState(false);
   return (
@@ -194,6 +215,7 @@ export function ProfileHeader({ profile, action, followers, children }) {
         {action && <div className="profile-action row" style={{ gap: 8 }}>{action}</div>}
       </div>
       {profile.bio && <p className="profile-bio">{profile.bio}</p>}
+      <SocialLinks settings={profile.settings} />
       {/* Statistiques à gauche, set préféré à droite sur la même ligne (en dessous si la place manque). */}
       <div className="row" style={{ gap: 6, flexWrap: 'wrap' }}>
         {followers != null && (

@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowUpRight, CalendarDays, Layers, Newspaper, ShoppingBag, ChartLine } from '../components/icons';
+import { ArrowUpRight, CalendarDays, Layers, Newspaper, ShoppingBag } from '../components/icons';
 import { useCollection } from '../store/collection';
 import { useLang } from '../utils/LanguageContext.jsx';
 import { getLocalizedSetName } from '../utils/setNames';
@@ -103,10 +103,6 @@ export default function Home() {
         <button className="tile tile-mint" onClick={() => navigate('/products')}>
           <ShoppingBag size={28} />
           <div><b>Produits</b><span>Boosters, ETB, displays</span></div>
-        </button>
-        <button className="tile tile-wide" onClick={() => navigate('/finance')}>
-          <ChartLine size={28} />
-          <div><b>Finance</b><span>{total > 0 && wallet ? `${formatEuro(wallet.value)} · valeur, courbes, cartes chères` : 'Valeur et évolution de ta collection'}</span></div>
         </button>
       </div>
 

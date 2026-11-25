@@ -248,6 +248,16 @@ const GRIDS = {
     x....x..x
     x...x.x.x
     xxxxxxxxx`,
+  Instagram: `
+    .xxxxxxx.
+    x.......x
+    x.....x.x
+    x..xxx..x
+    x.x...x.x
+    x.x...x.x
+    x..xxx..x
+    x.......x
+    .xxxxxxx.`,
   Keyboard: `
     .........
     xxxxxxxxx
@@ -558,6 +568,16 @@ const GRIDS = {
     ..x...x..
     .x.....x.
     x.......x`,
+  XSocial: `
+    xx......x
+    .xx....x.
+    ..xx..x..
+    ...xxx...
+    ...xxx...
+    ..x..xx..
+    .x....xx.
+    x......xx
+    .........`,
   StarFilled: `
     ....x....
     ...xxx...
@@ -638,6 +658,7 @@ export const Heart = dotIcon('Heart');
 export const Home = dotIcon('Home');
 export const ImagePlus = dotIcon('ImagePlus');
 export const ImageUp = dotIcon('ImageUp');
+export const Instagram = dotIcon('Instagram');
 export const Keyboard = dotIcon('Keyboard');
 export const Languages = dotIcon('Languages');
 export const Layers = dotIcon('Layers');
@@ -669,3 +690,4 @@ export const UserPlus = dotIcon('UserPlus');
 export const Users = dotIcon('Users');
 export const WifiOff = dotIcon('WifiOff');
 export const X = dotIcon('X');
+export const XSocial = dotIcon('XSocial');

@@ -15,6 +15,7 @@ import { useCardMatcher } from '../lib/cardSearch';
 import { getLocalizedSetName } from '../utils/setNames';
 import { Avatar, ProfileHeader, SHOWCASE_MAX, ShareButton, Showcase } from '../components/profile';
 import Sortable from '../components/Sortable';
+import { SOCIALS, parseHandle } from '../lib/socials';
 import { CardPlaceholder } from '../components/cards';
 import { Confirm, Empty, Loading, Page, SearchField, Segmented, Sheet, TopBar } from '../components/ui';
 
@@ -106,6 +107,9 @@ function EditProfileSheet({ profile, onClose }) {
     displayName: profile.displayName, username: profile.username, bio: profile.bio, avatar: profile.avatar, banner: profile.banner,
   });
   const [favoriteSet, setFavoriteSet] = useState(profile.settings.favoriteSet ?? '');
+  const [socials, setSocials] = useState(() => Object.fromEntries(SOCIALS.map((s) => [s.key, profile.settings[s.key] ? `@${profile.settings[s.key]}` : ''])));
+  const handles = Object.fromEntries(SOCIALS.map((s) => [s.key, parseHandle(s, socials[s.key])]));
+  const socialsOk = Object.values(handles).every((h) => h !== null);
   // Extensions groupées par série, dans l'ordre de la page des extensions.
   const series = useMemo(() => {
     const groups = new Map();
@@ -131,6 +135,7 @@ function EditProfileSheet({ profile, onClose }) {
     try {
       const settings = { ...profile.settings };
       if (favoriteSet) settings.favoriteSet = favoriteSet; else delete settings.favoriteSet;
+      for (const s of SOCIALS) { if (handles[s.key]) settings[s.key] = handles[s.key]; else delete settings[s.key]; }
       await save({ ...form, username: form.username.trim(), displayName: form.displayName.trim(), bio: form.bio.trim(), settings });
       onClose();
     } catch (e) {
@@ -142,7 +147,7 @@ function EditProfileSheet({ profile, onClose }) {
   return (
     <Sheet
       title="Modifier le profil" onClose={onClose} tall
-      footer={<button className="btn btn-violet grow" disabled={saving || !USERNAME_RE.test(form.username.trim())} onClick={submit}>Enregistrer</button>}
+      footer={<button className="btn btn-violet grow" disabled={saving || !socialsOk || !USERNAME_RE.test(form.username.trim())} onClick={submit}>Enregistrer</button>}
     >
       <div className="stack" style={{ gap: 14 }}>
         <div>
@@ -189,6 +194,22 @@ function EditProfileSheet({ profile, onClose }) {
             ))}
           </select>
         </label>
+        <div className="stack" style={{ gap: 10 }}>
+          <span className="label" style={{ margin: 0 }}>Réseaux sociaux</span>
+          {SOCIALS.map((s) => (
+            <label key={s.key} className="stack" style={{ gap: 4 }}>
+              <span className="tiny muted">{s.label}</span>
+              <input
+                className="input" value={socials[s.key]} placeholder={s.placeholder} maxLength={80}
+                autoCapitalize="off" autoCorrect="off" spellCheck={false} inputMode="url"
+                aria-invalid={handles[s.key] === null}
+                onChange={(e) => setSocials((v) => ({ ...v, [s.key]: e.target.value }))}
+              />
+              {handles[s.key] === null && <span className="tiny" style={{ color: 'var(--danger)' }}>Pseudo {s.label} invalide : tape ton @pseudo ou colle le lien de ton profil.</span>}
+            </label>
+          ))}
+          <span className="tiny dim">Affichés sur ton profil, cliquables. Laisse vide pour ne rien montrer.</span>
+        </div>
         {error && <p className="small" style={{ color: 'var(--danger)' }}>{error}</p>}
       </div>
     </Sheet>
