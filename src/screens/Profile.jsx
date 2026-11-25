@@ -425,7 +425,7 @@ export default function Profile({ email }) {
               <button className="link" onClick={() => setSheet('showcase')}>{profile.showcase.length ? 'Modifier' : 'Choisir'}</button>
             </div>
             <Showcase
-              cards={profile.showcase}
+              cards={profile.showcase} own
               empty={(
                 <button className="card card-pad row" style={{ width: '100%', gap: 12, textAlign: 'left' }} onClick={() => setSheet('showcase')}>
                   <Sparkles size={22} />

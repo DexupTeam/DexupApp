@@ -592,6 +592,10 @@ button.list-row:active, .list-row.tap:active { transform: scale(0.99); }
 .showcase-img { position: relative; display: block; aspect-ratio: 63 / 88; border-radius: 8px; overflow: hidden; background: var(--panel); box-shadow: 0 10px 22px rgba(0, 0, 0, 0.14); transition: transform 0.15s; }
 .showcase-card:hover .showcase-img { transform: translateY(-3px); }
 .showcase-img img { width: 100%; height: 100%; object-fit: cover; }
+.showcase-out {
+  position: absolute; left: 6px; right: 6px; bottom: 6px; padding: 4px 6px; border-radius: 4px; text-align: center;
+  background: rgba(11, 11, 11, 0.82); color: #fff; font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: 0.04em;
+}
 .profile-row-cards { display: flex; gap: 4px; flex-shrink: 0; }
 .profile-row-cards span { width: 30px; aspect-ratio: 63 / 88; border-radius: 3px; overflow: hidden; background: var(--panel); position: relative; }
 .profile-row-cards img { width: 100%; height: 100%; object-fit: cover; }

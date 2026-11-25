@@ -229,10 +229,12 @@ export function ProfileHeader({ profile, action, followers, children }) {
   );
 }
 
-/** Cartes mises en avant (vitrine, jusqu'à 9) ; un clic ouvre la fiche. `empty` : contenu si aucune carte. */
+/** Cartes mises en avant (vitrine, jusqu'à 9) ; un clic ouvre la fiche. `empty` : contenu si aucune carte.
+ *  `own` : c'est ma vitrine — une carte retirée depuis de la collection y est signalée (elle ne compte
+ *  plus dans la valeur ni dans Finance). */
 export const SHOWCASE_MAX = 9;
-export function Showcase({ cards, empty, max = SHOWCASE_MAX }) {
-  const { openCard, cardPhotos } = useCollection();
+export function Showcase({ cards, empty, max = SHOWCASE_MAX, own = false }) {
+  const { openCard, cardPhotos, owned, ready } = useCollection();
   if (!cards?.length) return empty ?? null;
   return (
     <div className="showcase">
@@ -241,7 +243,10 @@ export function Showcase({ cards, empty, max = SHOWCASE_MAX }) {
         const image = card.images?.small || cardImage(card, cardPhotos);
         return (
           <button key={card.id} className="showcase-card" onClick={() => openCard(card, cards.slice(0, max))} aria-label={`${card.name} — voir la fiche`}>
-            <span className="showcase-img">{image ? <img src={image} alt="" loading="lazy" /> : <CardPlaceholder card={card} />}</span>
+            <span className="showcase-img">
+              {image ? <img src={image} alt="" loading="lazy" /> : <CardPlaceholder card={card} />}
+              {own && ready && !owned[card.id] && <span className="showcase-out">Hors collection</span>}
+            </span>
             <b className="clamp1"><CardName card={card} /></b>
             {card.set?.name && <span className="tiny muted clamp1">{card.set.name}</span>}
           </button>
