@@ -458,14 +458,6 @@ button.list-row:active, .list-row.tap:active { transform: scale(0.99); }
 .kv { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 11px 0; border-bottom: 1px solid var(--line); font-size: 14px; }
 .kv:last-child { border-bottom: none; }
 
-/* Liens X / Instagram d'un profil */
-.profile-socials { margin: 2px 0 12px; }
-.social-link {
-  display: inline-flex; align-items: center; gap: 7px; height: 32px; padding: 0 12px; border-radius: 999px;
-  border: 1px solid var(--line); background: var(--surface); color: var(--ink); text-decoration: none;
-  font-family: var(--mono); font-size: 12.5px; transition: background 0.15s, border-color 0.15s;
-}
-.social-link:hover { background: var(--surface-2); border-color: var(--ink-3); }
 
 /* Recherches récentes (écran Recherche) */
 .recent-row { display: flex; align-items: center; border-bottom: 1px solid var(--line); }

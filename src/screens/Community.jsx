@@ -5,7 +5,7 @@ import { useCollection } from '../store/collection';
 import { useProfile } from '../store/profile';
 import { loadCardsByIds } from '../lib/tcg';
 import { CommunityUnavailable, getFollowerCount, getProfile, listProfiles, listProfilesByIds } from '../lib/community';
-import { Avatar, FollowButton, ProfileHeader, SHOWCASE_MAX, ShareButton, Showcase, TeamBadge, profileStats } from '../components/profile';
+import { Avatar, FollowButton, ProfileHeader, SHOWCASE_MAX, ShareButton, Showcase, SocialLinks, TeamBadge, profileStats } from '../components/profile';
 import { CardPlaceholder } from '../components/cards';
 import CardBrowser from '../components/CardBrowser';
 import { PokeBall } from '../components/PokeBall';
@@ -230,6 +230,7 @@ export function PublicProfile() {
             action={(
               <>
                 <FollowButton profile={profile} onChange={(follow) => setFollowers((n) => (n ?? 0) + (follow ? 1 : -1))} />
+                <SocialLinks settings={profile.settings} />
                 <ShareButton profile={profile} />
               </>
             )}

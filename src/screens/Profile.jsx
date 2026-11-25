@@ -13,7 +13,7 @@ import { formatEuro, loadCardsByIds, useSets } from '../lib/tcg';
 import { useWallet } from '../lib/prices';
 import { useCardMatcher } from '../lib/cardSearch';
 import { getLocalizedSetName } from '../utils/setNames';
-import { Avatar, ProfileHeader, SHOWCASE_MAX, ShareButton, Showcase } from '../components/profile';
+import { Avatar, ProfileHeader, SHOWCASE_MAX, ShareButton, Showcase, SocialLinks } from '../components/profile';
 import Sortable from '../components/Sortable';
 import { SOCIALS, parseHandle } from '../lib/socials';
 import { CardPlaceholder } from '../components/cards';
@@ -414,7 +414,7 @@ export default function Profile({ email }) {
 
       {status === 'ready' && profile && (
         <>
-          <ProfileHeader profile={profile} followers={followers} action={<ShareButton profile={profile} />}>
+          <ProfileHeader profile={profile} followers={followers} action={<><SocialLinks settings={profile.settings} /><ShareButton profile={profile} /></>}>
             <button className="btn btn-dark btn-sm" onClick={() => setSheet('edit')}><Pencil size={15} /> Modifier</button>
             <button className="btn btn-ghost btn-sm" onClick={() => navigate(`/community/${profile.username}`)}><Eye size={15} /> Voir mon profil public</button>
           </ProfileHeader>

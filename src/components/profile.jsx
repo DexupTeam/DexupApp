@@ -180,22 +180,19 @@ function FollowersSheet({ profile, total, onClose }) {
  */
 const SOCIAL_ICONS = { x: XSocial, instagram: Instagram };
 
-// Liens X / Instagram du profil (pseudos rangés dans settings), ouverts dans un nouvel onglet.
-function SocialLinks({ settings }) {
-  const links = SOCIALS.filter((s) => settings?.[s.key] && s.re.test(settings[s.key]));
-  if (!links.length) return null;
-  return (
-    <div className="row profile-socials" style={{ gap: 8, flexWrap: 'wrap' }}>
-      {links.map((s) => {
-        const Icon = SOCIAL_ICONS[s.key];
-        return (
-          <a key={s.key} className="social-link" href={s.url(settings[s.key])} target="_blank" rel="noopener noreferrer" aria-label={`${s.label} : @${settings[s.key]}`}>
-            <Icon size={16} /> @{settings[s.key]}
-          </a>
-        );
-      })}
-    </div>
-  );
+// Liens X / Instagram du profil (pseudos rangés dans settings) : logo seul, à gauche du partage.
+export function SocialLinks({ settings }) {
+  return SOCIALS.filter((s) => settings?.[s.key] && s.re.test(settings[s.key])).map((s) => {
+    const Icon = SOCIAL_ICONS[s.key];
+    return (
+      <a
+        key={s.key} className="icon-btn" href={s.url(settings[s.key])} target="_blank" rel="noopener noreferrer"
+        aria-label={`${s.label} : @${settings[s.key]}`} title={`@${settings[s.key]}`}
+      >
+        <Icon size={19} />
+      </a>
+    );
+  });
 }
 
 export function ProfileHeader({ profile, action, followers, children }) {
@@ -215,7 +212,6 @@ export function ProfileHeader({ profile, action, followers, children }) {
         {action && <div className="profile-action row" style={{ gap: 8 }}>{action}</div>}
       </div>
       {profile.bio && <p className="profile-bio">{profile.bio}</p>}
-      <SocialLinks settings={profile.settings} />
       {/* Statistiques à gauche, set préféré à droite sur la même ligne (en dessous si la place manque). */}
       <div className="row" style={{ gap: 6, flexWrap: 'wrap' }}>
         {followers != null && (
