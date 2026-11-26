@@ -111,6 +111,7 @@ export default function Scan() {
   // Reconnaissance : idle | loading (premier chargement du moteur) | running | error (moteur indisponible)
   const [ocr, setOcr] = useState('idle');
   const [engine, setEngine] = useState('loading'); // loading | ready | error
+  const engineError = useRef(null);
   const [message, setMessage] = useState(null);
   const [input, setInput] = useState('');
   const [results, setResults] = useState({ query: '', cards: [] });
@@ -179,7 +180,12 @@ export default function Scan() {
   // l'ouverture du scanner, pendant que l'utilisateur sort sa carte.
   useEffect(() => {
     let alive = true;
-    warmRecognizer().then(() => alive && setEngine('ready')).catch(() => alive && setEngine('error'));
+    warmRecognizer().then(() => alive && setEngine('ready')).catch((e) => {
+      // Le détail reste affiché avec le message : sans lui, impossible de savoir ce qui bloque sur un téléphone.
+      console.warn('[scan] moteur indisponible :', e);
+      engineError.current = String(e?.message || e).slice(0, 160);
+      if (alive) setEngine('error');
+    });
     return () => { alive = false; };
   }, []);
 
@@ -314,11 +320,12 @@ export default function Scan() {
         autoFailures.current = 0;
         setMessage('Carte non reconnue — rapproche-la, évite les reflets, ou saisis son numéro.');
       }
-    } catch (_) {
+    } catch (e) {
       setOcr('idle');
-      setMessage(engine === 'error' || !navigator.onLine
+      const detail = engineError.current || String(e?.message || e).slice(0, 160);
+      setMessage(!navigator.onLine
         ? 'Reconnaissance indisponible hors ligne la première fois — saisis le numéro.'
-        : 'Reconnaissance indisponible — saisis le numéro à la main.');
+        : `Reconnaissance indisponible — saisis le numéro à la main. (${detail})`);
     }
   };
 

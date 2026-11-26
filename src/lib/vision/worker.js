@@ -2,7 +2,7 @@
 //   1. trouver la carte dans la photo (détecteur de coins) ;
 //   2. la redresser dans ses deux sens debout, calculer son empreinte, garder le sens que la
 //      tête d'orientation juge à l'endroit ;
-//   3. chercher les images les plus proches parmi 102 000 cartes anglaises, japonaises et chinoises ;
+//   3. chercher les images les plus proches parmi 122 000 images de cartes (EN, FR, JA, CN) ;
 //   4. lire le numéro de collection pour départager les rééditions d'une même illustration.
 // Hors du fil principal pour que la caméra reste fluide pendant le calcul.
 import { loadCv, warp } from './opencv';
@@ -20,8 +20,12 @@ const NUMBER_VOTES = 3;
 
 let ready = null;
 function warm() {
-  ready ||= Promise.all([loadCv(), loadIndex(), model('detector'), model('matcher'), model('number')])
-    .catch((e) => { ready = null; throw e; });
+  // Chaque étape signe son erreur (« matcher : … ») : c'est elle qui s'affiche dans le scanner.
+  const step = (name, promise) => promise.catch((e) => { throw new Error(`${name} : ${e?.message || e}`); });
+  ready ||= Promise.all([
+    step('OpenCV', loadCv()), step('index', loadIndex()),
+    step('détecteur', model('detector')), step('matcher', model('matcher')), step('numéro', model('number')),
+  ]).catch((e) => { ready = null; throw e; });
   return ready;
 }
 

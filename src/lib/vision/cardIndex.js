@@ -1,21 +1,33 @@
-// Index de référence du scanner (scripts/scanner/build_index.py) : 102 000 empreintes d'images de
-// cartes anglaises, japonaises et chinoises (CardCorpus, CC BY 4.0), et la carte Dexup de chacune.
+// Index de référence du scanner (scripts/scanner/build_index.py) : 122 000 empreintes d'images de
+// cartes anglaises, françaises, japonaises et chinoises (CardCorpus, CC BY 4.0), et la carte Dexup de chacune.
 let indexPromise = null;
 
 export function loadIndex() {
   indexPromise ||= (async () => {
     const manifest = await (await fetch('/scan/index.json', { cache: 'no-cache' })).json();
-    const [chunks, meta] = await Promise.all([
-      Promise.all(manifest.embeddings.map(async (file) => {
-        const res = await fetch(`/scan/${file}`);
-        if (!res.ok) throw new Error(`index HTTP ${res.status}`);
-        return new Int8Array(await res.arrayBuffer());
-      })),
-      fetch(`/scan/${manifest.meta}`).then((r) => r.json()),
-    ]);
+    // Les morceaux sont écrits directement à leur place dans un seul tableau, au fil du téléchargement :
+    // pas de copie intermédiaire de 62 Mo (sur iPhone, la mémoire d'un onglet est comptée).
     const vectors = new Int8Array(manifest.rows * manifest.dim);
-    let offset = 0;
-    for (const c of chunks) { vectors.set(c, offset); offset += c.length; }
+    const chunkBytes = manifest.chunkRows * manifest.dim;
+    const [, meta] = await Promise.all([
+      Promise.all(manifest.embeddings.map(async (file, k) => {
+        const res = await fetch(`/scan/${file}`);
+        if (!res.ok) throw new Error(`index ${file} : HTTP ${res.status}`);
+        let offset = k * chunkBytes;
+        if (!res.body?.getReader) { vectors.set(new Int8Array(await res.arrayBuffer()), offset); return; }
+        const reader = res.body.getReader();
+        for (;;) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          vectors.set(new Int8Array(value.buffer, value.byteOffset, value.byteLength), offset);
+          offset += value.byteLength;
+        }
+      })),
+      fetch(`/scan/${manifest.meta}`).then((r) => {
+        if (!r.ok) throw new Error(`index ${manifest.meta} : HTTP ${r.status}`);
+        return r.json();
+      }),
+    ]);
     return { ...manifest, vectors, rows: Int32Array.from(meta.rows), prints: meta.prints };
   })().catch((e) => { indexPromise = null; throw e; });
   return indexPromise;
