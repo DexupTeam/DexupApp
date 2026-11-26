@@ -49,14 +49,45 @@ function netlifyFunctionsDevPlugin() {
 }
 
 // Version affichée dans le Profil : celle de package.json, montée à chaque mise en ligne (correctif ou fonctionnalité).
+// ONNX Runtime Web (scanner) crée sa mémoire WebAssembly partagée avec un plafond de 4 Go
+// (65 536 pages de 64 Ko), réservé d'un bloc. Un vrai iPhone refuse cette réservation
+// (« RangeError: Out of memory ») alors que le scanner n'en utilise qu'une petite partie : on abaisse le
+// plafond dans le fichier du moteur. Le fichier émis a donc son propre nom (hash du contenu modifié),
+// ce qui évite qu'un ancien cache garde la version à 4 Go.
+// Mesuré sur le scanner : il lui faut entre 64 et 128 Mo ; 512 Mo laisse une large marge.
+const ORT_MAX_PAGES = Number(process.env.ORT_MAX_PAGES) || 8192; // 8 192 × 64 Ko = 512 Mo
+function ortMemoryCapPlugin() {
+  const GLUE = /onnxruntime-web\/dist\/ort-wasm-simd-threaded\.mjs\?url$/;
+  return {
+    name: 'ort-memory-cap',
+    apply: 'build',
+    enforce: 'pre',
+    async resolveId(source, importer) {
+      if (!source.endsWith('ort-wasm-simd-threaded.mjs?url')) return null;
+      const resolved = await this.resolve(source.replace(/\?url$/, ''), importer, { skipSelf: true });
+      return resolved ? `${resolved.id}?url` : null;
+    },
+    load(id) {
+      if (!GLUE.test(id)) return null;
+      const file = id.replace(/\?url$/, '');
+      const src = fs.readFileSync(file, 'utf8');
+      if (!src.includes('maximum:65536')) this.error(`ort-memory-cap : plafond mémoire introuvable dans ${file} (ONNX Runtime mis à jour ?)`);
+      const ref = this.emitFile({ type: 'asset', name: 'ort-wasm-simd-threaded.mjs', source: src.replace('maximum:65536', `maximum:${ORT_MAX_PAGES}`) });
+      return `export default import.meta.ROLLUP_FILE_URL_${ref};`;
+    },
+  };
+}
+
 const { version } = JSON.parse(fs.readFileSync(path.resolve(__dirname, 'package.json'), 'utf8'));
 
 export default defineConfig({
   // Le fil de travail du scanner importe OpenCV et ONNX Runtime à la demande : format module.
-  worker: { format: 'es' },
   // « 2.9.0 » s'affiche « 2.9 », « 2.9.1 » en entier : le correctif se voit, le zéro non.
+  // Le scanner tourne dans un worker, construit à part : il a besoin du même plafond mémoire.
+  worker: { format: 'es', plugins: () => [ortMemoryCapPlugin()] },
   define: { __APP_VERSION__: JSON.stringify(version.replace(/\.0$/, '')) },
   plugins: [
+    ortMemoryCapPlugin(),
     react(),
     sqlWasmPlugin(),
     netlifyFunctionsDevPlugin(),
