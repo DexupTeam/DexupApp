@@ -18,6 +18,10 @@ async function record(day, products, cents) {
       body: JSON.stringify({ p_day: day, p_products: products, p_cents: cents }),
     });
     if (res.ok) return res.json();
+    // Table ou fonction absente : le script SQL n'a pas été exécuté dans Supabase, inutile de réessayer.
+    if (res.status === 404) {
+      throw new Error(`record_prices introuvable dans Supabase (HTTP 404) : exécute docs/supabase-price-history.sql dans le SQL Editor. ${await res.text()}`);
+    }
     if (attempt >= 3) throw new Error(`record_prices : HTTP ${res.status} ${await res.text()}`);
     await new Promise((r) => setTimeout(r, 2000 * attempt));
   }
