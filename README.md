@@ -14,8 +14,15 @@ En ligne : [dexup.netlify.app](https://dexup.netlify.app) · Organisation : [Dex
 
 - Nombre de cartes possédées, sets entamés, cartes gradées et **valeur de la collection** (prix tendance Cardmarket, actualisés chaque semaine ; une carte gradée compte pour la valeur saisie)
 - Statistiques détaillées (grading par société, répartition par set)
-- Accès direct à « Mes cartes », aux Actualités, à l’Agenda (conventions et sorties) et aux Produits
+- Accès direct à « Mes cartes », aux Actualités, à l’Agenda (conventions et sorties), aux Produits et à la page Finance (3 tuiles en haut, 2 en bas sur mobile)
 - Extensions en cours et dernières sorties
+
+### Finance
+
+- Valeur de la collection et sa **courbe** dans le temps (1 mois, 3 mois, 6 mois, 1 an, tout)
+- Répartition de la valeur par extension, par tranche de prix, et part des cartes gradées
+- Cartes les plus chères, plus fortes hausses et baisses (tendance comparée à la moyenne 30 j, cartes d'au moins 0,50 €)
+- Accessible par la tuile de l'accueil (mobile) et la barre latérale (ordinateur)
 
 ### Extensions
 
@@ -42,12 +49,15 @@ En ligne : [dexup.netlify.app](https://dexup.netlify.app) · Organisation : [Dex
 - **Prix Cardmarket** du jour (tendance, moyennes 7 j / 30 j, prix bas, tendance reverse / holo) via TCGdex ; le lien Cardmarket reste disponible même sans cotation
 - Ajout à la collection, favori ★, ajout à une liste
 - **Grading** : PSA / PCA / CA / CollectAura / CCC / CGC / Beckett ou société libre, avec une **valeur estimée** saisie à la main
+- **Courbe de prix** (voir « Courbes de prix » plus bas)
+- **Flèches précédente / suivante** pour passer d'une carte à l'autre de la liste d'où on l'a ouverte (extension, recherche, liste, collection…), aussi au clavier
 - Se ferme toute seule quand on change de page
 
 ### Recherche
 
 - Par nom en **français ou en anglais** (`Salamèche` → Charmander, insensible aux accents)
 - Filtre par rareté, résultats paginés (« Voir plus »)
+- **Recherches récentes** affichées quand le champ est vide (synchronisées avec le compte, effaçables une à une ou en entier)
 
 ### Scanner
 
@@ -86,7 +96,7 @@ En ligne : [dexup.netlify.app](https://dexup.netlify.app) · Organisation : [Dex
 
 ### Profil et communauté
 
-- **Profil** (ta photo en haut de l'accueil et de la Communauté) : photo de profil, bannière, nom affiché, pseudo, bio, set préféré, **vitrine** de 9 cartes au plus (avec ta photo perso si la carte en a une), visibilité, partage du lien du profil, et les paramètres (langue des extensions, synchronisation, déconnexion, version)
+- **Profil** (ta photo en haut de l'accueil et de la Communauté) : photo de profil, bannière, nom affiché, pseudo, bio, set préféré, **vitrine** de 9 cartes au plus (avec ta photo perso si la carte en a une), **réordonnable par glisser-déposer**, une carte sortie de la collection y est marquée « Hors collection », liens **X et Instagram** (logo à gauche du bouton Partager), visibilité, partage du lien du profil, et les paramètres (langue des extensions, synchronisation, déconnexion, version)
 - **Communauté** (onglet de la barre) : liste des profils publics (recherche par pseudo ou nom) ; chaque profil montre sa vitrine (ou, à défaut, ses favoris), puis ses cartes possédées, ses listes et ses favoris, avec recherche, filtre par extension, filtre « je l'ai / il me manque » et tri par extension, nom ou valeur ; « N cartes en commun avec toi » ; boutons Suivre et Partager
 - **Abonnements** : on suit un collectionneur depuis son profil ; l'onglet Communauté s'ouvre sur « Suivis » (ou « Tous » tant qu'on ne suit personne), et chaque profil affiche son nombre d'abonnés. Table `pokecollect_follows` à créer avec [`docs/supabase-follows.sql`](docs/supabase-follows.sql) ; sans elle, les boutons Suivre n'apparaissent pas
 - Le profil publie un **instantané** de la collection (identifiants des cartes, listes, favoris, statistiques), republié automatiquement quand la collection change ; les données privées de `pokecollect_data` ne sont jamais exposées
@@ -100,9 +110,11 @@ En ligne : [dexup.netlify.app](https://dexup.netlify.app) · Organisation : [Dex
 
 ### Interface
 
-- Thème clair monochrome : grille de points, titres en serif fin, libellés en monospace, une seule couleur d'accent (le violet du logo)
-- Navigation à 5 entrées : Accueil · Extensions · Scanner · Recherche · Classeur (barre flottante sur mobile, barre latérale sur ordinateur)
-- Animations légères : entrées en cascade, feuilles qui glissent, compteurs ; désactivées si le système demande moins d'animations
+- Thème clair monochrome : grille de points, titres en serif fin, sous-titres dans la police en points du logo (Doto), libellés en monospace, une seule couleur d'accent (le violet du logo)
+- **Icônes en matrice de points** (grilles 9 × 9, `src/components/icons.jsx`), dessinées pour Dexup
+- Favicon violet en thème clair, blanc en thème sombre
+- Navigation : Accueil · Extensions · Scanner · Recherche · Classeur en barre flottante sur mobile ; la barre latérale sur ordinateur ajoute Finance et Communauté
+- Animations légères : entrées en cascade, feuilles qui glissent, compteurs, transitions au changement de vue (grille / liste, Listes / Favoris) ; désactivées si le système demande moins d'animations
 
 ---
 
@@ -122,12 +134,19 @@ src/
 │   ├── Binder.jsx          # Classeur : listes + favoris
 │   ├── Collection.jsx      # « Ma collection » et « Cartes gradées »
 │   ├── ListDetail.jsx      # Détail d'une liste personnelle
-│   └── Products.jsx        # Catalogue de produits scellés
+│   ├── Products.jsx        # Catalogue de produits scellés
+│   ├── Finance.jsx         # Valeur, courbe et statistiques de la collection
+│   ├── Profile.jsx         # Ton profil et ses réglages
+│   └── Community.jsx       # Profils publics, abonnements
 ├── components/
 │   ├── ui.jsx              # Feuilles, champs, pastilles, états vides, page défilante
 │   ├── cards.jsx           # Tuiles et lignes de cartes (grille / liste)
 │   ├── CardSheet.jsx       # Fiche carte, grading, ajout à une liste
 │   ├── sheets.jsx          # Statistiques, actualités, conventions, compte, édition de liste
+│   ├── PriceChart.jsx      # Courbe de prix
+│   ├── Sortable.jsx        # Grille réordonnable (vitrine)
+│   ├── profile.jsx         # Vitrine, liens X / Instagram, en-tête de profil
+│   ├── icons.jsx           # Icônes en matrice de points
 │   ├── PokeBall.jsx        # Icônes de liste
 │   ├── Logo.jsx            # Logo
 │   └── Auth.jsx            # Connexion / inscription, écran de démarrage
@@ -136,7 +155,10 @@ src/
 ├── lib/
 │   ├── tcg.js              # Accès à l'API cartes (sets, cartes, recherche)
 │   ├── prices.js           # Prix Cardmarket via TCGdex + valeur de la collection
-│   ├── scan.js             # Lecture d'une carte (OCR) et classement des candidats
+│   ├── priceHistory.js     # Historique des prix (Supabase) pour les courbes
+│   ├── socials.js          # Pseudos X / Instagram
+│   ├── vision/             # Scanner : détecteur, matcher, index, lecture du numéro (fil de travail)
+│   ├── scan.js             # Recherche manuelle et classement des candidats
 │   ├── quality.js          # Mesure de netteté / exposition d'une image
 │   ├── useAutoCapture.js   # Déclenchement automatique du scan
 │   ├── news.js             # Actualités
@@ -174,8 +196,9 @@ netlify/functions/
 | React Router 7 | Navigation (HashRouter) |
 | Supabase JS 2 | Authentification + base de données |
 | sql.js | SQLite dans le navigateur (IndexedDB) |
-| Tesseract.js | Lecture des cartes au scan (OCR) |
-| Lucide React | Icônes |
+| ONNX Runtime Web | Modèles du scanner dans le navigateur (mémoire WebAssembly plafonnée à 512 Mo pour iPhone, `vite.config.js`) |
+| OpenCV.js | Redressement de la carte au scan |
+| Tesseract.js | Lecture de texte pour la recherche manuelle |
 | vite-plugin-pwa | Service worker + manifeste |
 
 ## APIs utilisées
@@ -203,6 +226,7 @@ Seules les données utilisateur sont synchronisées. Le cache API reste local.
 | `pokecollect_data` | Données par utilisateur (collection, favoris, listes, produits possédés) — RLS user-scoped |
 | `pokecollect_shared` | Cache partagé global (sets, cartes, actualités, conventions) — lecture publique |
 | `pokecollect_follows` | Abonnements (qui suit qui) — lecture publique, chacun ne suit qu'en son nom |
+| `price_months` | Historique des prix Cardmarket (un rang par produit et par mois) — lecture publique, écriture par le workflow « Price history » seulement |
 | `pokecollect_profiles` | Profils publics : pseudo, photo, bannière, bio, cartes mises en avant, instantané de la collection — lecture publique (profils publics), écriture par le propriétaire |
 
 `pokecollect_data` : RLS activé — chaque utilisateur n'accède qu'à ses propres données.  
@@ -332,7 +356,6 @@ Le déploiement se fait par Netlify à chaque push sur `main` (commande `npm run
 ## Pistes
 
 - [ ] Rappels pour les conventions à venir
-- [ ] Prix à jour pour les produits scellés (aujourd'hui saisis à la main)
 - [ ] Noms et visuels français des cartes
 
 ---
