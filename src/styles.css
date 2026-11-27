@@ -140,7 +140,7 @@ b { font-weight: 600; }
 .stack > :nth-child(2), .card-grid > :nth-child(2), .set-grid > :nth-child(2), .tiles > :nth-child(2), .hscroll > :nth-child(2) { animation-delay: 30ms; }
 .stack > :nth-child(3), .card-grid > :nth-child(3), .set-grid > :nth-child(3), .tiles > :nth-child(3), .hscroll > :nth-child(3) { animation-delay: 60ms; }
 .stack > :nth-child(4), .card-grid > :nth-child(4), .set-grid > :nth-child(4), .tiles > :nth-child(4), .hscroll > :nth-child(4) { animation-delay: 90ms; }
-.stack > :nth-child(5), .card-grid > :nth-child(5), .set-grid > :nth-child(5), .hscroll > :nth-child(5) { animation-delay: 120ms; }
+.stack > :nth-child(5), .card-grid > :nth-child(5), .set-grid > :nth-child(5), .tiles > :nth-child(5), .hscroll > :nth-child(5) { animation-delay: 120ms; }
 .stack > :nth-child(6), .card-grid > :nth-child(6), .set-grid > :nth-child(6), .hscroll > :nth-child(6) { animation-delay: 150ms; }
 .stack > :nth-child(7), .card-grid > :nth-child(7), .set-grid > :nth-child(7) { animation-delay: 180ms; }
 .stack > :nth-child(8), .card-grid > :nth-child(8), .set-grid > :nth-child(8) { animation-delay: 210ms; }
@@ -359,7 +359,15 @@ button.list-row:active, .list-row.tap:active { transform: scale(0.99); }
 .tile svg { color: var(--ink) !important; stroke-width: 1.5; }
 .tile b { font-family: var(--display); font-size: 20px; font-weight: 400; display: block; line-height: 1.15; }
 .tile span { display: block; margin-top: 4px; line-height: 1.35; font-family: var(--dot); font-weight: 800; font-size: 12.5px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-2); }
-@media (min-width: 700px) { .tiles { grid-template-columns: repeat(4, 1fr); } }
+/* Mobile : 3 tuiles en haut, 2 en bas (grille de 6 colonnes) */
+@media (max-width: 699px) {
+  .tiles { grid-template-columns: repeat(6, 1fr); }
+  .tiles > .tile { grid-column: span 3; }
+  .tiles > .tile:nth-child(-n+3) { grid-column: span 2; padding: 13px 12px; gap: 18px; }
+  .tiles > .tile:nth-child(-n+3) b { font-size: 16px; }
+  .tiles > .tile:nth-child(-n+3) span { font-size: 10.5px; letter-spacing: 0.02em; }
+}
+@media (min-width: 700px) { .tiles { grid-template-columns: repeat(5, 1fr); } }
 
 .hscroll { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; margin: 0 -16px; padding: 2px 16px 12px; }
 .hscroll::-webkit-scrollbar { display: none; }
