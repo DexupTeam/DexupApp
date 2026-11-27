@@ -14,7 +14,7 @@ En ligne : [dexup.netlify.app](https://dexup.netlify.app) · Organisation : [Dex
 
 - Nombre de cartes possédées, sets entamés, cartes gradées et **valeur de la collection** (prix tendance Cardmarket, actualisés chaque semaine ; une carte gradée compte pour la valeur saisie)
 - Statistiques détaillées (grading par société, répartition par set)
-- Accès direct à « Mes cartes », aux Actualités, à l’Agenda (conventions et sorties), aux Produits et à la page Finance (3 tuiles en haut, 2 en bas sur mobile)
+- Accès direct à « Mes cartes », aux Actualités, à l’Agenda (conventions et sorties), aux Produits ; sur mobile, un champ en haut de l'accueil ouvre la Recherche
 - Extensions en cours et dernières sorties
 
 ### Finance
@@ -22,7 +22,7 @@ En ligne : [dexup.netlify.app](https://dexup.netlify.app) · Organisation : [Dex
 - Valeur de la collection et sa **courbe** dans le temps (1 mois, 3 mois, 6 mois, 1 an, tout)
 - Répartition de la valeur par extension, par tranche de prix, et part des cartes gradées
 - Cartes les plus chères, plus fortes hausses et baisses (tendance comparée à la moyenne 30 j, cartes d'au moins 0,50 €)
-- Accessible par la tuile de l'accueil (mobile) et la barre latérale (ordinateur)
+- Dans la barre du bas (mobile) et la barre latérale (ordinateur)
 
 ### Extensions
 
@@ -113,7 +113,7 @@ En ligne : [dexup.netlify.app](https://dexup.netlify.app) · Organisation : [Dex
 - Thème clair monochrome : grille de points, titres en serif fin, sous-titres dans la police en points du logo (Doto), libellés en monospace, une seule couleur d'accent (le violet du logo)
 - **Icônes en matrice de points** (grilles 9 × 9, `src/components/icons.jsx`), dessinées pour Dexup
 - Favicon violet en thème clair, blanc en thème sombre
-- Navigation : Accueil · Extensions · Scanner · Recherche · Classeur en barre flottante sur mobile ; la barre latérale sur ordinateur ajoute Finance et Communauté
+- Navigation : Accueil · Extensions · Scanner · Finance · Classeur · Communauté en barre flottante sur mobile (la Recherche s'ouvre depuis l'accueil) ; sur ordinateur, barre latérale avec en plus Recherche
 - Animations légères : entrées en cascade, feuilles qui glissent, compteurs, transitions au changement de vue (grille / liste, Listes / Favoris) ; désactivées si le système demande moins d'animations
 
 ---
