@@ -359,6 +359,11 @@ button.list-row:active, .list-row.tap:active { transform: scale(0.99); }
 .tile svg { color: var(--ink) !important; stroke-width: 1.5; }
 .tile b { font-family: var(--display); font-size: 20px; font-weight: 400; display: block; line-height: 1.15; }
 .tile span { display: block; margin-top: 4px; line-height: 1.35; font-family: var(--dot); font-weight: 800; font-size: 12.5px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-2); }
+/* Champ de recherche de l'accueil (téléphone ; sur ordinateur, la barre latérale a « Recherche ») */
+.home-search { width: 100%; margin-bottom: 12px; cursor: text; color: var(--ink-3); text-align: left; }
+.home-search span { flex: 1; font-size: 16px; }
+@media (min-width: 900px) { .home-search { display: none; } }
+
 /* Mobile : 3 tuiles en haut, 2 en bas (grille de 6 colonnes) */
 @media (max-width: 699px) {
   .tiles { grid-template-columns: repeat(6, 1fr); }

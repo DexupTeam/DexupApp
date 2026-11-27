@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Clock, Search as SearchIcon, SearchX, WifiOff, X } from '../components/icons';
 import { getFrToEnMap, resolveSearchTerm } from '../utils/pokemonNames';
 import { searchCards } from '../lib/tcg';
@@ -22,6 +23,7 @@ const RARITIES = [
 const IDLE = { status: 'idle', cards: [], total: 0, page: 1, term: '', translated: null };
 
 export default function Search() {
+  const { state } = useLocation();
   const [query, setQuery] = useState('');
   const [rarity, setRarity] = useState(null);
   const [result, setResult] = useState(IDLE);
@@ -77,12 +79,13 @@ export default function Search() {
 
   return (
     <Page>
-      <TopBar title="Recherche" />
+      <TopBar title="Recherche" back={state?.focus ? "/" : undefined} />
 
       <div className="stack" style={{ gap: 12, marginBottom: 16 }}>
         <SearchField
           value={query} onChange={setQuery} placeholder="Nom du Pokémon (français ou anglais)"
           onSubmit={() => found && remember(query)}
+          autoFocus={Boolean(state?.focus)}
         />
         <Pills options={RARITIES} value={rarity} onChange={setRarity} />
       </div>

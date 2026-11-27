@@ -29,18 +29,20 @@ const TABS = [
   { path: '/scan', label: 'Scanner', Icon: ScanLine, match: (p) => p.startsWith('/scan'), primary: true },
   { path: '/search', label: 'Recherche', Icon: SearchIcon, match: (p) => p.startsWith('/search') },
   { path: '/binder', label: 'Classeur', Icon: BookMarked, match: (p) => p.startsWith('/binder') },
-  // Barre latérale seulement : sur téléphone, Finance s'ouvre depuis l'accueil (tuile) ou les statistiques.
-  { path: '/finance', label: 'Finance', Icon: ChartLine, match: (p) => p.startsWith('/finance'), sideOnly: true },
+  { path: '/finance', label: 'Finance', Icon: ChartLine, match: (p) => p.startsWith('/finance') },
   { path: '/community', label: 'Communauté', Icon: Users, match: (p) => p.startsWith('/community') || p.startsWith('/profile') },
 ];
+
+// Barre du bas (téléphone) : la recherche s'ouvre depuis le champ en haut de l'accueil, Finance prend sa place.
+const TAB_BAR = ['/', '/sets', '/scan', '/finance', '/binder', '/community'].map((path) => TABS.find((t) => t.path === path));
 
 function TabBar() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   return (
     <nav className="tabbar" aria-label="Navigation principale">
-      {TABS.filter((t) => !t.sideOnly).map(({ path, label, Icon, match, primary }) => {
-        const active = match(pathname);
+      {TAB_BAR.map(({ path, label, Icon, match, primary }) => {
+        const active = match(pathname) || (path === '/' && pathname.startsWith('/search')); // ouverte depuis l'accueil
         return (
           <button
             key={path}

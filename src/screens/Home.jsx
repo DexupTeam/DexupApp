@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowUpRight, CalendarDays, ChartLine, Layers, Newspaper, ShoppingBag } from '../components/icons';
+import { ArrowUpRight, CalendarDays, ChartLine, Layers, Newspaper, Search, ShoppingBag } from '../components/icons';
 import { useCollection } from '../store/collection';
 import { useLang } from '../utils/LanguageContext.jsx';
 import { getLocalizedSetName } from '../utils/setNames';
@@ -65,6 +65,17 @@ export default function Home() {
   const latest = sets.slice(0, 8);
   const goSet = (s) => navigate(`/sets/${s.id}`);
   const close = () => setSheet(null);
+  // iOS n'ouvre le clavier que pour un champ focalisé pendant le tap : un champ temporaire le garde ouvert
+  // le temps que la page Recherche affiche le sien (autoFocus), qui reprend le focus.
+  const openSearch = () => {
+    const tmp = document.createElement('input');
+    tmp.setAttribute('aria-hidden', 'true');
+    tmp.style.cssText = 'position:fixed;top:0;left:0;opacity:0;height:0;font-size:16px;';
+    document.body.appendChild(tmp);
+    tmp.focus();
+    setTimeout(() => tmp.remove(), 1000);
+    navigate('/search', { state: { focus: true } });
+  };
 
   return (
     <Page>
@@ -74,6 +85,12 @@ export default function Home() {
           <Avatar profile={profile} size={42} />
         </button>
       </header>
+
+      {/* Téléphone : la recherche n'est plus dans la barre du bas, elle s'ouvre d'ici. */}
+      <button type="button" className="field home-search" onClick={openSearch}>
+        <Search size={19} />
+        <span>Rechercher une carte</span>
+      </button>
 
       <button className="hero" onClick={() => setSheet('stats')} aria-label="Voir mes statistiques">
         <span className="hero-go"><ArrowUpRight size={20} /></span>
